@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\UserController;
+use App\ViewModels\UsersViewModels;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
