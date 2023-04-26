@@ -18,7 +18,9 @@ class RolesPermissionsSeeder extends Seeder
             'service' => [],
             'administrator' => [
                 'view any users',
-            ]
+            ],
+            'patient' => [],
+            'therapist' => [],
         ];
 
         foreach($roles as $role => $permissions){

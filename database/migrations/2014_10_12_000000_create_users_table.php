@@ -18,7 +18,18 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+
             $table->timestamps();
+            $table->primary('id');
+        });
+
+        Schema::create('therapist_has_patients', function (Blueprint $table) {
+            $table->uuid('therapist_id');
+            $table->uuid('patient_id');
+
+            $table->foreign('therapist_id')->references('id')->on('users');
+            $table->foreign('patient_id')->references('id')->on('users');
+            $table->primary(['therapist_id', 'patient_id']);
         });
     }
 
