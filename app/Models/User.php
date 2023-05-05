@@ -4,14 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use App\Models\Roles;
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Roles;
 
 class User extends Authenticatable
 {
@@ -26,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'tel'
     ];
 
     /**
@@ -46,6 +46,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+
+    public function address(){
+        return $this->belongsTo(Address::class);
+    }
 
     public static function getPatients(){
         return User::role(Roles::SERVICE)->get();

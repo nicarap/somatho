@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Model;
 use App\Models\Traitment;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Invoice extends Model
 {
@@ -31,8 +32,8 @@ class Invoice extends Model
         'realized_at' => 'datetime',
     ];
 
-    public function traitments(): HasMany
+    public function traitments(): BelongsTo
     {
-        return $this->hasMany(Traitment::class);
+        return $this->belongsTo(Traitment::class);
     }
 }

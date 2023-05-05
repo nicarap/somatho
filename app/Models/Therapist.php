@@ -3,24 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\User;
-use App\Models\Traitment;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\TherapistInfo;
+use App\Models\Traitment;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Therapist extends User
 {
     use HasFactory;
     protected $guard_name = 'web';
     protected $table = 'users';
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'siren',
-    ];
 
     public static function boot()
     {
@@ -32,8 +28,14 @@ class Therapist extends User
         });
     }
 
-    public function patients(){
-        return $this->hasMany(Patient::class);
+    public function therapistInfo(): HasOne
+    {
+        return $this->hasOne(TherapistInfo::class);
+    }
+
+    public function patients(): BelongsToMany
+    {
+        return $this->belongsToMany(Patient::class, 'therapists_has_patients');
     }
 
     public function traitments(): HasMany

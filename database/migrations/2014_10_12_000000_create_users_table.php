@@ -17,13 +17,16 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('tel')->nullable();
+            $table->uuid('address_id')->nullable();
             $table->rememberToken();
 
             $table->timestamps();
             $table->primary('id');
+            $table->foreign('address_id')->on('addresses')->references('id');
         });
 
-        Schema::create('therapist_has_patients', function (Blueprint $table) {
+        Schema::create('therapists_has_patients', function (Blueprint $table) {
             $table->uuid('therapist_id');
             $table->uuid('patient_id');
 
@@ -38,6 +41,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('therapists_has_patients');
         Schema::dropIfExists('users');
     }
 };

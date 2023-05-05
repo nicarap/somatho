@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('therapist_infos', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->uuid('id');
-            $table->uuid('user_id');
-            $table->string('siren');
+            $table->string('address');
+            $table->string('complement_address')->nullable();
+            $table->string('postal_code');
+            $table->string('location');
 
-            $table->timestamps();
             $table->primary('id');
-            $table->foreign('user_id')->on('users')->references('id');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('therapist_infos');
+        Schema::dropIfExists('addresses');
     }
 };
