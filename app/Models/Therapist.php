@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Therapist extends User
 {
     use HasFactory;
+    
     protected $guard_name = 'web';
     protected $table = 'users';
 

@@ -15,6 +15,7 @@ class Patient extends User
     use HasFactory;
 
     protected $table = 'users';
+    protected $guard_name = 'web';
 
     public static function boot()
     {
