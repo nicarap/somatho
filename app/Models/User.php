@@ -11,10 +11,11 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Roles;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasUuids, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasUuids, Notifiable, \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.
@@ -26,6 +27,15 @@ class User extends Authenticatable
         'email',
         'password',
         'tel'
+    ];
+
+    /**
+     * Attributes to include in the Audit.
+     *
+     * @var array
+     */
+    protected $auditExclude  = [
+        'password',
     ];
 
     /**
@@ -52,11 +62,30 @@ class User extends Authenticatable
         return $this->belongsTo(Address::class);
     }
 
+    public function isTherpist()
+    {
+        return $this->hasRole(Roles::THERAPIST);
+    }
+
+    public function isPatient()
+    {
+        return $this->hasRole(Roles::PATIENT);
+    }
+
+    public function isService()
+    {
+        return $this->hasRole(Roles::SERVICE);
+    }
+
     public static function getPatients(){
         return User::role(Roles::SERVICE)->get();
     }
 
     public static function getTherapist(){
         return User::role(Roles::THERAPIST)->get();
+    }
+
+    public static function findByEmail($email){
+        return User::where('email', $email)->first();
     }
 }

@@ -19,13 +19,19 @@ class UserService
 
     public function create(UserDTO $entity): User
     {
-        if(!$this->exist($entity)) throw new UserAlreadyExist(User::find($entity->id));
+        if($this->exist($entity)) throw new UserAlreadyExist(User::findByEmail($entity->email));
 
-        return $this->userRepository->create($entity);
+        $user = $this->userRepository->create($entity);
+
+        if($entity->roles){
+            $this->userRepository->syncRoles($user, $entity->roles);
+        }
+
+        return $user;
     }
 
-    public function exist(UserDTO|User $entity): bool
+    public function exist(UserDTO|User $entity): User|null
     {
-        return User::find($entity->id);
+        return User::findByEmail($entity->email);
     }
 }
