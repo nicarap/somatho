@@ -22,16 +22,16 @@ class Therapist extends User
     public static function boot()
     {
         parent::boot();
-        static::addGlobalScope('patient', function (Builder $query){
-            return $query->whereHas('roles', function (Builder $query2){
-                return $query2->where('role_id', Roles::findByName(Roles::THERAPIST)->id);
-            });
-        });
+        // static::addGlobalScope('patient', function (Builder $query){
+        //     return $query->whereHas('roles', function (Builder $query2){
+        //         return $query2->where('role_id', Roles::findByName(Roles::THERAPIST)->id);
+        //     });
+        // });
     }
 
     public function therapistInfo(): HasOne
     {
-        return $this->hasOne(TherapistInfo::class);
+        return $this->hasOne(TherapistInfo::class, 'user_id');
     }
 
     public function patients(): BelongsToMany

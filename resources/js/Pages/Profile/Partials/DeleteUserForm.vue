@@ -48,8 +48,10 @@ const closeModal = () => {
             </p>
         </header>
 
-        <DangerButton @click="confirmUserDeletion">Delete Account</DangerButton>
-
+        <div class="flex gap-4 justify-end">
+            <DangerButton @click="confirmUserDeletion">Delete Account</DangerButton>
+        </div>
+        
         <Modal :show="confirmingUserDeletion" @close="closeModal">
             <div class="p-6">
                 <h2 class="text-lg font-medium text-gray-900">

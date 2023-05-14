@@ -7,6 +7,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Therapist\PatientController as TherapistPatientController;
 use App\Http\Controllers\TherapistController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,14 +32,17 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/therapist', [DashboardTherapistController::class, 'index'])->name('therapist.dashboard');
     Route::get('/dashboard/patient', [DashboardPatientController::class, 'index'])->name('patient.dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+
+    Route::get('/profile/patient/{patient}', [ProfileController::class, 'showPatient'])->name('profile.patient.show');
+    Route::get('/profile/therapist/{therapist}', [ProfileController::class, 'showTherapist'])->name('profile.therapist.show');
+    
+    Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
@@ -46,6 +50,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('therapist/patient/index', [TherapistPatientController::class, 'index'])->name('therapist.patient.index');
     Route::resource('therapist', TherapistController::class);
+
+    Route::resource('user', UserController::class);
 });
 
 require __DIR__.'/auth.php';

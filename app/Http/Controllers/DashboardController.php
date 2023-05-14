@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use Inertia\Inertia;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,8 +13,11 @@ class DashboardController extends Controller
     {
         $user = $request->user();
         
-        if($user->isTherpist()) redirect('therapist.dashboard');
-        if($user->isPatient()) redirect('patient.dashboard');
-        return Inertia::render('Dashboard');
+        if($user->isTherpist()) return redirect(route('profile.therapist.show', ['therapist' => $user->id]));
+        if($user->isPatient()) return redirect(route('profile.patient.show', ['patient' => $user->id]));
+        
+        return Inertia::render('Dashboard', [
+            'user' => new UserResource($user),
+        ]);
     }
 }

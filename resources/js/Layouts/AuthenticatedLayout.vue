@@ -12,11 +12,11 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+        <div class="h-screen bg-gray-100">
+            <nav class="bg-white border-b border-gray-100 h-[10%]">
                 <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
+                <div class="max-w-7xl h-full mx-auto px-4 h-16 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-full">
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
@@ -109,7 +109,7 @@ const showingNavigationDropdown = ref(false);
                 <!-- Responsive Navigation Menu -->
                 <div
                     :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
-                    class="sm:hidden"
+                    class="sm:hidden h-18"
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
@@ -136,16 +136,25 @@ const showingNavigationDropdown = ref(false);
                 </div>
             </nav>
 
-            <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
-            </header>
-
             <!-- Page Content -->
-            <main>
-                <slot />
+            <main class="h-[90%]">
+            <div class="py-8 sm:px-6 lg:px-8 h-full overflow-hidden">
+
+                <div class="flex gap-4 w-full items-start h-full overflow-hidden">
+                    <div v-if="$slots.avatar || $slots.navigation" class="w-56 bg-white border border-gray-200 rounded-lg shadow max-h-full flex flex-col">
+                        <div class="flex flex-col items-center mb-2">
+                            <slot name="avatar" />
+                        </div>
+                        <div class="w-full overflow-y-auto">
+                            <slot name="navigation" />
+                        </div>
+                    </div>
+                    <div class="flex-1 h-full  overflow-auto">
+                        <slot />
+                    </div>
+                </div>
+                
+            </div>
             </main>
         </div>
     </div>

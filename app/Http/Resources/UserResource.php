@@ -12,7 +12,6 @@ class UserResource extends JsonResource
         return array_merge(parent::toArray($request), [
             'policies' => [
                 'view' => true,
-                'update' => true,
                 'delete' => true,
             ]
         ]);

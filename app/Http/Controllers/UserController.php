@@ -8,8 +8,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Services\UserService;
-use Illuminate\Http\Client\Request;
-use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Inertia\Inertia;
@@ -20,7 +19,6 @@ class UserController extends Controller
 
     public function __construct(private UserService $userService)
     {
-        parent::__construct();
     }
     /**
      * Display a listing of the resource.
@@ -77,23 +75,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateUserRequest $request, User $user)
-    {
-        //
+        return Inertia::render('Users/Show', [
+            'user' => $user,
+        ]);   
     }
 
     /**

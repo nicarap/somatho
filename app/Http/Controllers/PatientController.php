@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
+    public function __construct(){
+        $this->authorizeResource(Patient::class, 'patient');
+    }
+
     public function index(Request $request){
         return Inertia::render('Patient/Index', [
             'patients' => PatientResource::collection(
@@ -20,6 +24,13 @@ class PatientController extends Controller
             'policies' => [
                 'create' => true,
             ]
+        ]);
+    }
+
+    public function show(Request $request, Patient $patient){
+        
+        return Inertia::render('Patient/Show', [
+            'patient' => new PatientResource($patient->load('patientInfo')),
         ]);
     }
     

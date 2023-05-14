@@ -6,7 +6,11 @@ import TextInput from '@/Components/TextInput.vue';
 import TextInputField from '@/Components/TextInputField.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
 
-defineProps({
+const props = defineProps({
+    user:{
+        type: Object,
+        default: () => {}
+    },
     mustVerifyEmail: {
         type: Boolean,
     },
@@ -15,11 +19,9 @@ defineProps({
     },
 });
 
-const user = usePage().props.auth.user;
-
 const form = useForm({
-    name: user.name,
-    email: user.email,
+    name: props.user?.name,
+    email: props.user?.email,
 });
 </script>
 
@@ -27,7 +29,7 @@ const form = useForm({
     <section>
         <header>
             <h2 class="text-lg font-medium text-gray-900">Profile Information</h2>
-
+            
             <p class="mt-1 text-sm text-gray-600">
                 Update your account's profile information and email address.
             </p>
@@ -77,7 +79,7 @@ const form = useForm({
                 </div>
             </div>
 
-            <div class="flex items-center gap-4">
+            <div class="flex items-center justify-end gap-4">
                 <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
 
                 <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
