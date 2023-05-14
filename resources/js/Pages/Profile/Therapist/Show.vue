@@ -14,21 +14,20 @@ defineProps({
 });
 
 const soins = [
-    {day:'monday', hours:'8', time:'1'},
-    {day:'monday', hours:'10', time:'2'},
-    {day:'wednesday', hours:'10', halfTime:true, time:'2'},
+    {day:'20230510', start_hour:'08:30', end_hour: '09:00', time:'1'},
+    {day:'20230513', start_hour:'10:30', end_hour: '12:00', time:'2'},
+    {day:'20230509', start_hour:'10:00', end_hour: '11:00', time:'2'},
 ]
 
-const position = ref('left-0 right-0 left-0');
-
 const getPosition = (item) => {
-    console.log(item)
-
     let top = 'top-0'
     let height = 'h-12';
 
-    if(item.halfTime){
-        top = 'top-50'
+    switch(item.start_quart){
+        case '0': top = 'top-0';
+        case '1': top = 'top-25';
+        case '2': top = 'top-25';
+        case '3': top = 'top-75';
     }
 
     if(item.time === '2'){
@@ -38,7 +37,11 @@ const getPosition = (item) => {
     return `${height} ${top} left-0 right-0 left-0`
 }
 
-
+const traitments = (e) => {
+    e.preventDefault();
+    
+    console.log(e)
+}
 
 </script>
 
@@ -73,11 +76,15 @@ const getPosition = (item) => {
 
         
         <div class="bg-white">
-            <Agenda>
-                <template v-for="s in soins" v-slot:[s.day+s.hours]>
-                    <div class="absolute border border-l-4 border-red-400 border-t-0 border-r-0 border-b-0 px-2 bg-gray-100 hover:bg-red-200 z-50 cursor-pointer" :class="getPosition(s)">
-                        <div>Soins</div>
-                        <div class="text-xs text-gray-500">Patient</div>
+            <Agenda :traitments="soins">
+                <template v-for="s in soins" v-slot:[s.day+s.start_hour]>
+                    <div class="absolute flex bg-gray-100 hover:bg-red-200 z-50 cursor-pointer overflow-hidden rounded-tl-md rounded-bl-md" 
+                    :class="getPosition(s)" @click="traitments">
+                        <div class="h-full bg-red-400 px-1 " />
+                        <div class="px-2">
+                            <div>Patient Name</div>
+                            <div class="text-xs text-gray-500">{{ s.start_hour }}</div>
+                        </div>
                     </div>
                 </template> 
             </Agenda>  
