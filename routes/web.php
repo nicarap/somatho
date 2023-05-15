@@ -7,6 +7,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Therapist\PatientController as TherapistPatientController;
 use App\Http\Controllers\TherapistController;
+use App\Http\Controllers\TraitmentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -50,8 +51,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('therapist/patient/index', [TherapistPatientController::class, 'index'])->name('therapist.patient.index');
     Route::resource('therapist', TherapistController::class);
+    Route::resource('traitment', TraitmentController::class)->only(['store']);
 
     Route::resource('user', UserController::class);
 });
 
 require __DIR__.'/auth.php';
+require __DIR__.'/api.php';

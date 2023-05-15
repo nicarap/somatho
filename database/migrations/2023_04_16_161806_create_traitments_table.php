@@ -15,7 +15,8 @@ return new class extends Migration
             $table->uuid('id');
             $table->uuid('therapist_id');
             $table->uuid('patient_id');
-            $table->dateTime('programmed_at');
+            $table->dateTime('programmed_start_at');
+            $table->dateTime('programmed_end_at');
             $table->dateTime('therapist_validated_at');
             $table->dateTime('patient_validated_at');
             $table->dateTime('realized_at')->nullable();

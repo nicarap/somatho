@@ -76,7 +76,7 @@ const traitments = (e) => {
 
         
         <div class="bg-white">
-            <Agenda :traitments="soins">
+            <Agenda :traitments="soins" :therapist="therapist.data">
                 <template v-for="s in soins" v-slot:[s.day+s.start_hour]>
                     <div class="absolute flex bg-gray-100 hover:bg-red-200 z-50 cursor-pointer overflow-hidden rounded-tl-md rounded-bl-md" 
                     :class="getPosition(s)" @click="traitments">

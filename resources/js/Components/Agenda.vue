@@ -1,16 +1,8 @@
 <script setup>
 import { onMounted, ref, useSlots, nextTick, watch, defineProps } from 'vue';
-import moment from 'moment';
-import 'moment/locale/fr'
-import { useForm } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
-
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import PrimaryButton from './PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import CreateTraitment from '@/Pages/Traitment/Create.vue';
+import moment from 'moment';
 
 const days = ref([]);
 const hours = ref([
@@ -27,14 +19,36 @@ const hours = ref([
 ])
 const openModal = ref(false)
 const slots = useSlots()
-const numWeek = ref(moment().format('W'))
+const today = ref(moment())
+const numWeek = ref(null)
+const month = ref(null)
+const createTraitment = ref(null)
+const filters = ref({})
 
 const props = defineProps({
     dislayDay: {
         type: String,
         default: '7'
-    }
+    },
+    therapist: Object,
 })
+
+const translateMonth = (month) => {
+    return {
+        'January': 'Janvier',
+        'February': 'Février',
+        'March': 'Mars',
+        'April': 'Avril',
+        'May': 'Mai',
+        'June': 'Juin',
+        'July': 'Juilliet',
+        'August': 'Août',
+        'September': 'Septembre',
+        'October': 'Octobre',
+        'November': 'Novembre',
+        'December': 'Décembre',
+    }[month]
+}
 
 const translateDay = (day) => {
     return {
@@ -48,32 +62,25 @@ const translateDay = (day) => {
 }
 
 const openReserveModal = (d, h) => {
-    if(isReserved(d,h)) return false;
+    if(isReserved(d,h) || isPassed(moment(d.momentDate, 'DD/MM/YYYY'))) return false;
     
     openModal.value = true;
-    form.day = d.day
-    form.start_hour = h
+    filters.value = {
+        day: d,
+        hour: h
+    }
     // nextTick(() => console.log('passwordInput.value.focus()'));
 };
 
 const closeReserveModal = () => {
     openModal.value = false;
-
-    form.reset();
 };
 
-const form = useForm({
-    day: null,
-    start_hour: null,
-    start_quart: null,
-    end_hour: null,
-    end_quart: null,
-    time:'1'
-})
-
 const isReserved = (days, hour) => {
-    return slots[days.formated_en+hour]
+    return slots[slotName(days.momentDate)+hour]
 }
+
+const slotName = (momentDate) => {return momentDate.format('YYYYMMDD')}
 
 const getDays = () => {
     let gdays = []
@@ -81,23 +88,31 @@ const getDays = () => {
         gdays.push({
             day: moment().startOf('week').week(numWeek.value).add(i+1, 'day').format('dddd'), 
             translate_day: translateDay(moment().startOf('week').week(numWeek.value).add(i+1, 'day').format('dddd')), 
-            formated: moment().startOf('week').week(numWeek.value).add(i+1, 'day').format('DD/MM/YYYY'),
-            formated_en: moment().startOf('week').week(numWeek.value).add(i+1, 'day').format('YYYYMMDD')})
+            momentDate: moment().startOf('week').week(numWeek.value).add(i+1, 'day')
+        })
     }
     days.value = gdays;
-    console.log(numWeek)
 }
 
+const getMonth = () => {
+    month.value = moment().startOf('week').week(numWeek.value).format('MMMM')
+}
+
+const getWeek = () => numWeek.value = moment().format('W')
+const isPassed = (date) => {return today.value > date}
+const isHoverableCell = (date, hour) => { return !isReserved(date, hour) && !isPassed(date.momentDate) }
 onMounted(() => {
-    getDays()
+    getWeek();
 })
 
 watch(numWeek, () => {
-    getDays()
+    getDays();
+    getMonth();
 })
 
-const createReservation = () => {
-    console.log(form)
+const createReservation = (form) => {
+    console.table(form)
+    // form.post(route('traitment.store'))
 }
 
 </script>
@@ -106,15 +121,17 @@ const createReservation = () => {
     <table class="w-full">
         <thead>
             <tr><th :colspan="days.length+1" class="text-center p-2 text-gray-600">
-                <FontAwesomeIcon icon="chevron-left" class="text-gray-400" @click="numWeek--"/> Semaine {{ numWeek }} <FontAwesomeIcon icon="chevron-right" class="text-gray-400" @click="numWeek++" />
+                {{ translateMonth(month) }}
+            </th></tr>
+            <tr><th :colspan="days.length+1" class="text-center p-2 text-gray-600">
+                <font-awesome-icon icon="chevron-left" class="text-gray-400" @click="numWeek--"/> Semaine {{ numWeek }} <font-awesome-icon icon="chevron-right" class="text-gray-400" @click="numWeek++" />
             </th></tr>
             <tr>
                 <td class="text-center border-r">{{ h }}</td>
                 <template v-for="(d, index) in days" >
-                
                     <th  class="p-2 border" v-if="index < props.dislayDay">
                         <div>{{d.translate_day}}</div>
-                        <div class="text-xs text-gray-400">{{d.formated}}</div>
+                        <div class="text-xs text-gray-400">{{d.momentDate.format('DD/MM/YYYY')}}</div>
                     </th>
                 </template>
             </tr>
@@ -124,14 +141,14 @@ const createReservation = () => {
                 <td class="text-center border-r">{{ h }}</td>
                 
                 <template v-for="(d, index) in days" >
-                    <td v-if="index < props.dislayDay">
-                        <div :class="[!isReserved(d, h) && 'hover:bg-gray-100']" @click="openReserveModal(d,h)">
-                            <div  class="relative h-3"><slot :name="d.formated_en+h" /></div>
-                            <div class="relative h-3 border-dashed border-b right-0 left-0"><slot :name="d.formated_en+h.replace(':00', ':15')" /></div>
+                    <td v-if="index < props.dislayDay" :class="[isPassed(d.momentDate) && 'bg-gray-300']">
+                        <div :class="[isHoverableCell(d,h) && 'hover:bg-gray-100']" @click="openReserveModal(d,h)">
+                            <div  class="relative h-3"><slot :name="slotName(d.momentDate)+h" /></div>
+                            <div class="relative h-3 border-dashed border-b right-0 left-0"><slot :name="slotName(d.momentDate)+h.replace(':00', ':15')" /></div>
                         </div>
-                        <div :class="[!isReserved(d, h) && 'hover:bg-gray-100']" @click="openReserveModal(d,hours[hours.indexOf(h)+2])">
-                            <div class="relative h-3"><slot :name="d.formated_en+h.replace(':00', ':30')" /></div>
-                            <div class="relative h-3"><slot :name="d.formated_en+h.replace(':00', ':45')" /></div>
+                        <div :class="[isHoverableCell(d, h) && 'hover:bg-gray-100']" @click="openReserveModal(d,hours[hours.indexOf(h)+2])">
+                            <div class="relative h-3"><slot :name="slotName(d.momentDate)+h.replace(':00', ':30')" /></div>
+                            <div class="relative h-3"><slot :name="slotName(d.momentDate)+h.replace(':00', ':45')" /></div>
                         </div>
                     </td>
                 </template>
@@ -140,53 +157,7 @@ const createReservation = () => {
     </table>
 
     <Modal :show="openModal" @close="closeReserveModal" maxWidth="sm">
-        <div class="p-6">
-            <h2 class="text-lg font-medium text-gray-900">
-                Créer une réservation
-            </h2>
-            <div class="mt-3 w-full">
-                <InputLabel for="day" value="Jour" class="sr-only" />
-                <select id="day" class="border-gray-300 w-full mt-0 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" v-model="form.day">
-                    <option v-for="d in days" :value="d.day">{{d.translate_day}}</option>
-                </select>
-                <InputError :message="form.errors.day" class="mt-2" />
-            </div>
-
-        <div class="mt-3 w-full flex">
-            <InputLabel for="hour" value="Heure de début" class="sr-only" >Heure de début</InputLabel>
-            <select id="hour" class="border-gray-300 w-full mt-0 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" v-model="form.start_hour">
-                <option v-for="h in hours.filter((h) => h >= form.start_hour)" :value="h">{{h}}</option>
-            </select>
-            <InputError :message="form.errors.day" class="mt-2" />
-        </div>
-
-        <div class="mt-3 w-full flex">
-            <InputLabel for="hour" value="Heure de début" class="sr-only" >Heure de Fin</InputLabel>
-            <select id="hour" class="border-gray-300 w-full mt-0 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" v-model="form.end_hour">
-                <option v-for="h in hours.filter((h) => h >= form.start_hour)" :value="h">{{h}}</option>
-            </select>
-            <InputError :message="form.errors.day" class="mt-2" />
-        </div>
-
-            <div class="mt-3 w-full">
-                <InputLabel for="time" value="Durée" class="sr-only" />
-                <TextInput id="time" type="number" min="1" max="3" class="border-gray-300 w-full mt-0 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" v-model="form.time" />
-                <InputError :message="form.errors.day" class="mt-2" />
-            </div>           
-
-            <div class="mt-6 flex justify-end">
-                <SecondaryButton @click="closeReserveModal"> Annuler </SecondaryButton>
-
-                <PrimaryButton
-                    class="ml-3"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                    @click="createReservation"
-                >
-                    Reserver
-                </PrimaryButton>
-            </div>
-        </div>
+        <create-traitment ref="createTraitment" @submit="createReservation" :therapist="therapist" :filters="filters" @cancel="closeReserveModal" />
     
     </Modal>
 </template>
