@@ -5,19 +5,18 @@ namespace App\Http\Controllers\Therapist;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Http\Resources\PatientResource;
+use App\Http\Resources\UserResource;
 use Spatie\QueryBuilder\QueryBuilder;
-use App\Models\Patient;
-use App\Models\Therapist;
+use App\Models\User;
 
-class PatientController extends Controller
+class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $therapist = Therapist::find($request->user()->id);
-        return Inertia::render('Therapist/Patient/Index', [
-            'patients' => PatientResource::collection(
-                QueryBuilder::for(Patient::hasTherapist($therapist))
+        $therapist = User::find($request->user()->id);
+        return Inertia::render('Therapist/User/Index', [
+            'Users' => UserResource::collection(
+                QueryBuilder::for(User::hasTherapist($therapist))
                     ->paginate()
                     ->appends($request->query())
             ),

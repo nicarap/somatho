@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Therapist;
 use App\Models\Invoice;
-use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Traitment extends Model
@@ -33,8 +33,8 @@ class Traitment extends Model
         return $this->belongsTo(Therapist::class);
     }
 
-    public function Patient(): BelongsTo
+    public function User(): BelongsTo
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(User::class);
     }
 }

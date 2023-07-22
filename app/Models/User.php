@@ -12,6 +12,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Roles;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable implements Auditable
 {
@@ -62,7 +64,7 @@ class User extends Authenticatable implements Auditable
         return $this->belongsTo(Address::class);
     }
 
-    public function isTherpist()
+    public function isTherapist()
     {
         return $this->hasRole(Roles::THERAPIST);
     }
@@ -78,7 +80,7 @@ class User extends Authenticatable implements Auditable
     }
 
     public static function getPatients(){
-        return User::role(Roles::SERVICE)->get();
+        return User::role(Roles::PATIENT)->get();
     }
 
     public static function getTherapist(){
@@ -88,4 +90,22 @@ class User extends Authenticatable implements Auditable
     public static function findByEmail($email){
         return User::where('email', $email)->first();
     }
+
+    
+    public function patients(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'therapists_has_patients', 'patient_id', 'therapist_id');
+    }
+    
+
+    public function therapists(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'therapists_has_patients', 'therapist_id', 'patient_id');
+    }
+
+    public function traitments(): HasMany
+    {
+        return $this->hasMany(Traitment::class);
+    }
+
 }

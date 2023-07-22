@@ -10,27 +10,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Models\Patient;
-use App\Http\Resources\PatientResource;
-use App\Models\Therapist;
-use App\Http\Resources\TherapistResource;
 use App\Models\User;
 use App\Http\Resources\UserResource;
 
-
 class ProfileController extends Controller
 {
-    public function showPatient(Request $request, Patient $patient)
+    public function showUser(Request $request, User $User)
     {
-        return Inertia::render('Profile/Patient/Show', [
-            'patient' => new PatientResource($patient->load(['patientInfo', 'roles'])),
+        return Inertia::render('Profile/User/Show', [
+            'User' => new UserResource($User->load(['UserInfo', 'roles'])),
         ]);
     }
 
-    public function showTherapist(Request $request, Therapist $therapist)
+    public function showTherapist(Request $request, User $therapist)
     {
         return Inertia::render('Profile/Therapist/Show', [
-            'therapist' => new TherapistResource($therapist->load('therapistInfo')),
+            'therapist' => new UserResource($therapist),
         ]);
     }
 

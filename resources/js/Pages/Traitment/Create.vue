@@ -7,7 +7,7 @@ const patients = ref([])
 
 const getPatient = () => {
     axios(route('api.therapist.patients.index'))
-    .then((response) => { patients.value = response.data })
+    .then((response) => { console.log(response); patients.value = response.data })
 }
 
 onMounted(() => {
@@ -17,6 +17,6 @@ onMounted(() => {
 </script>
 
 
-<template>{{patient}}
+<template>{{patients}}
     <create v-bind="$attrs" :patients="patients" />
 </template>

@@ -2,11 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Patient;
-use App\Models\PatientInfo;
-use App\Models\Therapist;
-use App\Models\TherapistInfo;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
+use App\Models\Roles;
 use Illuminate\Database\Seeder;
 
 class DummyDataBaseSeeder extends Seeder
@@ -16,19 +13,25 @@ class DummyDataBaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $nb_therapists = 5;
-        $nb_patients = 25;
+        $nb_therapists = 2;
+        $nb_patients = 5;
         for($i=0; $i< $nb_therapists;$i++){
-            TherapistInfo::factory()->count(5)->for(Therapist::factory()->forAddress()->create())->create();
+            $u = User::factory()->forAddress()->create();
+            $u->email = 't_'.$u->email;
+            $u->assignRole(Roles::THERAPIST);
+            $u->save();
         }
         for($i=0; $i< $nb_patients;$i++){
-            PatientInfo::factory()->count(15)->for(Patient::factory()->forAddress()->create())->create();
+            $u = User::factory()->forAddress()->create();
+            $u->email = 'p_'.$u->email;
+            $u->assignRole(Roles::PATIENT);
+            $u->save();
         }
         
-        $patients = Patient::all();
+        $patients = User::getPatients();
 
         foreach($patients as $patient){
-            $patient->therapists()->attach(Therapist::inRandomOrder()->limit(5)->first());
+            $patient->therapists()->attach(User::getTherapist()->random()->first());
         }
     }
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('tel')->nullable();
             $table->uuid('address_id')->nullable();
+            $table->string('siren')->nullable();
             $table->rememberToken();
 
             $table->timestamps();

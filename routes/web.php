@@ -3,13 +3,12 @@
 use App\Http\Controllers\Dashboard\PatientController as DashboardPatientController;
 use App\Http\Controllers\Dashboard\TherapistController as DashboardTherapistController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Therapist\PatientController as TherapistPatientController;
-use App\Http\Controllers\TherapistController;
 use App\Http\Controllers\TraitmentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -48,6 +47,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('patient', PatientController::class);
+    Route::get('/test', function (Request $request) {
+        return Inertia::render('Traitment/Create', ['therapist' => $request->user()]);
+    });
 
     Route::get('therapist/patient/index', [TherapistPatientController::class, 'index'])->name('therapist.patient.index');
     Route::resource('therapist', TherapistController::class);

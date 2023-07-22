@@ -11,7 +11,7 @@ class Roles extends Role
 
     const SERVICE = 'service';
     const ADMIN = 'administrator';
-    const PATIENT = 'patient';
     const THERAPIST = 'therapist';
+    const PATIENT = 'patient';
     
 }

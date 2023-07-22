@@ -24,6 +24,7 @@
         "@fortawesome/vue-fontawesome": "^3.0.3",
         "lodash": "^4.17.21",
         "moment": "^2.29.4",
-        "pinia": "^2.0.36"
+        "pinia": "^2.0.36",
+        "yarn": "^1.22.19"
     }
 }
