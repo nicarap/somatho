@@ -18,7 +18,7 @@ defineProps({
 
     <AuthenticatedLayout>
         <template #avatar>
-            <Avatar size="24" name="RL" class=" my-3" />
+            <Avatar size="24" :name="user.data.name.split(' ').map((s) => s[0]?.toUpperCase()).join('')" class=" my-3" />
             <h5 class="mb-1 text-xl font-medium text-gray-900">{{ user.data.name }}</h5>
             <span class="text-sm text-gray-500">{{ user.data.email }}</span>
 

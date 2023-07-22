@@ -118,17 +118,20 @@ const createReservation = (form) => {
 </script>
 
 <template>
+    <div>
     <table class="w-full">
         <thead>
             <tr><th :colspan="days.length+1" class="text-center p-2 text-gray-600">
                 {{ translateMonth(month) }}
             </th></tr>
             <tr><th :colspan="days.length+1" class="text-center p-2 text-gray-600">
-                <font-awesome-icon icon="chevron-left" class="text-gray-400" @click="numWeek--"/> Semaine {{ numWeek }} <font-awesome-icon icon="chevron-right" class="text-gray-400" @click="numWeek++" />
+                <font-awesome-icon icon="chevron-left" class="text-gray-400" @click="numWeek--"/> 
+                    Semaine {{ numWeek }} 
+                <font-awesome-icon icon="chevron-right" class="text-gray-400" @click="numWeek++" />
             </th></tr>
             <tr>
-                <td class="text-center border-r">{{ h }}</td>
-                <template v-for="(d, index) in days" >
+                <td class="text-center border border-l-0"></td>
+                <template v-for="(d, index) in days" :key="index">
                     <th  class="p-2 border" v-if="index < props.dislayDay">
                         <div>{{d.translate_day}}</div>
                         <div class="text-xs text-gray-400">{{d.momentDate.format('DD/MM/YYYY')}}</div>
@@ -137,11 +140,11 @@ const createReservation = (form) => {
             </tr>
         </thead>
         <tbody>
-            <tr v-for="h in hours.filter((h) => h.includes(':00'))" class="m-2 h-12 border-b">
+            <tr v-for="(h, index) in hours.filter((h) => h.includes(':00'))" class="m-2 h-12 border-b" :key="index">
                 <td class="text-center border-r">{{ h }}</td>
                 
-                <template v-for="(d, index) in days" >
-                    <td v-if="index < props.dislayDay" :class="[isPassed(d.momentDate) && 'bg-gray-300']">
+                <template v-for="(d, indexd) in days" :key="indexd">
+                    <td v-if="indexd < props.dislayDay" :class="[isPassed(d.momentDate) && 'bg-gray-300']">
                         <div :class="[isHoverableCell(d,h) && 'hover:bg-gray-100']" @click="openReserveModal(d,h)">
                             <div  class="relative h-3"><slot :name="slotName(d.momentDate)+h" /></div>
                             <div class="relative h-3 border-dashed border-b right-0 left-0"><slot :name="slotName(d.momentDate)+h.replace(':00', ':15')" /></div>
@@ -160,4 +163,5 @@ const createReservation = (form) => {
         <create-traitment ref="createTraitment" @submit="createReservation" :therapist="therapist" :filters="filters" @cancel="closeReserveModal" />
     
     </Modal>
+    </div>
 </template>

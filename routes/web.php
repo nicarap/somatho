@@ -11,6 +11,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 
     Route::get('/profile/patient/{patient}', [ProfileController::class, 'showPatient'])->name('profile.patient.show');
-    Route::get('/profile/therapist/{therapist}', [ProfileController::class, 'showTherapist'])->name('profile.therapist.show');
+    Route::get('/profile/therapist/{user}', [ProfileController::class, 'showTherapist'])->name('profile.therapist.show');
+    Route::get('/profile/therapist/{user}/agenda', [ProfileController::class, 'agenda'])->name('profile.therapist.agenda');
     
     Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

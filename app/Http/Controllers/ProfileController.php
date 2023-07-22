@@ -36,6 +36,12 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function agenda(Request $request, User $user){
+        return Inertia::render('Profile/Therapist/Agenda', [
+            'therapist' => new UserResource($user),
+        ]);
+    }
+
     /**
      * Display the user's profile form.
      */
