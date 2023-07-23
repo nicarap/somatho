@@ -15,30 +15,10 @@ use App\Http\Resources\UserResource;
 
 class ProfileController extends Controller
 {
-    public function showUser(Request $request, User $User)
-    {
-        return Inertia::render('Profile/User/Show', [
-            'User' => new UserResource($User->load(['UserInfo', 'roles'])),
-        ]);
-    }
-
-    public function showTherapist(Request $request, User $therapist)
-    {
-        return Inertia::render('Profile/Therapist/Show', [
-            'therapist' => new UserResource($therapist),
-        ]);
-    }
-
     public function show(Request $request, User $user)
     {
         return Inertia::render('Profile/Therapist/Show', [
             'user' => new UserResource($user),
-        ]);
-    }
-
-    public function agenda(Request $request, User $user){
-        return Inertia::render('Profile/Therapist/Agenda', [
-            'therapist' => new UserResource($user),
         ]);
     }
 

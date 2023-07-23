@@ -12,7 +12,7 @@ class DashboardController extends Controller
     {
         $user = $request->user();
         
-        if($user->isTherapist()) return redirect(route('profile.therapist.show', ['therapist' => $user->id]));
+        if($user->isTherapist()) return redirect(route('therapist.dashboard', ['therapist' => $user->id]));
         if($user->isPatient()) {
             // TODO : Redirect public view blade
             // return redirect(route('profile.patient.show', ['patient' => $user->id]));

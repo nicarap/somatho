@@ -5,6 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import TextInputField from '@/Components/TextInputField.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const props = defineProps({
     user:{
@@ -18,6 +19,7 @@ const props = defineProps({
         type: String,
     },
 });
+const profileInformationOpen = ref(false);
 
 const form = useForm({
     name: props.user?.name,
@@ -26,16 +28,22 @@ const form = useForm({
 </script>
 
 <template>
-    <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900">Profile Information</h2>
-            
-            <p class="mt-1 text-sm text-gray-600">
-                Update your account's profile information and email address.
-            </p>
-        </header>
-        
-        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
+    <div>
+        <div class="flex justify-between items-center text-gray-900" @click="profileInformationOpen = !profileInformationOpen">
+            <section>
+                <header>
+                    <h2 class="text-lg font-medium text-gray-900">Profile Information</h2>
+                    
+                    <p class="mt-1 text-sm text-gray-600">
+                        Update your account's profile information and email address.
+                    </p>
+                </header>
+            </section>
+            <font-awesome-icon :icon="profileInformationOpen ? 'chevron-up' : 'chevron-down'" />
+        </div>
+
+        <form @submit.prevent="form.patch(route('profile.update'))" class="transition-all duration-150 overflow-hidden mt-6 space-y-6"
+        :class="profileInformationOpen ? 'max-h-96' : 'max-h-0'">
             <TextInputField label="Nom" 
                 name="name"
                 v-model="form.name" 
@@ -87,5 +95,5 @@ const form = useForm({
                 </Transition>
             </div>
         </form>
-    </section>
+    </div>
 </template>

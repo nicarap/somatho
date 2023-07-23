@@ -9,13 +9,12 @@ use App\Http\Resources\UserResource;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Models\User;
 
-class UserController extends Controller
+class PatientController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, User $therapist)
     {
-        $therapist = User::find($request->user()->id);
         return Inertia::render('Therapist/User/Index', [
-            'Users' => UserResource::collection(
+            'patients' => UserResource::collection(
                 QueryBuilder::for(User::hasTherapist($therapist))
                     ->paginate()
                     ->appends($request->query())
