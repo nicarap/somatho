@@ -34,7 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('patient', PatientController::class);
+    // Route::resource('patient', PatientController::class);
     Route::get('/test', function (Request $request) {
         return Inertia::render('Traitment/Create', ['therapist' => $request->user()]);
     });
@@ -44,7 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('therapist', TherapistController::class);
     Route::resource('{therapist}/patient', TherapistPatientController::class);
     
-    Route::resource('traitment', TraitmentController::class)->only(['store']);
+    Route::resource('traitment', TraitmentController::class)->only(['store', 'update']);
 
     Route::resource('user', UserController::class);
 });

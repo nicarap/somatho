@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Resources\UserResource;
+use App\Models\Traitment;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Spatie\QueryBuilder\AllowedFilter;
 use Inertia\Response;
 use App\Models\User;
+use Spatie\LaravelData\Support\Lazy\InertiaLazy;
 
 class TherapistController extends Controller
 {
@@ -38,7 +41,13 @@ class TherapistController extends Controller
     public function agenda(Request $request, User $therapist): Response
     {
         return Inertia::render('Therapist/Agenda', [
-            'therapist' => new UserResource($therapist),
+            'therapist' => $therapist,
+            'traitments' => Inertia::lazy(fn () => QueryBuilder::for(Traitment::forTherapist($therapist)->with('patient:id,name'))
+                ->allowedFilters([
+                    AllowedFilter::scope('starts_after'),
+                    AllowedFilter::scope('end_before'),
+                ])
+                ->get())
         ]);
     }
 

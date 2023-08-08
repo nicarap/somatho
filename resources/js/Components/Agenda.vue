@@ -18,7 +18,6 @@ const hours = ref([
     '17:00',
 ])
 
-const slots = useSlots()
 const today = ref(moment())
 const numWeek = ref(null)
 const month = ref(null)
@@ -29,9 +28,13 @@ const props = defineProps({
         default: '7'
     },
     therapist: Object,
+    loading: {
+        type: Boolean,
+        default: false,
+    }
 })
 
-defineEmits(['click'])
+defineEmits(['click', 'clickHalf'])
 
 const translateMonth = (month) => {
     return {
@@ -97,6 +100,7 @@ watch(numWeek, () => {
 </script>
 
 <template>
+    <div class="relative">
     <table class="w-full">
         <thead>
             <tr><th :colspan="days.length+1" class="text-center p-2 text-gray-600">
@@ -121,17 +125,21 @@ watch(numWeek, () => {
         </thead>
         <tbody class="bg-white">
             <tr v-for="(h, index) in hours" class="m-2 h-12" :key="index">
-                <td class="text-center border h-12">{{ h }}</td>
+                <td class="text-center border h-12 ">{{ h }}</td>
                 
                 <template v-for="(d, indexd) in days" :key="indexd">
                     <td v-if="indexd < props.dislayDay" :class="[isPassed(d.momentDate) && 'bg-gray-300']" 
-                    class="relative">
-                            <div class="absolute top-0 bottom-1/2 bg-500 border left-0 right-0"  @click="$emit('click', d.momentDate, d.momentDate.add(1, 'h'))" />
-                            <div class="absolute top-1/2 bottom-0 bg-500 border left-0 right-0"  @click="$emit('click', moment(d.momentDate.format('DD/MM/YYYY')+' '+h.split(':')[0]+':30'), moment(d.momentDate.format('DD/MM/YYYY')+' '+h.split(':')[0]+':30').add(1, 'h'))" />
+                    class="relative ">
+                            <div class="absolute top-0 bottom-1/2 bg-500 border left-0 right-0" :class="[!isPassed(d.momentDate) && 'hover:bg-gray-100']"  @click="$emit('click', d.momentDate, h)" />
+                            <div class="absolute top-1/2 bottom-0 bg-500 border left-0 right-0" :class="[!isPassed(d.momentDate) && 'hover:bg-gray-100']"  @click="$emit('clickHalf', d.momentDate, h)" />
                             <slot :name="slotName(d.momentDate)+h.split(':')[0]" /> 
                     </td>
                 </template>
             </tr>
         </tbody>
     </table>
+    <div v-if="loading" class="absolute top-0 bottom-0 left-0 right-0 w-full flex justify-center items-center bg-gray-300/20">
+        <icon-button icon="spinner" class="text-primary animate-spin" size="2xl" />
+    </div>
+    </div>
 </template>

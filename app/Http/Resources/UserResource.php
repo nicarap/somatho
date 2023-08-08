@@ -10,6 +10,7 @@ class UserResource extends JsonResource
     public function toArray(Request $request)
     {
         return array_merge(parent::toArray($request), [
+            'traitments' => $this->therapistTraitments,
             'policies' => [
                 'view' => true,
                 'delete' => true,

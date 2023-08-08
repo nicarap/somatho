@@ -83,7 +83,7 @@ class User extends Authenticatable implements Auditable
         return User::role(Roles::PATIENT)->get();
     }
 
-    public static function getTherapist(){
+    public static function getTherapists(){
         return User::role(Roles::THERAPIST)->get();
     }
 
@@ -94,18 +94,23 @@ class User extends Authenticatable implements Auditable
     
     public function patients(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'therapists_has_patients', 'patient_id', 'therapist_id');
+        return $this->belongsToMany(User::class, 'therapists_has_patients', 'therapist_id', 'patient_id');
     }
     
 
     public function therapists(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'therapists_has_patients', 'therapist_id', 'patient_id');
+        return $this->belongsToMany(User::class, 'therapists_has_patients', 'patient_id', 'therapist_id');
     }
 
-    public function traitments(): HasMany
+    public function therapistTraitments(): HasMany
     {
-        return $this->hasMany(Traitment::class);
+        return $this->hasMany(Traitment::class, 'therapist_id');
+    }
+
+    public function patientTraitments(): HasMany
+    {
+        return $this->hasMany(Traitment::class, 'patient_id');
     }
 
 }

@@ -11,7 +11,7 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-    <div>
+    <div>{{ $page.props.flash }}
         <div class="h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100 h-[10%]">
                 <!-- Primary Navigation Menu -->

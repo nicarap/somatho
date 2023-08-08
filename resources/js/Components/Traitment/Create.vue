@@ -6,70 +6,64 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 import moment from 'moment';
-import { watch } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
-    therapist: Object,
-    patients: Object,
-    filters: Object,
-    days: Array,
-    hours: Array,
+    therapist: {type: Object, default: () => {}},
+    patients: {type: Object, default: () => {}},
+    filters: {type: Object, default: () => {}},
 })
-
-const data = {
-    day: _.get(props.filters, 'day'),
-    start_hour: _.get(props.filters, 'day.momentDate')?.format('YYYY-MM-DD'),
-    start_quart: null,
-    end_hour: null,
-    end_quart: null,
-}
 
 const form = useForm({
-    therapist_id:props.therapist.id,
-    patient_id: null,
-    programmed_start_at: moment(_.get(props.filters, 'day.momentDate')?.format('YYYY-MM-DD')+'T'+_.get(props.filters, 'hour'))?.format('YYYY-MM-DD HH:mm'),
-    programmed_end_at: moment(_.get(props.filters, 'day.momentDate')?.format('YYYY-MM-DD')+'T'+_.get(props.filters, 'hour'))?.add(2, 'hours').format('YYYY-MM-DD HH:mm'),
-    time:''
+    patient_id: _.get(props.filters, 'patient_id'),
+    programmed_start_at: _.get(props.filters, 'programmed_start_at'),
+    programmed_end_at: _.get(props.filters, 'programmed_end_at'),
 })
 
-watch(()=>form.programmed_start_at, (val) => {
-    form.programmed_end_at = moment(val).add(1.5, 'hours').format('YYYY-MM-DD HH:mm')
-})
-
-const emit = defineEmits(['submit', 'cancel', 'createReservation'])
+const emit = defineEmits(['submit', 'cancel', 'createReservation', 'updateReservation'])
 
 const submit = () => {
-    emit('submit', form)
+    if(editMode.value){
+        emit('updateReservation', form)
+    }else{
+        emit('createReservation', form)
+    }
 }
 
-const cancel = () => emit('cancel')
+const editMode = computed(() => {
+    return form.patient_id && !form.isDirty
+})
 
+const cancel = () => emit('cancel')
 </script>
 
 <template>
     <form @submit.prevent="submit">
         <div class="p-6">
             <h2 class="text-lg font-medium text-gray-900">
-                Créer une réservation
+                {{ editMode ? 'Modifier la réservation' : 'Créer une réservation' }}
             </h2>
             
             <div class="mt-3 w-full">
                 <InputLabel for="patient" value="Patient" />
-                <select id="patient" class="border-gray-300 w-full mt-0 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" v-model="form.patient_id">
+                <select id="patient" :disabled="editMode" class="border-gray-300 w-full mt-0 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" 
+                required v-model="form.patient_id">
                     <option v-for="p in props.patients" :value="p.id">{{p.name}}</option>
                 </select>
                 <InputError :message="form.errors.patient" class="mt-2" />
             </div>
 
             <div class="mt-3 w-full">
-                <InputLabel for="day" value="Jour et heure de début" />
-                <TextInput type="datetime-local" class="w-full" :min="moment().format('YYYY-MM-DDThh:mm')" v-model="form.programmed_start_at" />
+                <InputLabel for="day" value="Début de la réservation" />
+                <TextInput type="datetime-local" class="w-full" :min="moment().format('YYYY-MM-DDThh:mm')" 
+                required v-model="form.programmed_start_at" />
                 <InputError :message="form.errors.programmed_start_at" class="mt-2" />
             </div>
 
             <div class="mt-3 w-full">
-                <InputLabel for="day" value="Jour et heure de fin" />
-                <TextInput type="datetime-local" class="w-full" :min="form.programmed_start_at" v-model="form.programmed_end_at" />
+                <InputLabel for="day" value="Fin de la réservation" />
+                <TextInput type="datetime-local" class="w-full" :min="form.programmed_start_at" 
+                required v-model="form.programmed_end_at" />
                 <InputError :message="form.errors.programmed_end_at" class="mt-2" />
             </div>     
 
@@ -80,9 +74,8 @@ const cancel = () => emit('cancel')
                     class="ml-3"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
-                    @click="$emit('createReservation')"
                 >
-                    Reserver
+                    {{ editMode ? 'Modifier' : 'Reserver' }}
                 </PrimaryButton>
             </div>
         </div>

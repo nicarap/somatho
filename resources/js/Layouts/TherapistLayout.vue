@@ -24,11 +24,11 @@ defineProps({
         <Head :title="title" />
 
         <template #avatar>
-            <Avatar size="24" :name="therapist.data.name.split(' ').map((s) => s[0]?.toUpperCase?.()).join('')" class=" my-3" />
-            <h5 class="mb-1 text-xl font-medium text-gray-900">{{ therapist.data.name }}</h5>
-            <span class="text-sm text-gray-500">{{ therapist.data.email }}</span>
+            <Avatar size="24" :name="therapist.name.split(' ').map((s) => s[0]?.toUpperCase?.()).join('')" class=" my-3" />
+            <h5 class="mb-1 text-xl font-medium text-gray-900">{{ therapist.name }}</h5>
+            <span class="text-sm text-gray-500">{{ therapist.email }}</span>
             <div class="p-4">
-                <PrimaryButton @click="$inertia.visit(route('therapist.edit', {therapist: therapist.data}))">Modifier mes informations</PrimaryButton>
+                <PrimaryButton @click="$inertia.visit(route('therapist.edit', {therapist: therapist}))">Modifier mes informations</PrimaryButton>
             </div>
         </template>
 
@@ -37,7 +37,7 @@ defineProps({
                 <div class="bg-teal-600 text-white font-bold p-2">Mon Agenda</div>
                 <ol class="w-full cursor-default">
                     <li class="border pl-8 pr-2 py-2 text-sm font-medium cursor-pointer hover:bg-gray-200" 
-                    @click="$inertia.get(route('therapist.agenda', therapist.data))">Mes rendez-vous</li>
+                    @click="$inertia.get(route('therapist.agenda', therapist))">Mes rendez-vous</li>
                     <li class="border pl-8 pr-2 py-2 text-sm font-medium cursor-pointer hover:bg-gray-200 ">Je prends rendez-vous</li>
                 </ol>
             </div>

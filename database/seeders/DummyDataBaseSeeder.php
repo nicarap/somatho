@@ -17,12 +17,14 @@ class DummyDataBaseSeeder extends Seeder
         $nb_patients = 5;
         for($i=0; $i< $nb_therapists;$i++){
             $u = User::factory()->forAddress()->create();
+            $u->name = 'therapist_'.$u->name;
             $u->email = 't_'.$u->email;
             $u->assignRole(Roles::THERAPIST);
             $u->save();
         }
         for($i=0; $i< $nb_patients;$i++){
             $u = User::factory()->forAddress()->create();
+            $u->name = 'patient_'.$u->name;
             $u->email = 'p_'.$u->email;
             $u->assignRole(Roles::PATIENT);
             $u->save();
@@ -31,7 +33,7 @@ class DummyDataBaseSeeder extends Seeder
         $patients = User::getPatients();
 
         foreach($patients as $patient){
-            $patient->therapists()->attach(User::getTherapist()->random()->first());
+            $patient->therapists()->attach(User::getTherapists()->random()->first());
         }
     }
 }

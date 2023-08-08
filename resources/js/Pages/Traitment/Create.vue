@@ -3,25 +3,33 @@ import Create from '@/Components/Traitment/Create.vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
-const getPatient = () => {
-    axios(route('api.therapist.patients.index'))
-    .then((response) => { console.log(response); patients.value = response.data })
-}
+const patients = ref([]);
 
+const getPatient = () => {
+    axios(route('api.therapist.patients.index', {therapist: props.therapist}))
+    .then((response) => { patients.value = response.data })
+}
+defineEmits(["updateReservation","createReservation"])
 const props = defineProps({
-    user: {
+    therapist: {
+        type: Object,
+        default: () => {}
+    },
+    filters: {
         type: Object,
         default: () => {}
     }
 })
 
 onMounted(() => {
-    if(!props.user) getPatient();
+    getPatient()
 })
 
 </script>
 
-
-<template>{{patients}}
-    <create v-bind="$attrs" :patients="user" />
+<template>
+    <create 
+            @updateReservation="(form) => $emit('updateReservation', form)"
+            @createReservation="(form) => $emit('createReservation', form)"
+            v-bind="{filters, therapist, patients}" />
 </template>

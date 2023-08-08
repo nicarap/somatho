@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Therapist;
 use App\Models\Invoice;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Traitment extends Model
@@ -16,25 +19,77 @@ class Traitment extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'realized_at'
+        'programmed_start_at',
+        'programmed_end_at',
+        'realized_at',
+        'therapist_validated_at',
+        'patient_validated_at',
+        'price',
+        'travel_cost',
+        'discount',
+        'location_choosed',
+        'address',
+        'postal_code',
+        'location'
+
     ];
 
     protected $cast = [
         'realized_at' => 'datetime',
+        'programmed_start_at' => 'datetime:Y-m-d',
+        'programmed_end_at' => 'datetime:d-m-Y',
     ];
+
+    protected function programmedStartAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => Carbon::parse($value)->format('Y-m-d h:i'),
+        );
+    }
+
+    protected function programmedEndAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => Carbon::parse($value)->format('Y-m-d h:i'),
+        );
+    }
 
     public function invoice(): HasOne
     {
         return $this->hasOne(Invoice::class);
     }
 
-    public function Therapist(): BelongsTo
+    public function therapist(): BelongsTo
     {
-        return $this->belongsTo(Therapist::class);
+        return $this->belongsTo(User::class, 'therapist_id');
     }
 
-    public function User(): BelongsTo
+    public function patient(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'patient_id');
+    }
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function scopeForTherapist(Builder $query, User $therapist): Builder
+    {
+        return $query->where('therapist_id', $therapist->id);
+    }
+
+    public function scopeForPatient(Builder $query, User $patient): Builder
+    {
+        return $query->where('patient_id', $patient->id);
+    }
+
+    public function scopeStartsAfter(Builder $query, $date): Builder
+    {
+        return $query->where('programmed_start_at', '>=', Carbon::parse($date));
+    }
+    public function scopeEndBefore(Builder $query, $date): Builder
+    {
+        return $query->where('programmed_end_at', '<=', Carbon::parse($date));
     }
 }

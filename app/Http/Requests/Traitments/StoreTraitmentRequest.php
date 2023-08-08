@@ -23,8 +23,9 @@ class StoreTraitmentRequest extends FormRequest
     {
         return [
             'therapist_id' => ['required', 'exists:users,id'],
-            // 'patient_id' => ['required', 'exists:users,id'],
-            'programmed_at' => ['required'],
+            'patient_id' => ['required', 'exists:users,id'],
+            'programmed_start_at' => ['required', 'date'],
+            'programmed_end_at' => ['required', 'date'],
         ];
     }
 }
