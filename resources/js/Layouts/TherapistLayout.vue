@@ -36,15 +36,17 @@ defineProps({
             <div class="mt-4">
                 <div class="bg-teal-600 text-white font-bold p-2">Mon Agenda</div>
                 <ol class="w-full cursor-default">
-                    <li class="border pl-8 py-2 text-sm font-medium  hover:bg-gray-200" 
+                    <li class="border pl-8 pr-2 py-2 text-sm font-medium cursor-pointer hover:bg-gray-200" 
                     @click="$inertia.get(route('therapist.agenda', therapist.data))">Mes rendez-vous</li>
-                    <li class="border pl-8 py-2 text-sm font-medium  hover:bg-gray-200 ">Je prends rendez-vous</li>
+                    <li class="border pl-8 pr-2 py-2 text-sm font-medium cursor-pointer hover:bg-gray-200 ">Je prends rendez-vous</li>
                 </ol>
             </div>
             <div class="mt-4">
                 <div class="bg-teal-600 text-white font-bold p-2">Notifications</div>
                 <ol class="w-full cursor-default">
-                    <li class="border pl-8 py-2 text-sm font-medium  hover:bg-gray-200 ">Messages</li>
+                    <li class="border pl-8 pr-2 py-2 text-sm font-medium cursor-pointer flex justify-between hover:bg-gray-200 ">Messages 
+                        <div class="h-6 w-6 text-xs rounded-full bg-gray-200 flex items-center justify-center">2</div>
+                    </li>
                 </ol>
             </div>
         </template>

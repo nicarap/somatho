@@ -1,29 +1,27 @@
 <script setup>
-import { onMounted, ref, useSlots, nextTick, watch, defineProps } from 'vue';
-import Modal from '@/Components/Modal.vue';
-import CreateTraitment from '@/Pages/Traitment/Create.vue';
+import { onMounted, ref, useSlots, watch, defineProps, defineEmits } from 'vue';
+import IconButton from './IconButton.vue';
 import moment from 'moment';
 
 const days = ref([]);
 const hours = ref([
-    '08:00', '08:15', '08:30', '08:45',
-    '09:00', '09:15', '09:30', '09:45',
-    '10:00', '10:15', '10:30', '10:45',
-    '11:00', '11:15', '11:30', '11:45',
-    '12:00', '12:15', '12:30', '12:45',
-    '13:00', '13:15', '13:30', '13:45',
-    '14:00', '14:15', '14:30', '14:45',
-    '15:00', '15:15', '15:30', '15:45',
-    '16:00', '16:15', '16:30', '16:45',
-    '17:00', '17:15', '17:30', '17:45',
+    '07:00',
+    '08:00',
+    '09:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
 ])
-const openModal = ref(false)
+
 const slots = useSlots()
 const today = ref(moment())
 const numWeek = ref(null)
 const month = ref(null)
-const createTraitment = ref(null)
-const filters = ref({})
 
 const props = defineProps({
     dislayDay: {
@@ -32,6 +30,8 @@ const props = defineProps({
     },
     therapist: Object,
 })
+
+defineEmits(['click'])
 
 const translateMonth = (month) => {
     return {
@@ -61,26 +61,11 @@ const translateDay = (day) => {
     }[day]
 }
 
-const openReserveModal = (d, h) => {
-    if(isReserved(d,h) || isPassed(moment(d.momentDate, 'DD/MM/YYYY'))) return false;
-    
-    openModal.value = true;
-    filters.value = {
-        day: d,
-        hour: h
-    }
-    // nextTick(() => console.log('passwordInput.value.focus()'));
-};
-
-const closeReserveModal = () => {
-    openModal.value = false;
-};
-
-const isReserved = (days, hour) => {
-    return slots[slotName(days.momentDate)+hour]
+const isPassed = (date) => {
+    return today.value > date
 }
 
-const slotName = (momentDate) => {return momentDate.format('YYYYMMDD')}
+const slotName = (momentDate) => {return momentDate?.format('YYYYMMDD')}
 
 const getDays = () => {
     let gdays = []
@@ -99,8 +84,7 @@ const getMonth = () => {
 }
 
 const getWeek = () => numWeek.value = moment().format('W')
-const isPassed = (date) => {return today.value > date}
-const isHoverableCell = (date, hour) => { return !isReserved(date, hour) && !isPassed(date.momentDate) }
+
 onMounted(() => {
     getWeek();
 })
@@ -110,26 +94,22 @@ watch(numWeek, () => {
     getMonth();
 })
 
-const createReservation = (form) => {
-    console.table(form)
-    // form.post(route('traitment.store'))
-}
-
 </script>
 
 <template>
-    <div>
     <table class="w-full">
         <thead>
             <tr><th :colspan="days.length+1" class="text-center p-2 text-gray-600">
                 {{ translateMonth(month) }}
             </th></tr>
             <tr><th :colspan="days.length+1" class="text-center p-2 text-gray-600">
-                <font-awesome-icon icon="chevron-left" class="text-gray-400" @click="numWeek--"/> 
+                <div class="flex gap-4 w-full justify-center">
+                    <icon-button icon="chevron-left"  @click="numWeek--"/> 
                     Semaine {{ numWeek }} 
-                <font-awesome-icon icon="chevron-right" class="text-gray-400" @click="numWeek++" />
+                    <icon-button icon="chevron-right"  @click="numWeek++"/>
+            </div>
             </th></tr>
-            <tr>
+            <tr class="bg-white">
                 <td class="text-center border border-l-0"></td>
                 <template v-for="(d, index) in days" :key="index">
                     <th  class="p-2 border" v-if="index < props.dislayDay">
@@ -139,29 +119,19 @@ const createReservation = (form) => {
                 </template>
             </tr>
         </thead>
-        <tbody>
-            <tr v-for="(h, index) in hours.filter((h) => h.includes(':00'))" class="m-2 h-12 border-b" :key="index">
-                <td class="text-center border-r">{{ h }}</td>
+        <tbody class="bg-white">
+            <tr v-for="(h, index) in hours" class="m-2 h-12" :key="index">
+                <td class="text-center border h-12">{{ h }}</td>
                 
                 <template v-for="(d, indexd) in days" :key="indexd">
-                    <td v-if="indexd < props.dislayDay" :class="[isPassed(d.momentDate) && 'bg-gray-300']">
-                        <div :class="[isHoverableCell(d,h) && 'hover:bg-gray-100']" @click="openReserveModal(d,h)">
-                            <div  class="relative h-3"><slot :name="slotName(d.momentDate)+h" /></div>
-                            <div class="relative h-3 border-dashed border-b right-0 left-0"><slot :name="slotName(d.momentDate)+h.replace(':00', ':15')" /></div>
-                        </div>
-                        <div :class="[isHoverableCell(d, h) && 'hover:bg-gray-100']" @click="openReserveModal(d,hours[hours.indexOf(h)+2])">
-                            <div class="relative h-3"><slot :name="slotName(d.momentDate)+h.replace(':00', ':30')" /></div>
-                            <div class="relative h-3"><slot :name="slotName(d.momentDate)+h.replace(':00', ':45')" /></div>
-                        </div>
+                    <td v-if="indexd < props.dislayDay" :class="[isPassed(d.momentDate) && 'bg-gray-300']" 
+                    class="relative">
+                            <div class="absolute top-0 bottom-1/2 bg-500 border left-0 right-0"  @click="$emit('click', d.momentDate, d.momentDate.add(1, 'h'))" />
+                            <div class="absolute top-1/2 bottom-0 bg-500 border left-0 right-0"  @click="$emit('click', moment(d.momentDate.format('DD/MM/YYYY')+' '+h.split(':')[0]+':30'), moment(d.momentDate.format('DD/MM/YYYY')+' '+h.split(':')[0]+':30').add(1, 'h'))" />
+                            <slot :name="slotName(d.momentDate)+h.split(':')[0]" /> 
                     </td>
                 </template>
             </tr>
         </tbody>
     </table>
-
-    <Modal :show="openModal" @close="closeReserveModal" maxWidth="sm">
-        <create-traitment ref="createTraitment" @submit="createReservation" :therapist="therapist" :filters="filters" @cancel="closeReserveModal" />
-    
-    </Modal>
-    </div>
 </template>

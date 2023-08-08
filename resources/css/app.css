@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-img-banner {
+    background-image: url(../../public/banner.jpg);
+    background-size: cover;
+    background-position: bottom;
+    background-attachment: fixed;
+}

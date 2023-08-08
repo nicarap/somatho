@@ -36,7 +36,7 @@ watch(()=>form.programmed_start_at, (val) => {
     form.programmed_end_at = moment(val).add(1.5, 'hours').format('YYYY-MM-DD HH:mm')
 })
 
-const emit = defineEmits(['submit', 'cancel'])
+const emit = defineEmits(['submit', 'cancel', 'createReservation'])
 
 const submit = () => {
     emit('submit', form)
@@ -53,7 +53,7 @@ const cancel = () => emit('cancel')
                 Créer une réservation
             </h2>
             
-            <div class="mt-3 w-full"><pre>{{ props.patients?.data }}</pre>
+            <div class="mt-3 w-full">
                 <InputLabel for="patient" value="Patient" />
                 <select id="patient" class="border-gray-300 w-full mt-0 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" v-model="form.patient_id">
                     <option v-for="p in props.patients" :value="p.id">{{p.name}}</option>
@@ -80,7 +80,7 @@ const cancel = () => emit('cancel')
                     class="ml-3"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
-                    @click="createReservation"
+                    @click="$emit('createReservation')"
                 >
                     Reserver
                 </PrimaryButton>

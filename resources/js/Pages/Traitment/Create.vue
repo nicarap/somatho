@@ -3,20 +3,25 @@ import Create from '@/Components/Traitment/Create.vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
-const patients = ref([])
-
 const getPatient = () => {
     axios(route('api.therapist.patients.index'))
     .then((response) => { console.log(response); patients.value = response.data })
 }
 
+const props = defineProps({
+    user: {
+        type: Object,
+        default: () => {}
+    }
+})
+
 onMounted(() => {
-    getPatient();
+    if(!props.user) getPatient();
 })
 
 </script>
 
 
 <template>{{patients}}
-    <create v-bind="$attrs" :patients="patients" />
+    <create v-bind="$attrs" :patients="user" />
 </template>
