@@ -15,6 +15,7 @@ const props = defineProps({
 })
 
 const form = useForm({
+    therapist_id: props.therapist.id,
     patient_id: _.get(props.filters, 'patient_id'),
     programmed_start_at: _.get(props.filters, 'programmed_start_at'),
     programmed_end_at: _.get(props.filters, 'programmed_end_at'),
@@ -48,7 +49,7 @@ const cancel = () => emit('cancel')
                 <InputLabel for="patient" value="Patient" />
                 <select id="patient" :disabled="editMode" class="border-gray-300 w-full mt-0 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" 
                 required v-model="form.patient_id">
-                    <option v-for="p in props.patients" :value="p.id">{{p.name}}</option>
+                    <option v-for="(p, index) in props.patients" :key="index" :value="p.id">{{p.name}}</option>
                 </select>
                 <InputError :message="form.errors.patient" class="mt-2" />
             </div>

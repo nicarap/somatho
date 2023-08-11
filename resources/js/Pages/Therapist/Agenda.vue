@@ -47,7 +47,7 @@ const clickHalf = (start_at, hour, user) => {
 
 const openReserveModal = (traitment) => {
     if (
-        isReserved(traitment.programmed_start_at) || // TODO : ne marche pas
+        // isReserved(traitment.programmed_start_at) || // TODO : ne marche pas
         isPassed(traitment.programmed_end_at)
     )
         return false;
@@ -56,6 +56,7 @@ const openReserveModal = (traitment) => {
     selectedTraitment.value = traitment
 
     filters.value = {
+        therapist_id: props.therapist.id,
         patient_id: traitment.patient?.id,
         programmed_start_at: traitment.programmed_start_at,
         programmed_end_at: traitment.programmed_end_at,
@@ -123,13 +124,13 @@ const getSlotsName = (s) => {
 };
 
 const createReservation = (form) => {
-    form.post(route("traitment.store"), {
+    form.post(route("therapist.traitment.store", {therapist: props.therapist}), {
         onFinish: () => (openModal.value = false),
     });
 };
 
 const updateReservation = (form) => {
-    form.put(route("traitment.update", {traitment:selectedTraitment.value}), {
+    form.put(route("therapist.traitment.update", {therapist: props.therapist, traitment:selectedTraitment.value}), {
         onFinish: () => (openModal.value = false),
     });
 };
@@ -179,15 +180,16 @@ watch(traitmentsLoaded, (val) => {
                 v-slot:[getSlotsName(s)]
             >
                 <div
-                    class="absolute flex bg-gray-100 hover:bg-primary/25 z-50 cursor-pointer overflow-hidden rounded-tl-md rounded-bl-md left-0 right-0"
+                    class="absolute flex bg-gray-100 hover:bg-primary z-50 cursor-pointer overflow-hidden rounded-md
+                    border-4 border-transparent border-l-primary left-0 right-0 group"
                     :class="getPosition(s.programmed_start_at, s.programmed_end_at)"
                     :style="{height: getHeight(s.programmed_start_at, s.programmed_end_at)}"
                     @click="openReserveModal(s)"
                 >
-                    <div class="h-full bg-primary px-1 " />
-                    <div class="px-2">
+                    <!-- <div class="bg-primary px-1 " /> -->
+                    <div class="px-2 group-hover:text-white">
                         <div class="text-sm tracking-widest">{{ s.patient.name }}</div>
-                        <div class="text-xs text-gray-500">{{ getDate(s.programmed_start_at, 'HH:mm') }} - {{ getDate(s.programmed_end_at, 'HH:mm') }}</div>
+                        <div class="text-xs text-gray-500 group-hover:text-white">{{ getDate(s.programmed_start_at, 'HH:mm') }} - {{ getDate(s.programmed_end_at, 'HH:mm') }}</div>
                     </div>
                 </div>
             </template>

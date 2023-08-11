@@ -1,25 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Therapist;
 
+use App\Http\Controllers\Controller;
 use App\DataTransferObjects\traitmentDTO;
 use App\Http\Requests\Traitments\StoreTraitmentRequest;
-use App\Models\Traitment;
 use App\Models\User;
 use App\Services\TraitmentService;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class TraitmentController extends Controller
 {
+    public function __construct(private TraitmentService $traitmentService) {}
 
-    public function __construct(private TraitmentService $traitmentService)
-    {
-
-
-    }
     public function store(StoreTraitmentRequest $request)
     {
         $therapist = User::firstWhere('id', $request->get('therapist_id'));
@@ -39,10 +33,5 @@ class TraitmentController extends Controller
         }else{
             return back()->with(['flash'=> ['type' => 'error', 'message' => 'La réservation n\'a pas pu être créée']]);
         }
-    }
-
-    public function update(Request $request, Traitment $traitment)
-    {
-        dd($traitment);
     }
 }

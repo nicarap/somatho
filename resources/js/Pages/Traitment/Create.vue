@@ -29,7 +29,7 @@ onMounted(() => {
 
 <template>
     <create 
-            @updateReservation="(form) => $emit('updateReservation', form)"
-            @createReservation="(form) => $emit('createReservation', form)"
+            @updateReservation="(f) => $emit('updateReservation', f)"
+            @createReservation="(f) => $emit('createReservation', f)"
             v-bind="{filters, therapist, patients}" />
 </template>

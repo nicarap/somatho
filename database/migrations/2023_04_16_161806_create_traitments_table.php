@@ -17,12 +17,12 @@ return new class extends Migration
             $table->uuid('patient_id');
             $table->dateTime('programmed_start_at');
             $table->dateTime('programmed_end_at');
-            $table->dateTime('therapist_validated_at');
-            $table->dateTime('patient_validated_at');
+            $table->dateTime('therapist_validated_at')->nullable();
+            $table->dateTime('patient_validated_at')->nullable();
             $table->dateTime('realized_at')->nullable();
             $table->float('price');
-            $table->float('travel_cost');
-            $table->float('discount');
+            $table->float('travel_cost')->nullable();
+            $table->float('discount')->nullable();
             $table->string('location_choosed');
             $table->string('address');
             $table->string('complement_address')->nullable();

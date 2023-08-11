@@ -44,7 +44,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('therapist', TherapistController::class);
     Route::resource('{therapist}/patient', TherapistPatientController::class);
     
-    Route::resource('traitment', TraitmentController::class)->only(['store', 'update']);
+    Route::post('therapist/{therapist}/traitment', [TraitmentController::class, 'store'])->name('therapist.traitment.store');
+    Route::put('therapist/{therapist}/traitment', [TraitmentController::class, 'update'])->name('therapist.traitment.update');
 
     Route::resource('user', UserController::class);
 });

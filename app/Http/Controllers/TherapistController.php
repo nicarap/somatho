@@ -21,7 +21,7 @@ class TherapistController extends Controller
         $therapist = $request->user();
 
         return Inertia::render('Therapist/Dashboard', [
-            'therapist' => new UserResource($therapist),
+            'therapist' => $therapist,
         ]);
     }
 
