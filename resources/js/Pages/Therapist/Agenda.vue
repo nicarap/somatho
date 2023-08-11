@@ -4,7 +4,7 @@ import Agenda from "@/Components/Agenda.vue";
 import moment from "moment/moment";
 import Modal from "@/Components/Modal.vue";
 import CreateTraitment from "@/Pages/Traitment/Create.vue";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
@@ -13,7 +13,7 @@ const props = defineProps({
     },
     traitments: {
         type: Array,
-        default: () => null,
+        default: () => [],
     },
 });
 
@@ -21,11 +21,14 @@ const openModal = ref(false);
 const filters = ref({});
 const traitmentsLoaded = ref(false);
 const traitmentsLoading = ref(false);
-const selectedTraitment = ref(null)
-
+const selectedTraitment = ref(null);
+const numWeek = ref(parseInt(moment().format('W')))
+const computedTraitments = computed(() => props.traitments)
+const storeTraitments = ref([])
 const setDateTime = (date, time) => {
     return moment(date + " " + time, "YYYY-MM-DD HH:mm");
 };
+
 
 const click = (start_at, hour, user) => {
     let date = setDateTime(start_at.format("YYYY-MM-DD"), hour);
@@ -135,47 +138,56 @@ const updateReservation = (form) => {
     });
 };
 
-const getSoins = () => {
+const getSoins = (week) => {
     router.get(
         route("therapist.agenda", { therapist: props.therapist }),
         {
             filter: {
-                starts_after: "2022-01-01",
-                end_before: "2024-01-01",
+                start_at: moment().startOf('week').week(week).format('YYYY-MM-DD'),
+                end_at: moment().endOf('week').week(week).format('YYYY-MM-DD'),
             },
         },
         {
             onBefore: () => (traitmentsLoading.value = true),
             only: ["traitments"],
+            preserveState: true,
             onFinish: () => (traitmentsLoading.value = false),
         }
     );
 };
 
 onMounted(() => {
-    if (!props.traitments) getSoins();
+    getSoins(numWeek);
 });
 
 watch(traitmentsLoaded, (val) => {
-    console.log(val);
     getSoins();
 });
+
+watch(numWeek, (val) => {
+    if(storeTraitments.value.filter((s) => moment(s.programmed_start_at).week() === val).length === 0){
+        getSoins(val);
+    }
+})
+
+watch(computedTraitments, (val) => storeTraitments.value = [...storeTraitments.value, ...val])
 </script>
 
 <template>
-
     <therapist-layout
         title="Profile"
         :therapist="therapist"
     >
-        <Agenda
+        <Agenda v-model:numWeek="numWeek"
             :therapist="therapist"
+            @previousWeek="numWeek--"
+            @nextWeek="numWeek++"
             @click="click"
             @clickHalf="clickHalf"
             :loading="traitmentsLoading"
         >
             <template
-                v-for="(s, index) in traitments"
+                v-for="(s, index) in storeTraitments"
                 :key="index"
                 v-slot:[getSlotsName(s)]
             >
@@ -189,11 +201,14 @@ watch(traitmentsLoaded, (val) => {
                     <!-- <div class="bg-primary px-1 " /> -->
                     <div class="px-2 group-hover:text-white">
                         <div class="text-sm tracking-widest">{{ s.patient.name }}</div>
-                        <div class="text-xs text-gray-500 group-hover:text-white">{{ getDate(s.programmed_start_at, 'HH:mm') }} - {{ getDate(s.programmed_end_at, 'HH:mm') }}</div>
+                        <div class="text-xs text-gray-500 group-hover:text-white">
+                            {{ getDate(s.programmed_start_at, 'HH:m') }} - {{ getDate(s.programmed_end_at, 'HH:m') }}
+                        </div>
                     </div>
                 </div>
             </template>
         </Agenda>
+        <pre>{{ storeTraitments.length }}</pre>
     </therapist-layout>
 
     <Modal

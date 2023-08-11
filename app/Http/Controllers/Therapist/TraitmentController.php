@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Therapist;
 use App\Http\Controllers\Controller;
 use App\DataTransferObjects\traitmentDTO;
 use App\Http\Requests\Traitments\StoreTraitmentRequest;
-use App\Models\User;
+use App\Models\Therapist;
 use App\Services\TraitmentService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class TraitmentController extends Controller
 
     public function store(StoreTraitmentRequest $request)
     {
-        $therapist = User::firstWhere('id', $request->get('therapist_id'));
+        $therapist = Therapist::firstWhere('id', $request->get('therapist_id'));
         $address = $therapist->address;
 
         if($traitment = $this->traitmentService->create(traitmentDTO::from(array_merge($request->all(), [

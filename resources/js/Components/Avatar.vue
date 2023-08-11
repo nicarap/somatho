@@ -32,7 +32,7 @@ const computedSizeClass = computed(() => {
 
 <template>
     <div  class="relative inline-flex items-center h- justify-center overflow-hidden bg-gray-100 rounded-full  shadow-lg"  :class="[computedSizeClass]">
-        <span v-if="props.name" class="font-large text-gray-600">{{ props.name }}</span>
+        <span v-if="props.name" class="font-large text-2xl font-bold text-primary">{{ props.name }}</span>
         <font-awesome-icon v-else icon="user" class="absolute -bottom-2 w-full h-full text-gray-400" />
     </div>
 </template>

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Roles;
+use App\Models\Therapist;
 use Illuminate\Database\Seeder;
 
 class DummyDataBaseSeeder extends Seeder
@@ -16,24 +17,17 @@ class DummyDataBaseSeeder extends Seeder
         $nb_therapists = 2;
         $nb_patients = 5;
         for($i=0; $i< $nb_therapists;$i++){
-            $u = User::factory()->forAddress()->create();
-            $u->name = 'therapist_'.$u->name;
-            $u->email = 't_'.$u->email;
-            $u->assignRole(Roles::THERAPIST);
-            $u->save();
+            Therapist::factory()->forAddress()->create();
         }
         for($i=0; $i< $nb_patients;$i++){
-            $u = User::factory()->forAddress()->create();
-            $u->name = 'patient_'.$u->name;
-            $u->email = 'p_'.$u->email;
-            $u->assignRole(Roles::PATIENT);
-            $u->save();
+            User::factory()->forAddress()->create();
         }
         
-        $patients = User::getPatients();
+        $patients = User::all();
+        $therapists = Therapist::all();
 
         foreach($patients as $patient){
-            $patient->therapists()->attach(User::getTherapists()->random()->first());
+            $patient->therapists()->attach($therapists->random()->first());
         }
     }
 }

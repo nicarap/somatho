@@ -3,34 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TherapistResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Http\Resources\UserResource;
+use App\Models\Therapist;
 use App\Models\Traitment;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Spatie\QueryBuilder\AllowedFilter;
 use Inertia\Response;
-use App\Models\User;
-use Spatie\LaravelData\Support\Lazy\InertiaLazy;
+use Carbon\Carbon;
 
 class TherapistController extends Controller
 {
-    public function dashboard(Request $request): Response
+    public function dashboard(Request $request, Therapist $therapist): Response
     {
-        $therapist = $request->user();
-
+        
         return Inertia::render('Therapist/Dashboard', [
             'therapist' => $therapist,
+            'traitments_count_by_week' => $therapist->traitments()->startAt(Carbon::now()->startOfWeek())->endAt(Carbon::now()->endOfWeek())->count(),
+            'traitments_count_by_day' => $therapist->traitments()->startAt(Carbon::now())->endAt(Carbon::now())->count(),
+            'next_traitment' => Traitment::forTherapist($therapist)->nextTraitment()->first()->load('patient')
         ]);
     }
 
-    public function index(Request $request): Response
+    public function index(Request $request, Therapist $therapist): Response
     {
-        $therapist = User::find($request->user()->id);
         return Inertia::render('Therapist/User/Index', [
-            'Users' => UserResource::collection(
-                QueryBuilder::for(User::hasTherapist($therapist))
+            'Users' => TherapistResource::collection(
+                QueryBuilder::for(Therapist::hasTherapist($therapist))
                     ->paginate()
                     ->appends($request->query())
             ),
@@ -38,26 +39,27 @@ class TherapistController extends Controller
         ]);
     }
 
-    public function agenda(Request $request, User $therapist): Response
+    public function agenda(Request $request, Therapist $therapist): Response
     {
         return Inertia::render('Therapist/Agenda', [
             'therapist' => $therapist,
-            'traitments' => Inertia::lazy(fn () => QueryBuilder::for(Traitment::forTherapist($therapist)->with('patient:id,name'))
+            'traitments' => Inertia::lazy(fn () => 
+            QueryBuilder::for(Traitment::forTherapist($therapist)->with('patient:id,name'))
                 ->allowedFilters([
-                    AllowedFilter::scope('starts_after'),
-                    AllowedFilter::scope('end_before'),
+                    AllowedFilter::scope('start_at'),
+                    AllowedFilter::scope('end_at'),
                 ])
                 ->get())
         ]);
     }
 
     /**
-     * Display the user's profile form.
+     * Display the therapist's profile form.
      */
-    public function edit(Request $request, User $therapist): Response
+    public function edit(Request $request, Therapist $therapist): Response
     {
         return Inertia::render('Therapist/Edit', [
-            'therapist' => new UserResource($therapist),
+            'therapist' => new TherapistResource($therapist),
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
         ]);

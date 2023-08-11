@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('location');
             $table->timestamps();
 
-            $table->foreign('therapist_id')->references('id')->on('users');
+            $table->foreign('therapist_id')->references('id')->on('therapists');
             $table->foreign('patient_id')->references('id')->on('users');
             $table->primary('id');
         });

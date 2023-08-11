@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Traitment extends Model
 {
@@ -43,7 +44,7 @@ class Traitment extends Model
     protected function programmedStartAt(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => Carbon::parse($value)->format('Y-m-d h:i'),
+            get: fn (string $value) => Carbon::parse($value)->format('Y-m-d H:i'),
         );
     }
 
@@ -61,22 +62,30 @@ class Traitment extends Model
 
     public function therapist(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'therapist_id');
+        return $this->belongsTo(Therapist::class);
     }
 
     public function patient(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'patient_id');
+        return $this->belongsTo(User::class);
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'patient_id');
     }
 
-    public function scopeForTherapist(Builder $query, User $therapist): Builder
+    public function scopeForTherapist(Builder $query, Therapist $therapist): Builder
     {
         return $query->where('therapist_id', $therapist->id);
+    }
+    
+    /**
+     * Get the next traitment of a terapist.
+     */
+    public function scopeNextTraitment(): Builder
+    {
+        return $this->startAt(Carbon::now());
     }
 
     public function scopeForPatient(Builder $query, User $patient): Builder
@@ -84,12 +93,12 @@ class Traitment extends Model
         return $query->where('patient_id', $patient->id);
     }
 
-    public function scopeStartsAfter(Builder $query, $date): Builder
+    public function scopeStartAt(Builder $query, $date): Builder
     {
-        return $query->where('programmed_start_at', '>=', Carbon::parse($date));
+        return $query->where('programmed_start_at', '>=', Carbon::parse($date)->format('Y-m-d'));
     }
-    public function scopeEndBefore(Builder $query, $date): Builder
+    public function scopeEndAt(Builder $query, $date): Builder
     {
-        return $query->where('programmed_end_at', '<=', Carbon::parse($date));
+        return $query->where('programmed_end_at', '<=', Carbon::parse($date)->endOfDay());
     }
 }

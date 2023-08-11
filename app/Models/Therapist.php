@@ -2,25 +2,22 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\Roles;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class User extends Authenticatable implements Auditable
+class Therapist extends Authenticatable implements Auditable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasUuids, Notifiable, \OwenIt\Auditing\Auditable;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids, Notifiable, \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.
@@ -71,25 +68,15 @@ class User extends Authenticatable implements Auditable
     {
         return $this->belongsTo(Address::class);
     }
-
+    
     /**
-     * retrieve user by mail
+     * retrieve patients
      *
      * @return HasMany
      */
-    public static function findByEmail($email)
+    public function patients(): BelongsToMany
     {
-        return User::where('email', $email)->first();
-    }
-
-    /**
-     * retrieve therapists
-     *
-     * @return HasMany
-     */
-    public function therapists(): BelongsToMany
-    {
-        return $this->belongsToMany(Therapist::class, 'therapists_has_patients');
+        return $this->belongsToMany(User::class, 'therapists_has_patients');
     }
 
     /**
@@ -99,6 +86,6 @@ class User extends Authenticatable implements Auditable
      */
     public function traitments(): hasMany
     {
-        return $this->hasMany(Traitment::class, 'patient_id');
+        return $this->hasMany(Traitment::class);
     }
 }

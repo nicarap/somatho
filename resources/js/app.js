@@ -7,11 +7,11 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { createPinia } from 'pinia';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTimes, faUsers, faUser, faSpinner, faEdit, faTrash, faEye, faChevronRight, faChevronLeft, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import moment from 'moment/moment';
+import * as icons from '@/icons';
 
-library.add(faUser, faTimes, faUsers, faEdit, faTrash, faSpinner, faEye, faChevronRight, faChevronLeft, faChevronDown, faChevronUp);
+library.add(icons);
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 

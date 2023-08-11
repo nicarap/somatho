@@ -34,17 +34,24 @@ defineProps({
 
         <template #navigation>
             <div class="mt-4">
-                <div class="bg-teal-600 text-white font-bold p-2">Mon Agenda</div>
                 <ol class="w-full cursor-default">
-                    <li class="border pl-8 pr-2 py-2 text-sm font-medium cursor-pointer hover:bg-gray-200" 
-                    @click="$inertia.get(route('therapist.agenda', therapist))">Mes rendez-vous</li>
-                    <li class="border pl-8 pr-2 py-2 text-sm font-medium cursor-pointer hover:bg-gray-200 ">Je prends rendez-vous</li>
-                </ol>
-            </div>
-            <div class="mt-4">
-                <div class="bg-teal-600 text-white font-bold p-2">Notifications</div>
-                <ol class="w-full cursor-default">
-                    <li class="border pl-8 pr-2 py-2 text-sm font-medium cursor-pointer flex justify-between hover:bg-gray-200 ">Messages 
+                    <li class="border pl-8 pr-2 py-2 text-sm font-medium cursor-pointer flex gap-2 items-center" 
+                        :class="[route().current('therapist.patient.*') ? 'bg-primary text-white' : 'bg-white hover:bg-primary/25']"
+                        @click="$inertia.get(route('therapist.patient.index', therapist))">
+                        <font-awesome-icon class="text-primary" 
+                        :class="[route().current('therapist.patient.*') && 'text-white']" 
+                        icon="person" />
+                            Mes patients
+                        </li>
+                    <li class="border pl-8 pr-2 py-2 text-sm font-medium cursor-pointer flex gap-2 items-center" 
+                        :class="[route().current('therapist.agenda') ? 'bg-primary text-white' : 'bg-white hover:bg-primary/25']"
+                        @click="$inertia.get(route('therapist.agenda', therapist))">
+                        <font-awesome-icon class="text-primary" :class="[route().current('therapist.agenda') && 'text-white']" icon="calendar" />Mes rendez-vous</li>
+                    <li class="border pl-8 pr-2 py-2 flex justify-between items-center text-sm font-medium cursor-pointer hover:bg-gray-200"
+                        :class="[route().current('therapist.message.*') ? 'bg-primary text-white' : 'bg-white']">
+                        <div class="grow flex gap-2 items-center">
+                            <font-awesome-icon class="text-primary" icon="message" />Mes messages 
+                        </div>
                         <div class="h-6 w-6 text-xs rounded-full bg-gray-200 flex items-center justify-center">2</div>
                     </li>
                 </ol>

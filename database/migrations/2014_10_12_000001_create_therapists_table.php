@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('therapists', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('name');
             $table->string('email')->unique();
@@ -26,6 +26,15 @@ return new class extends Migration
             $table->primary('id');
             $table->foreign('address_id')->on('addresses')->references('id');
         });
+
+        Schema::create('therapists_has_patients', function (Blueprint $table) {
+            $table->uuid('therapist_id');
+            $table->uuid('user_id');
+
+            $table->foreign('therapist_id')->references('id')->on('therapists');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->primary(['therapist_id', 'user_id']);
+        });
     }
 
     /**
@@ -33,6 +42,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('therapists_has_patients');
+        Schema::dropIfExists('therapists');
     }
 };

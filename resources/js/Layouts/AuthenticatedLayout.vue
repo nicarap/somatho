@@ -22,7 +22,7 @@ const showingNavigationDropdown = ref(false);
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
                                     <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
+                                        class="block h-12 w-auto fill-primary text-gray-800"
                                     />
                                 </Link>
                             </div>
@@ -141,8 +141,8 @@ const showingNavigationDropdown = ref(false);
             <div class="py-8 sm:px-6 lg:px-8 h-full overflow-hidden">
 
                 <div class="flex gap-4 w-full items-start h-full overflow-hidden">
-                    <div v-if="$slots.avatar || $slots.navigation" class="w-56 bg-white border border-gray-200 rounded-lg shadow max-h-full flex flex-col">
-                        <div class="flex flex-col items-center mb-2">
+                    <div v-if="$slots.avatar || $slots.navigation" class="w-56 bg-white rounded-lg shadow max-h-full flex flex-col">
+                        <div class="flex flex-col items-center m-2">
                             <slot name="avatar" />
                         </div>
                         <div class="w-full overflow-y-auto">

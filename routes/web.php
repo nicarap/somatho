@@ -42,7 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('therapist/{therapist}/dashboard', [TherapistController::class, 'dashboard'])->name('therapist.dashboard');
     Route::get('therapist/{therapist}/agenda', [TherapistController::class, 'agenda'])->name('therapist.agenda');
     Route::resource('therapist', TherapistController::class);
-    Route::resource('{therapist}/patient', TherapistPatientController::class);
+    Route::name('therapist')->resource('therapist/{therapist}/patient', TherapistPatientController::class);
     
     Route::post('therapist/{therapist}/traitment', [TraitmentController::class, 'store'])->name('therapist.traitment.store');
     Route::put('therapist/{therapist}/traitment', [TraitmentController::class, 'update'])->name('therapist.traitment.update');

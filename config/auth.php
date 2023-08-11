@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'therapist',
         'passwords' => 'users',
     ],
 
@@ -36,9 +36,13 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        'patient' =>[
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'patient',
+        ],
+        'therapist' => [
+            'driver' => 'session',
+            'provider' => 'therapist',
         ],
     ],
 
@@ -60,7 +64,11 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'therapist' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Therapist::class,
+        ],
+        'patient' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],

@@ -24,14 +24,14 @@ class TraitmentRepository
 
     public function save(Traitment $traitment)
     {
-        DB::beginTransaction();
-        try {
+        // DB::beginTransaction();
+        // try {
             $traitment->save();
-            DB::commit();
-        }catch(Exception $e){
-            DB::rollBack();
-            return false;
-        }        
+        //     DB::commit();
+        // }catch(Exception $e){
+        //     DB::rollBack();
+        //     return false;
+        // }        
         return $traitment;        
     }
 

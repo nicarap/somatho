@@ -22,7 +22,7 @@ class StoreTraitmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'therapist_id' => ['required', 'exists:users,id'],
+            'therapist_id' => ['required', 'exists:therapists,id'],
             'patient_id' => ['required', 'exists:users,id'],
             'programmed_start_at' => ['required', 'date'],
             'programmed_end_at' => ['required', 'date'],
