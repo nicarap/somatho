@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center items-center cursor-pointer rounded-full hover:bg-gray-200" :class="computedSize">
+    <div class="flex justify-center items-center cursor-pointer rounded-full text-primary hover:bg-primary/75 hover:text-white" :class="computedSize">
         <font-awesome-icon :icon="icon" :size="size" />
     </div>
 </template>

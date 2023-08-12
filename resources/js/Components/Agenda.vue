@@ -35,7 +35,7 @@ const props = defineProps({
     }
 })
 
-defineEmits(['click', 'clickHalf', 'previousWeek', 'nextWeek'])
+const emits = defineEmits(['click', 'clickHalf', 'previousWeek', 'nextWeek'])
 
 const translateMonth = (month) => {
     return {
@@ -83,6 +83,17 @@ const days = computed(() => {
     return gdays;
 })
 
+const click = (date, hour) => {
+    if(!isPassed(date)){
+        emits('click', date, hour)
+    }
+}
+
+const clickHalf = (date, hour) => {
+    if(!isPassed(date)){
+        emits('clickHalf', date, hour)
+    }
+}
 const month = computed(() => props.numWeek && moment().startOf('week').week(props.numWeek).format('MMMM'))
 
 </script>
@@ -118,8 +129,8 @@ const month = computed(() => props.numWeek && moment().startOf('week').week(prop
                     <template v-for="(d, indexd) in days" :key="indexd">
                         <td v-if="indexd < props.dislayDay" :class="[isPassed(d.momentDate) && 'bg-gray-300']" 
                         class="relative ">
-                                <div class="absolute top-0 bottom-1/2 bg-500 border left-0 right-0" :class="[!isPassed(d.momentDate) && 'hover:bg-gray-100']"  @click="$emit('click', d.momentDate, h)" />
-                                <div class="absolute top-1/2 bottom-0 bg-500 border left-0 right-0" :class="[!isPassed(d.momentDate) && 'hover:bg-gray-100']"  @click="$emit('clickHalf', d.momentDate, h)" />
+                                <div class="absolute top-0 bottom-1/2 bg-500 border left-0 right-0" :class="[!isPassed(d.momentDate) && 'hover:bg-gray-100']"  @click="click(d.momentDate, h)" />
+                                <div class="absolute top-1/2 bottom-0 bg-500 border left-0 right-0" :class="[!isPassed(d.momentDate) && 'hover:bg-gray-100']"  @click="clickHalf(d.momentDate, h)" />
                                 <slot :name="slotName(d.momentDate)+h.split(':')[0]" /> 
                         </td>
                     </template>

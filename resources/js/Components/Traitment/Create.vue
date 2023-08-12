@@ -56,14 +56,16 @@ const cancel = () => emit('cancel')
 
             <div class="mt-3 w-full">
                 <InputLabel for="day" value="Début de la réservation" />
-                <TextInput type="datetime-local" class="w-full" :min="moment().format('YYYY-MM-DDThh:mm')" 
+                <TextInput type="datetime-local" class="w-full" :min="moment().format('YYYY-MM-DDTHH:mm')" 
                 required v-model="form.programmed_start_at" />
                 <InputError :message="form.errors.programmed_start_at" class="mt-2" />
             </div>
-
+            
             <div class="mt-3 w-full">
                 <InputLabel for="day" value="Fin de la réservation" />
-                <TextInput type="datetime-local" class="w-full" :min="form.programmed_start_at" 
+                <TextInput type="datetime-local" class="w-full" 
+                :min="moment(form.programmed_start_at).startOf('day').format('YYYY-MM-DDTHH:mm')" 
+                :max="moment(form.programmed_start_at).endOf('day').format('YYYY-MM-DDTHH:mm')"
                 required v-model="form.programmed_end_at" />
                 <InputError :message="form.errors.programmed_end_at" class="mt-2" />
             </div>     

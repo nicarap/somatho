@@ -21,9 +21,17 @@ class TherapistController extends Controller
         
         return Inertia::render('Therapist/Dashboard', [
             'therapist' => $therapist,
-            'traitments_count_by_week' => $therapist->traitments()->startAt(Carbon::now()->startOfWeek())->endAt(Carbon::now()->endOfWeek())->count(),
-            'traitments_count_by_day' => $therapist->traitments()->startAt(Carbon::now())->endAt(Carbon::now())->count(),
-            'next_traitment' => Traitment::forTherapist($therapist)->nextTraitment()->first()->load('patient')
+            'traitments_by' => [
+                'week' => [
+                    'count' => $therapist->traitments()->startAt(Carbon::now()->startOfWeek())->endAt(Carbon::now()->endOfWeek())->count(),
+                    'date' => Carbon::now()->week()
+                ],
+                'day' => [
+                    'count' => $therapist->traitments()->startAt(Carbon::now())->endAt(Carbon::now())->count(),
+                    'date' => Carbon::now(),
+                ]
+            ],
+            'next_traitment' => Traitment::forTherapist($therapist)->nextTraitment()->first()?->load('patient')
         ]);
     }
 
@@ -59,7 +67,7 @@ class TherapistController extends Controller
     public function edit(Request $request, Therapist $therapist): Response
     {
         return Inertia::render('Therapist/Edit', [
-            'therapist' => new TherapistResource($therapist),
+            'therapist' => new TherapistResource($therapist->load('addresses')),
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
         ]);

@@ -10,6 +10,10 @@ const props = defineProps({
         type: String,
         default: '48',
     },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
     contentClasses: {
         type: String,
         default: 'py-1 bg-white',
@@ -28,6 +32,7 @@ onUnmounted(() => document.removeEventListener('keydown', closeOnEscape));
 const widthClass = computed(() => {
     return {
         48: 'w-48',
+        'full': 'w-full',
     }[props.width.toString()];
 });
 
@@ -42,11 +47,19 @@ const alignmentClasses = computed(() => {
 });
 
 const open = ref(false);
+
+const openDropdown = () => {
+    if(!props.disabled){
+        open.value = !open.value
+    }
+}
+defineExpose({open})
+
 </script>
 
 <template>
     <div class="relative">
-        <div @click="open = !open">
+        <div @click="openDropdown">
             <slot name="trigger" />
         </div>
 

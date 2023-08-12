@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
 use App\Models\User;
-use App\Models\Roles;
 use App\Models\Therapist;
 use Illuminate\Database\Seeder;
 
@@ -14,20 +14,27 @@ class DummyDataBaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $nb_therapists = 2;
         $nb_patients = 5;
-        for($i=0; $i< $nb_therapists;$i++){
-            Therapist::factory()->forAddress()->create();
-        }
+
+        $me = Therapist::create([
+            'name' => 'Raphael Lebon',
+            'email' => 'raphael.lebon@tessi.fr',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+        ]);
+
+        $adresses = Address::factory()->count(2)->create();
+        foreach($adresses as $adress){
+            $me->addresses()->attach($adress, ['model_type' => Therapist::class]);
+        }        
+
         for($i=0; $i< $nb_patients;$i++){
-            User::factory()->forAddress()->create();
+            User::factory()->hasAttached(Address::factory()->count(1), ['model_type' => User::class])->create();
         }
         
         $patients = User::all();
-        $therapists = Therapist::all();
 
-        foreach($patients as $patient){
-            $patient->therapists()->attach($therapists->random()->first());
+        foreach($patients as $index => $patient){
+            if($index < $nb_patients - 2) $patient->therapists()->attach($me);
         }
     }
 }

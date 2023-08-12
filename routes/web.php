@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\TherapistController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Therapist\AddressController as TherapistAddressController;
 use App\Http\Controllers\Therapist\PatientController as TherapistPatientController;
 use App\Http\Controllers\TraitmentController;
 use App\Http\Controllers\UserController;
@@ -45,9 +47,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::name('therapist')->resource('therapist/{therapist}/patient', TherapistPatientController::class);
     
     Route::post('therapist/{therapist}/traitment', [TraitmentController::class, 'store'])->name('therapist.traitment.store');
-    Route::put('therapist/{therapist}/traitment', [TraitmentController::class, 'update'])->name('therapist.traitment.update');
+    Route::put('therapist/{therapist}/traitment/{traitment}/edit', [TraitmentController::class, 'update'])->name('therapist.traitment.update');
+    Route::put('therapist/{therapist}/address/{address}/edit', [TherapistAddressController::class, 'changeDefaultAddress'])->name('therapist.address.changeDefaultAddress');
 
     Route::resource('user', UserController::class);
+
+    Route::resource('address', AddressController::class);
 });
 
 require __DIR__.'/auth.php';

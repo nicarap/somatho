@@ -62,11 +62,11 @@ class Therapist extends Authenticatable implements Auditable
     /**
      * Retrieve address of the model
      *
-     * @return HasMany
+     * @return belongsToMany
      */
-    public function address()
+    public function addresses()
     {
-        return $this->belongsTo(Address::class);
+        return $this->belongsToMany(Address::class, 'user_has_addresses', 'model_id')->withPivot('default');;
     }
     
     /**

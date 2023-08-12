@@ -18,13 +18,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('tel')->nullable();
-            $table->uuid('address_id')->nullable();
             $table->string('siren')->nullable();
             $table->rememberToken();
 
             $table->timestamps();
             $table->primary('id');
-            $table->foreign('address_id')->on('addresses')->references('id');
         });
     }
 
