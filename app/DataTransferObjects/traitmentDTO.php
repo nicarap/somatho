@@ -20,10 +20,10 @@ class traitmentDTO extends Data
         #[WithCast(DateTimeInterfaceCast::class, 'Y-m-d H:i')]
         public DateTime $programmed_end_at,
         public string $price,
-        public string $location_choosed,
-        public string $address,
-        public string $postal_code,
-        public string $location,
+        public string $label,
+        public string $context,
+        public string $postcode,
+        public string $city,
 
         #[WithCast(DateTimeInterfaceCast::class)]
         public DateTime|Optional $therapist_validated_at,

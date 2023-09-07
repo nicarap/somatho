@@ -25,17 +25,20 @@ class AddressService
     public function create(array $attributes, User|Therapist $requester)
     {
         $address = $this->addressRepository->create($attributes);
-        $this->attachTo($address, $requester);
-        $this->changeDefaultAddress($requester, $address, Arr::get($attributes, 'default'));
+        $this->attachTo($address, $requester, $requester->addresses()->count() === 0 && Arr::get($attributes, 'default'));
 
         return $address;
     }
 
-    public function attachTo(Address $address, Therapist|User $user)
+    public function attachTo(Address $address, Therapist|User $user,  bool $is_default): Address
     {
         if($user instanceof(Therapist::class)){
-            return $this->therapistService->attachAdress($user, $address);
+            $address->therapists()->attach($user, ['default' => $is_default]);
+        }else if($user instanceof(User::class)){
+            $address->users()->attach($user, ['default' => $is_default]);
         }
+        
+        return $address;
     }
 
     public function changeDefaultAddress(Therapist $therapist, Address $address, bool $is_default)
@@ -70,7 +73,8 @@ class AddressService
     {
         // TODO : if adress is in use traitments don't delete
         
-        $address->userAdresses()->sync([]);
+        $address->therapists()->sync([]);
+        $address->patients()->sync([]);
         return $this->addressRepository->destroy($address);
     }
 }

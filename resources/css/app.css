@@ -8,3 +8,21 @@
     background-position: bottom;
     background-attachment: fixed;
 }
+
+.background-me {
+    background-image: url(../../public/images/me.jpg);
+    background-size: cover;
+    background-position: bottom;
+}
+
+.background-poyet {
+    background-image: url(../../public/images/poyet.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.background-somato {
+    background-image: url(../../public/images/somato.jpg);
+    background-size: cover;
+    background-position: center;
+}

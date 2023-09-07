@@ -12,8 +12,8 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 const emits = defineEmits(['cancel', 'save']);
 
 const form = useForm({
-    'address_name': '',
     'label': '',
+    'search_label': '',
     'name': '',
     'context': '',
     'postcode': '',
@@ -32,8 +32,8 @@ const addressSelected = ref({})
 const automaticAdressLoading = ref(false);
 
 watch(addressSelected, (val) => {
-    form.label = _.get(val, 'properties.label')
-    form.name = _.get(val, 'properties.name')
+    form.label = _.get(val, 'properties.name')
+    form.search_label = _.get(val, 'properties.name')
     form.context = _.get(val, 'properties.context')
     form.postcode = _.get(val, 'properties.postcode')
     form.city = _.get(val, 'properties.city')
@@ -75,20 +75,19 @@ const submit = () => {
 <template>
     <form ref="_form" @submit.prevent="submit" class="space-y-2 p-2">
         <div>
-            <InputLabel for="address_name" value="Nom" />
-            <TextInput id="address_name" placeholder="ex: Chez moi, Au salon, ..." required class="mt-1 block w-full" type="text" v-model="form.address_name" />
-            <InputError :message="form.errors.address_name" class="mt-2" />
+            <InputLabel for="name" value="Nom" />
+            <TextInput id="name" placeholder="ex: Chez moi, Au salon, ..." required class="mt-1 block w-full" type="text" v-model="form.name" />
+            <InputError :message="form.errors.name" class="mt-2" />
         </div>
         
         <TextAutocompleteField label="Trouver mon adresse" 
             name="automaticAddress"
             v-model="addressSelected"
-            :value="form.label"
+            :value="form.search_label"
             @search="searchAddress"
             placeholder="Commencez à écrire pour rechercher..."
             :items="itemsAddress" 
             :errors="errorAddress ? [errorAddress] : null"
-            :required="!form.manual_address" 
             :loading="automaticAdressLoading"
             :disabled="form.manual_address" autocomplete="off" />
         
@@ -100,9 +99,9 @@ const submit = () => {
             <div class="grid grid-cols-2 gap-2">
         
                 <div>
-                    <InputLabel for="name" value="Adresse" />
-                    <TextInput id="name" class="mt-1 block w-full" :disabled="!form.manual_address" :required="form.manual_address" type="text" v-model="form.name" />
-                    <InputError :message="form.errors.name" class="mt-2" />
+                    <InputLabel for="label" value="Adresse" />
+                    <TextInput id="label" class="mt-1 block w-full" :disabled="!form.manual_address" :required="form.manual_address" type="text" v-model="form.label" />
+                    <InputError :message="form.errors.label" class="mt-2" />
                 </div> 
 
                 <div>

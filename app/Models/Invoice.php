@@ -19,10 +19,9 @@ class Invoice extends Model
     protected $fillable = [
         'paid_at',
         'invoice_number',
-        'address',
-        'complement_address',
-        'postal_code',
-        'location',
+        'label',
+        'context',
+        'postcode',
         'tel',
         'tva',
         'total_price',

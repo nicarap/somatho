@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->uuid('id');
-            $table->string('label');
             $table->string('name');
+            $table->string('label');
             $table->string('context')->nullable();
             $table->string('postcode');
             $table->string('city');

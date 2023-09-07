@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import Modal from '@/Components/Modal.vue';
 import CreateAddress from "@/Components/Address/Create.vue"
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import DangerButton from '@/Components/DangerButton.vue';
 
 const props = defineProps({
     user:{
@@ -38,13 +38,13 @@ const closeDeleteAddressModal = () => openDeleteAddressModal.value = false
 
 const createNewAddress = (form) => {
     form.user = props.therapist
-    form.post(route('address.store'), {}, {
+    form.post(route('address.store'), {
         onFinish: () => openAddNewAddressModal.value = false,
     })
 }
 
 const deleteAddress = (address) => {
-    router.delete(route('address.destroy', {address: address}), {}, {
+    router.delete(route('address.destroy', {address: address}), {
         onFinish: () => {
             deleteAddressSelected.value = null
             closeDeleteAddressModal()
@@ -58,7 +58,7 @@ const deleteAddress = (address) => {
         <div class="flex justify-between items-center h-full text-gray-900">
             <section>
                 <header>
-                    <h2 class="text-lg font-medium text-gray-900">Mes adresses</h2>
+                    <h2 class="text-lg font-semibold uppercase text-primary">Mes adresses</h2>
                     <span class="text-sm text-gray-600">
                         Mettre à jour mon adrese.
                     </span>
@@ -70,7 +70,7 @@ const deleteAddress = (address) => {
                 class="rounded-lg mt-2 border-2  text-gray-700 p-2"
                 :class="[address.pivot.default ? 'border-primary' : 'hover:border-primary']">
                 <div class="uppercase flex w-full justify-between items-center text-sm font-semibold">
-                    {{ address.label }}
+                    {{ address.name }}
                             <div class="min-w-6 ">
                     <span v-if="address.pivot.default" class="fa-stack fa-xs">
                         <font-awesome-icon icon="certificate" class="fa-stack-2x text-primary" />
@@ -88,7 +88,7 @@ const deleteAddress = (address) => {
                     </template>
                 </div>
                 </div>
-                <div>{{ address.name }}</div>
+                <div>{{ address.label }}</div>
                 <div>{{ address.context }}</div>
                 <div>{{ address.postcode }}, {{ address.city }}</div>
             </div>
@@ -125,9 +125,9 @@ const deleteAddress = (address) => {
                 <div class="flex justify-center">
                     <div>
                         <div class="uppercase flex w-full justify-between items-center text-sm font-semibold">
-                            {{ deleteAddressSelected.label }}
+                            {{ deleteAddressSelected.name }}
                         </div>
-                        <div>{{ deleteAddressSelected.name }}</div>
+                        <div>{{ deleteAddressSelected.label }}</div>
                         <div>{{ deleteAddressSelected.context }}</div>
                         <div>{{ deleteAddressSelected.postcode }}, {{ deleteAddressSelected.city }}</div>
                     </div>
@@ -135,7 +135,7 @@ const deleteAddress = (address) => {
             </div>
                 <div class="flex w-full mt-2 justify-end items-center gap-2">
                     <SecondaryButton @click="closeDeleteAddressModal">Annuler</SecondaryButton>
-                    <PrimaryButton class="bg-red-500" @click="deleteAddress(deleteAddressSelected)">Supprimer</PrimaryButton>
+                    <DangerButton @click="deleteAddress(deleteAddressSelected)">Supprimer</DangerButton>
                 </div>
             </div>
         </Modal>

@@ -23,7 +23,7 @@ class TraitmentService
         return $this->traitmentRepository->create($traitment);
     }
 
-    public function save(Traitment $traitment): Bool
+    public function save(Traitment $traitment): Traitment
     {
         return $this->traitmentRepository->save($traitment);
     }

@@ -28,10 +28,10 @@ class Traitment extends Model
         'price',
         'travel_cost',
         'discount',
-        'location_choosed',
-        'address',
-        'postal_code',
-        'location'
+        'label',
+        'context',
+        'postcode',
+        'city',
 
     ];
 
@@ -83,9 +83,9 @@ class Traitment extends Model
     /**
      * Get the next traitment of a terapist.
      */
-    public function scopeNextTraitment(): Builder
+    public function scopeNextTraitment(Builder $query): Builder
     {
-        return $this->startAt(Carbon::now());
+        return $query->startAt(Carbon::now());
     }
 
     public function scopeForPatient(Builder $query, User $patient): Builder

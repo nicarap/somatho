@@ -28,14 +28,14 @@ class Address extends Model
         return $this->belongsToMany(UserAddress::class, 'user_has_addresses');
     }
 
-    public function users(): MorphToMany
+    public function patients(): MorphToMany
     {
-        return $this->morphToMany(User::class, 'adressable');
-    }
-    
-    public function therapists(): MorphToMany
-    {
-        return $this->morphToMany(Therapist::class, 'adressable');
+        return $this->morphedByMany(User::class, 'model', 'user_has_addresses', 'address_id', 'model_id');
     }
 
+    public function therapists(): MorphToMany
+    {
+        return $this->morphedByMany(Therapist::class, 'model', 'user_has_addresses', 'address_id', 'model_id');
+    }
+    
 }

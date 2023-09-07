@@ -50,7 +50,7 @@ class TherapistController extends Controller
     public function agenda(Request $request, Therapist $therapist): Response
     {
         return Inertia::render('Therapist/Agenda', [
-            'therapist' => $therapist,
+            'therapist' => new TherapistResource($therapist),
             'traitments' => Inertia::lazy(fn () => 
             QueryBuilder::for(Traitment::forTherapist($therapist)->with('patient:id,name'))
                 ->allowedFilters([

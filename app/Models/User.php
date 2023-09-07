@@ -101,4 +101,9 @@ class User extends Authenticatable implements Auditable
     {
         return $this->hasMany(Traitment::class, 'patient_id');
     }
+
+    public function therapistTraitments(Therapist $therapist)
+    {
+        return $this->traitments()->where('therapist_id', $therapist->id);
+    }
 }

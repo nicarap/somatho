@@ -24,22 +24,16 @@ const profileInformationOpen = ref(false)
 <template>
     <therapist-layout :therapist="therapist.data" title="Modification">            
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 cursor-default bg-white shadow sm:rounded-lg">
-                    <UpdateProfileInformationForm
-                        :user="therapist.data"
-                        :must-verify-email="mustVerifyEmail"
-                        :status="status"
-                    />
-            </div>
-            
-            <div class="p-4 cursor-default bg-white shadow sm:rounded-lg">
+            <div class="p-4 cursor-default bg-white shadow sm:rounded-lg flex flex-col gap-4">
+                <UpdateProfileInformationForm
+                    :user="therapist.data"
+                    :must-verify-email="mustVerifyEmail"
+                    :status="status"
+                />
+                <UpdatePasswordForm :user="therapist.data" />
                 <UpdateAddress :user="therapist.data" />
             </div>
             
-            <div class="p-4 cursor-default bg-white shadow sm:rounded-lg">
-                <UpdatePasswordForm :user="therapist.data" />
-            </div>
-
             <div class="p-4 cursor-default bg-white shadow sm:rounded-lg">
                 <DeleteUserForm />
             </div>

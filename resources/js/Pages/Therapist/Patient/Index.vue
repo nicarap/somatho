@@ -18,16 +18,23 @@
             <div v-for="(patient, index) in therapist.data.patients" :key="index" 
             class="bg-white border shadow-sm p-4 mb-2" 
             @click="patientSelected = patient">        
-                <div class="w-full flex justify-center">
+            <div class="flex h-full flex-col justify-between">
+                <div><div class="w-full flex justify-center">
                     <Avatar size="24" :name="patient.name.split(' ').map((s) => s[0]?.toUpperCase?.()).join('')" class=" my-3" />
                 </div>
-                <div class="block text-xl font-medium text-gray-900">{{ patient.name }}</div>
-                <div class="text-sm text-gray-500">{{ patient.email }}</div>
-                <div class="text-sm text-gray-500">Dernier rendez vous </div>
-                <div class="text-sm text-gray-500">Prochain rendez vous </div>
-                <div class="pt-4 w-full flex justify-end">
+                <div class="block text-xl font-medium text-center text-gray-900">{{ patient.name }}</div>
+                <div class="text-sm text-gray-500 text-center ">{{ patient.email }}</div>
+                <div class="flex justify-center item-center mt-4 gap-4 w-full">
+                    <div class="text-sm text-gray-500" v-if="patient.next_traitment">
+                        <div class="whitespace-nowrap">Prochain rendez vous</div>
+                        <div class="text-center">{{ $globals.formatDate(patient.next_traitment.programmed_start_at)}}</div>
+                    </div>
+                </div>
+                </div>
+                <div class="pt-4 w-full flex justify-center">
                     <SecondaryButton @click="$inertia.visit(route('therapist.patient.show', {therapist: therapist.data, patient: patient}))">Voir la fiche</SecondaryButton>
                 </div>
+            </div>
             </div>
         </div>
     </therapist-layout>
@@ -47,6 +54,10 @@ export default {
         therapist:{
             type: Object,
             default: () => null,
+        },
+        next_traitment: {
+            type: Object,
+            default: () => null
         }
     },
     data(){

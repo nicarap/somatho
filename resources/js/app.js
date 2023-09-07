@@ -26,6 +26,11 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy, pinia)
             .component("font-awesome-icon", FontAwesomeIcon);
             myApp.config.globalProperties.moment = moment
+            myApp.config.globalProperties.$globals = {
+                formatDate: (value, format = 'DD/MM/YYYY HH:mm') => {
+                    return value ? moment(value).format(format) : ''
+                }
+            };
             return myApp.mount(el);
     },
     progress: {

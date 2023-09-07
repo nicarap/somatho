@@ -33,7 +33,7 @@ const setDateTime = (date, time) => {
 const click = (start_at, hour, user) => {
     let date = setDateTime(start_at.format("YYYY-MM-DD"), hour);
     openReserveModal({
-        therapist: props.therapist,
+        therapist: props.therapist.data,
         programmed_start_at: date.format("YYYY-MM-DD HH:mm"),
         programmed_end_at: date.add(1.5, "h").format("YYYY-MM-DD HH:mm"),
     });
@@ -42,7 +42,7 @@ const click = (start_at, hour, user) => {
 const clickHalf = (start_at, hour, user) => {
     let date = setDateTime(start_at.format("YYYY-MM-DD"), hour);
     openReserveModal({
-        therapist: props.therapist,
+        therapist: props.therapist.data,
         programmed_start_at: date.add(30, "m").format("YYYY-MM-DD HH:mm"),
         programmed_end_at: date.add(1.5, "h").format("YYYY-MM-DD HH:mm"),
     });
@@ -59,7 +59,7 @@ const openReserveModal = (traitment) => {
     selectedTraitment.value = traitment
 
     filters.value = {
-        therapist_id: props.therapist.id,
+        therapist_id: props.therapist.data.id,
         patient_id: traitment.patient?.id,
         programmed_start_at: traitment.programmed_start_at,
         programmed_end_at: traitment.programmed_end_at,
@@ -127,20 +127,21 @@ const getSlotsName = (s) => {
 };
 
 const createReservation = (form) => {
-    form.post(route("therapist.traitment.store", {therapist: props.therapist}), {
+    form.post(route("therapist.traitment.store", {therapist: props.therapist.data}), {
+        only: ['traitments'],
         onFinish: () => (openModal.value = false),
     });
 };
 
 const updateReservation = (form) => {
-    form.put(route("therapist.traitment.update", {therapist: props.therapist, traitment:selectedTraitment.value}), {
+    form.put(route("therapist.traitment.update", {therapist: props.therapist.data, traitment:selectedTraitment.value}), {
         onFinish: () => (openModal.value = false),
     });
 };
 
 const getSoins = (week) => {
     router.get(
-        route("therapist.agenda", { therapist: props.therapist }),
+        route("therapist.agenda", { therapist: props.therapist.data }),
         {
             filter: {
                 start_at: moment().startOf('week').week(week).format('YYYY-MM-DD'),
@@ -176,10 +177,10 @@ watch(computedTraitments, (val) => storeTraitments.value = [...storeTraitments.v
 <template>
     <therapist-layout
         title="Profile"
-        :therapist="therapist"
+        :therapist="therapist.data"
     >
         <Agenda v-model:numWeek="numWeek"
-            :therapist="therapist"
+            :therapist="therapist.data"
             @previousWeek="numWeek--"
             @nextWeek="numWeek++"
             @click="click"
@@ -219,7 +220,7 @@ watch(computedTraitments, (val) => storeTraitments.value = [...storeTraitments.v
         <create-traitment
             @updateReservation="updateReservation"
             @createReservation="createReservation"
-            :therapist="therapist"
+            :therapist="therapist.data"
             :filters="filters"
             @cancel="closeReserveModal"
         />

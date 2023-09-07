@@ -16,9 +16,9 @@ class TraitmentRepository
         $traitment = Traitment::make($traitmentDTO->toArray());
         $traitment->therapist()->associate($traitmentDTO->therapist_id);
         $traitment->patient()->associate($traitmentDTO->patient_id);
-
+        
         $this->save($traitment);
-
+        
         return $traitment;    
     }
 

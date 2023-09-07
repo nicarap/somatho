@@ -23,11 +23,10 @@ return new class extends Migration
             $table->float('price');
             $table->float('travel_cost')->nullable();
             $table->float('discount')->nullable();
-            $table->string('location_choosed');
-            $table->string('address');
-            $table->string('complement_address')->nullable();
-            $table->string('postal_code');
-            $table->string('location');
+            $table->string('label'); // address
+            $table->string('context')->nullable(); // address
+            $table->string('city'); // address
+            $table->string('postcode'); // address
             $table->timestamps();
 
             $table->foreign('therapist_id')->references('id')->on('therapists');

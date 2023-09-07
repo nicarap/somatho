@@ -26,29 +26,28 @@ class TraitmentController extends Controller
         DB::beginTransaction();
         
         $therapist = Therapist::firstWhere('id', $request->get('therapist_id'));
-        $address = $therapist->address;
-
+        $address = $therapist->addresses()->first();
+        
         try{
             $traitment = $this->traitmentService->create(traitmentDTO::from(array_merge($request->all(), [
-                'location_choosed' => $address->location,
-                'address' => $address->address,
-                'postal_code' => $address->postal_code,
-                'location' => $address->location,
+                'label' => $address->label,
+                'context' => $address->context,
+                'postcode' => $address->postcode,
+                'city' => $address->city,
                 'price' => 70,
             ])));
-
             $this->traitmentService->therapistValidation($traitment, Carbon::now());
             $this->traitmentService->patientValidation($traitment, Carbon::now());
-
-            return back()->with(['flash'=> ['type' => 'success', 'message' => 'Réservation créée']]);
-
+            
             DB::commit();
-        }catch(Exception $e){
+        }catch(\Exception $e){
             report($e);
             DB::rollBack();
 
             return back()->with(['flash'=> ['type' => 'error', 'message' => 'La réservation n\'a pas pu être créée']]);
         }
+
+        return back()->with(['flash'=> ['type' => 'success', 'message' => 'Réservation créée']]);
     }
 
     public function update(Request $request, Traitment $traitment)
