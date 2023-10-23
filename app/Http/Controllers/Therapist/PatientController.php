@@ -16,7 +16,6 @@ class PatientController extends Controller
 {
     public function index(Request $request, Therapist $therapist)
     {
-        $request['nextTraitmentFortherapist'] = $therapist;
         return Inertia::render('Therapist/Patient/Index', [
             'therapist' => new TherapistResource($therapist->load('patients')),
             'policies' => [],
@@ -24,8 +23,7 @@ class PatientController extends Controller
     }
 
     public function show(Request $request, Therapist $therapist, User $patient)
-    {
-        // dd($patient->therapistTraitments($therapist)->get());
+    {        
         return Inertia::render('Therapist/Patient/Show', [
             'therapist' => new TherapistResource($therapist),
             'patient' => new UserResource($patient),

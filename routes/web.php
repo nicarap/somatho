@@ -6,7 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Therapist\AddressController as TherapistAddressController;
 use App\Http\Controllers\Therapist\PatientController as TherapistPatientController;
-use App\Http\Controllers\TraitmentController;
+use App\Http\Controllers\Therapist\TraitmentController as TherapistTraitmentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -31,7 +31,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');    
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -41,19 +41,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('Traitment/Create', ['therapist' => $request->user()]);
     });
 
-    Route::get('therapist/{therapist}/dashboard', [TherapistController::class, 'dashboard'])->name('therapist.dashboard');
-    Route::get('therapist/{therapist}/agenda', [TherapistController::class, 'agenda'])->name('therapist.agenda');
     Route::resource('therapist', TherapistController::class);
-    Route::name('therapist')->resource('therapist/{therapist}/patient', TherapistPatientController::class);
-    
-    Route::post('therapist/{therapist}/traitment', [TraitmentController::class, 'store'])->name('therapist.traitment.store');
-    Route::put('therapist/{therapist}/traitment/{traitment}/edit', [TraitmentController::class, 'update'])->name('therapist.traitment.update');
-    Route::put('therapist/{therapist}/address/{address}/edit', [TherapistAddressController::class, 'changeDefaultAddress'])->name('therapist.address.changeDefaultAddress');
+
+    Route::prefix('therapist/{therapist}')->name('therapist.')->group(function () {
+        Route::resource('/patient', TherapistPatientController::class);
+        Route::get('dashboard', [TherapistController::class, 'dashboard'])->name('dashboard');
+        Route::get('agenda', [TherapistController::class, 'agenda'])->name('agenda');
+
+        Route::resource('traitment', TherapistTraitmentController::class)->only(['update', 'store']);
+        Route::delete('/traitment/{traitment}', [TherapistTraitmentController::class, 'destroy'])->name('traitment.destroy');
+
+        Route::put('/address/{address}/edit', [TherapistAddressController::class, 'changeDefaultAddress'])->name('address.changeDefaultAddress');
+    });
 
     Route::resource('user', UserController::class);
 
     Route::resource('address', AddressController::class);
 });
 
-require __DIR__.'/auth.php';
-require __DIR__.'/api.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/api.php';

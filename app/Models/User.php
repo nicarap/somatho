@@ -72,6 +72,11 @@ class User extends Authenticatable implements Auditable
         return $this->belongsToMany(Address::class, 'user_has_addresses', 'model_id');
     }
 
+    public function notes(): MorphMany
+    {
+        return $this->morphMany(Note::class, 'model');
+    }
+
     /**
      * retrieve user by mail
      *

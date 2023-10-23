@@ -11,7 +11,7 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-    <div>{{ $page.props.flash }}
+    <div>
         <div class="h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100 h-[10%]">
                 <!-- Primary Navigation Menu -->
@@ -138,23 +138,21 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Content -->
             <main class="h-[90%]">
-            <div class="py-8 sm:px-6 lg:px-8 h-full overflow-hidden">
-
-                <div class="flex gap-4 w-full items-start h-full overflow-hidden">
-                    <div v-if="$slots.avatar || $slots.navigation" class="w-56 bg-white rounded-lg shadow max-h-full flex flex-col">
-                        <div class="flex flex-col items-center m-2">
-                            <slot name="avatar" />
+                <div class="py-8 sm:px-6 lg:px-8 h-full overflow-hidden">
+                    <div class="flex gap-4 w-full items-start h-full overflow-hidden">
+                        <div v-if="$slots.avatar || $slots.navigation" class="hidden w-full max-w-xs bg-white rounded-lg shadow max-h-full sm:flex flex-col">
+                            <div class="flex flex-col items-center m-2">
+                                <slot name="avatar" />
+                            </div>
+                            <div class="w-full overflow-y-auto">
+                                <slot name="navigation" />
+                            </div>
                         </div>
-                        <div class="w-full overflow-y-auto">
-                            <slot name="navigation" />
+                        <div class="flex-1 px-2 h-full overflow-auto">
+                            <slot />
                         </div>
-                    </div>
-                    <div class="flex-1 h-full  overflow-auto">
-                        <slot />
                     </div>
                 </div>
-                
-            </div>
             </main>
         </div>
     </div>

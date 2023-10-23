@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Address extends Model
@@ -22,7 +23,7 @@ class Address extends Model
         'latitude',
         'is_verified',
     ];
-    
+
     public function userAdresses()
     {
         return $this->belongsToMany(UserAddress::class, 'user_has_addresses');
@@ -37,5 +38,4 @@ class Address extends Model
     {
         return $this->morphedByMany(Therapist::class, 'model', 'user_has_addresses', 'address_id', 'model_id');
     }
-    
 }

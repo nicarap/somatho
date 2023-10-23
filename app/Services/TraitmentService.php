@@ -15,7 +15,6 @@ class TraitmentService
 {
     public function __construct(private TraitmentRepository $traitmentRepository)
     {
-        
     }
 
     public function create(traitmentDTO $traitment): Traitment
@@ -27,12 +26,19 @@ class TraitmentService
     {
         return $this->traitmentRepository->save($traitment);
     }
-    
-    public function therapistValidation(Traitment $traitment, Carbon $date){
+
+    public function destroy(Traitment $traitment): bool
+    {
+        return $this->traitmentRepository->delete($traitment);
+    }
+
+    public function therapistValidation(Traitment $traitment, Carbon $date)
+    {
         $this->traitmentRepository->update($traitment, ['therapist_validated_at' => $date]);
     }
 
-    public function patientValidation(Traitment $traitment, Carbon $date){
+    public function patientValidation(Traitment $traitment, Carbon $date)
+    {
         $this->traitmentRepository->update($traitment, ['patient_validated_at' => $date]);
     }
 }

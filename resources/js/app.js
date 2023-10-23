@@ -29,11 +29,18 @@ createInertiaApp({
             myApp.config.globalProperties.$globals = {
                 formatDate: (value, format = 'DD/MM/YYYY HH:mm') => {
                     return value ? moment(value).format(format) : ''
+                },
+                formatTel: (value) => {
+                    let formated;
+                    if(value.includes('+')){
+                        formated = value.replace(/\D+/g, '').replace(/(\d{3})(\d{3})(\d{2})(\d{2})(\d{2})/, '(+$1) $2 $3 $4 $5');
+                    }else formated = value.replace(/(\d{4})(\d{2})(\d{2})(\d{2})/, '$1 $2 $3 $4'); 
+                    return formated;
                 }
             };
             return myApp.mount(el);
     },
     progress: {
-        color: '#4B5563',
+        color: '#52b8e3',
     },
 });

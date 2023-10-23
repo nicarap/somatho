@@ -18,7 +18,7 @@ class TherapistController extends Controller
 {
     public function dashboard(Request $request, Therapist $therapist): Response
     {
-        
+
         return Inertia::render('Therapist/Dashboard', [
             'therapist' => $therapist,
             'traitments_by' => [
@@ -51,8 +51,8 @@ class TherapistController extends Controller
     {
         return Inertia::render('Therapist/Agenda', [
             'therapist' => new TherapistResource($therapist),
-            'traitments' => Inertia::lazy(fn () => 
-            QueryBuilder::for(Traitment::forTherapist($therapist)->with('patient:id,name'))
+            'traitments' => Inertia::lazy(fn () =>
+            QueryBuilder::for(Traitment::forTherapist($therapist)->with(['patient:id,name', 'address:id,name']))
                 ->allowedFilters([
                     AllowedFilter::scope('start_at'),
                     AllowedFilter::scope('end_at'),

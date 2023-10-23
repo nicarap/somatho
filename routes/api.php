@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\api\Therapist\PatientController;
+use App\Http\Controllers\api\Therapist\PatientController as TherapistPatientController;
+use App\Http\Controllers\api\Therapist\AddressController as TherapistAddressController;
+use App\Http\Controllers\api\Patient\AddressController as PatientAddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->name('api.')->group(function () {
-    Route::get('therapist/{therapist}/patients/index', [PatientController::class, 'index'])->name('therapist.patients.index');
+    Route::get('therapist/{therapist}/patients/index', [TherapistPatientController::class, 'index'])->name('therapist.patients.index');
+    Route::get('therapist/{therapist}/address', [TherapistAddressController::class, 'index'])->name('therapist.address.index');
+    Route::get('patient/{user}/address', [PatientAddressController::class, 'index'])->name('patient.address.index');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

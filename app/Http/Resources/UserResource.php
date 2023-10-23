@@ -15,8 +15,8 @@ class UserResource extends JsonResource
         return array_merge(parent::toArray($request), [
             'therapist' => TherapistResource::collection($this->whenLoaded('therapist')),
             'traitments' => TraitmentResource::collection($this->whenLoaded('traitments')),
-            'next_traitment' => $this->when(Arr::get($request, 'nextTraitmentFortherapist'), 
-                new TraitmentResource(Traitment::forTherapist(Arr::get($request, 'nextTraitmentFortherapist'))->forPatient($this->resource)->nextTraitment()->first())),
+            'next_traitment' => $this->when($request->route('therapist'), 
+                new TraitmentResource(Traitment::forTherapist($request->route('therapist'))->forPatient($this->resource)->nextTraitment()->first())),
             'policies' => [
                 'view' => true,
                 'delete' => true,

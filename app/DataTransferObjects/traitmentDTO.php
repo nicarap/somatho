@@ -15,15 +15,12 @@ class traitmentDTO extends Data
     public function __construct(
         public string $therapist_id,
         public string $patient_id,
+        public string $address_id,
         #[WithCast(DateTimeInterfaceCast::class, 'Y-m-d H:i')]
         public DateTime $programmed_start_at,
         #[WithCast(DateTimeInterfaceCast::class, 'Y-m-d H:i')]
         public DateTime $programmed_end_at,
         public string $price,
-        public string $label,
-        public string $context,
-        public string $postcode,
-        public string $city,
 
         #[WithCast(DateTimeInterfaceCast::class)]
         public DateTime|Optional $therapist_validated_at,
@@ -32,9 +29,6 @@ class traitmentDTO extends Data
         public float|Optional $travel_cost,
         public float|Optional $discount,
         public string|Optional $complement_address,
-    )
-    {
-        
+    ) {
     }
-    
 }

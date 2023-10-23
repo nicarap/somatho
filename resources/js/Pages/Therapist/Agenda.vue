@@ -17,6 +17,7 @@ const props = defineProps({
     },
 });
 
+
 const openModal = ref(false);
 const filters = ref({});
 const traitmentsLoaded = ref(false);
@@ -50,32 +51,24 @@ const clickHalf = (start_at, hour, user) => {
 
 const openReserveModal = (traitment) => {
     if (
-        // isReserved(traitment.programmed_start_at) || // TODO : ne marche pas
         isPassed(traitment.programmed_end_at)
     )
         return false;
 
     openModal.value = true;
-    selectedTraitment.value = traitment
+    selectedTraitment.value = traitment;
 
     filters.value = {
+        id: traitment.id,
         therapist_id: props.therapist.data.id,
         patient_id: traitment.patient?.id,
+        address_id: traitment.address_id,
         programmed_start_at: traitment.programmed_start_at,
         programmed_end_at: traitment.programmed_end_at,
     };
 };
 
 const isPassed = (date) => date < moment();
-
-const isReserved = (date) => {
-    if (
-        props.traitments.find((s) =>
-            moment(date).isBetween(moment(s.start_at), moment(s.end_at), "days")
-        )
-    )
-        return true;
-};
 
 const closeReserveModal = () => {
     openModal.value = false;
@@ -129,15 +122,24 @@ const getSlotsName = (s) => {
 const createReservation = (form) => {
     form.post(route("therapist.traitment.store", {therapist: props.therapist.data}), {
         only: ['traitments'],
-        onFinish: () => (openModal.value = false),
+        onFinish: () => openModal.value = false,
     });
 };
 
 const updateReservation = (form) => {
     form.put(route("therapist.traitment.update", {therapist: props.therapist.data, traitment:selectedTraitment.value}), {
-        onFinish: () => (openModal.value = false),
+        onFinish: () => openModal.value = false,
     });
 };
+
+const cancelReservation = () => {
+    router.delete(route('therapist.traitment.destroy', {therapist: props.therapist.data, traitment: selectedTraitment.value.id}), {
+        onFinish: () => {
+            openModal.value = false;
+            storeTraitments.value = storeTraitments.value.filter((t) => t.id !== selectedTraitment.value.id);
+        },
+    });
+}
 
 const getSoins = (week) => {
     router.get(
@@ -187,6 +189,7 @@ watch(computedTraitments, (val) => storeTraitments.value = [...storeTraitments.v
             @clickHalf="clickHalf"
             :loading="traitmentsLoading"
         >
+        
             <template
                 v-for="(s, index) in storeTraitments"
                 :key="index"
@@ -209,7 +212,7 @@ watch(computedTraitments, (val) => storeTraitments.value = [...storeTraitments.v
                 </div>
             </template>
         </Agenda>
-        <pre>{{ storeTraitments.length }}</pre>
+        
     </therapist-layout>
 
     <Modal
@@ -217,9 +220,11 @@ watch(computedTraitments, (val) => storeTraitments.value = [...storeTraitments.v
         @close="closeReserveModal"
         maxWidth="sm"
     >
+    
         <create-traitment
             @updateReservation="updateReservation"
             @createReservation="createReservation"
+            @cancelReservation="cancelReservation"
             :therapist="therapist.data"
             :filters="filters"
             @cancel="closeReserveModal"

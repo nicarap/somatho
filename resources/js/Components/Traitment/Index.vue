@@ -12,7 +12,7 @@ const props = defineProps({
     <table class="table-fixed w-full">
         <thead>
             <tr class="text-left">
-                <th>date de début</th>
+                <th>Date de début</th>
                 <th>Date de fin</th>
                 <th>Réalisé</th>
                 <th>Prix</th>
