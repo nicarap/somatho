@@ -13,6 +13,7 @@ use App\Models\Traitment;
 use App\Services\TraitmentService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class TraitmentController extends Controller
@@ -30,7 +31,12 @@ class TraitmentController extends Controller
         try {
             $traitment = $this->traitmentService->create(traitmentDTO::from(array_merge($request->all(), [
                 'price' => 70,
+                'therapist_id' => $therapist->id
             ])));
+
+            if ($request->get('note')) {
+                $this->traitmentService->addNote($traitment, $request->get('note'));
+            }
 
             $this->traitmentService->therapistValidation($traitment, Carbon::now());
             $this->traitmentService->patientValidation($traitment, Carbon::now());
@@ -38,6 +44,7 @@ class TraitmentController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             report($e);
+            dd($e);
             DB::rollBack();
 
             return back()->with(['flash' => ['type' => 'error', 'message' => 'La réservation n\'a pas pu être créée']]);

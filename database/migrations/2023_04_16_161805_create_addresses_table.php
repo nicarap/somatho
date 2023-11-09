@@ -23,6 +23,7 @@ return new class extends Migration
             $table->boolean('is_verified')->default(false);
 
             $table->primary('id');
+            $table->softDeletes();
             $table->timestamps();
         });
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('description');
             $table->string('model_type');
-            $table->string('model_id'); // user et soin
+            $table->string('model_id'); // patient et traitment
             $table->timestamps();
         });
     }

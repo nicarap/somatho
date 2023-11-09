@@ -109,45 +109,41 @@ const showingNavigationDropdown = ref(false);
                 <!-- Responsive Navigation Menu -->
                 <div
                     :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
-                    class="sm:hidden h-18"
+                    class="sm:hidden h-18 bg-gray-500 relative text-white z-50"
                 >
-                    <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                    <div class="space-y-1">
+                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('therapist.dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
-                    </div>
-
-                    <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-t border-gray-200">
-                        <div class="px-4">
-                            <div class="font-medium text-base text-gray-800">
-                                {{ $page.props.auth.user.name }}
-                            </div>
-                            <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
-                        </div>
-
-                        <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
+                        <ResponsiveNavLink :href="route('therapist.agenda', {
+                            therapist: $page.props.auth.user
+                        })" :active="route().current('therapist.agenda')">
+                            Agenda
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('therapist.patient.index', {
+                            therapist: $page.props.auth.user
+                        })" :active="route().current('therapist.patient.*')">
+                            Patients
+                        </ResponsiveNavLink>
                     </div>
                 </div>
             </nav>
 
             <!-- Page Content -->
-            <main class="h-[90%]">
-                <div class="py-8 sm:px-6 lg:px-8 h-full overflow-hidden">
-                    <div class="flex gap-4 w-full items-start h-full overflow-hidden">
-                        <div v-if="$slots.avatar || $slots.navigation" class="hidden w-full max-w-xs bg-white rounded-lg shadow max-h-full sm:flex flex-col">
-                            <div class="flex flex-col items-center m-2">
-                                <slot name="avatar" />
-                            </div>
-                            <div class="w-full overflow-y-auto">
-                                <slot name="navigation" />
-                            </div>
+            <main class="h-[90%] flex w-full">
+                <div class="h-full hidden lg:block bg-white w-full max-w-xs shadow-xl">
+                    <div v-if="$slots.avatar || $slots.navigation" class="w-full max-w-xs bg-white rounded-lg shadow max-h-full flex flex-col">
+                        <div class="flex flex-col items-center m-2">
+                            <slot name="avatar" />
                         </div>
+                        <div class="w-full overflow-y-auto">
+                            <slot name="navigation" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full py-8 sm:px-6 lg:px-8 h-full overflow-hidden">
+                    <div class="flex gap-4 w-full items-start h-full overflow-hidden">
                         <div class="flex-1 px-2 h-full overflow-auto">
                             <slot />
                         </div>

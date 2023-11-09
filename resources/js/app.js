@@ -8,6 +8,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { createPinia } from 'pinia';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
 import moment from 'moment/moment';
 import * as icons from '@/icons';
 
@@ -25,6 +26,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy, pinia)
             .component("font-awesome-icon", FontAwesomeIcon);
+
             myApp.config.globalProperties.moment = moment
             myApp.config.globalProperties.$globals = {
                 formatDate: (value, format = 'DD/MM/YYYY HH:mm') => {

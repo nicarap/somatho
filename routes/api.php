@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->name('api.')->group(function () {
-    Route::get('therapist/{therapist}/patients/index', [TherapistPatientController::class, 'index'])->name('therapist.patients.index');
+    Route::get('therapist/{therapist}/patients/index', [TherapistPatientController::class, 'index'])->name('therapist.patient.index');
     Route::get('therapist/{therapist}/address', [TherapistAddressController::class, 'index'])->name('therapist.address.index');
     Route::get('patient/{user}/address', [PatientAddressController::class, 'index'])->name('patient.address.index');
 });

@@ -38,17 +38,24 @@ defineProps({
                     <li class="border pl-8 pr-2 py-2 text-sm font-medium cursor-pointer flex gap-2 items-center" 
                         :class="[route().current('therapist.patient.*') ? 'bg-primary text-white' : 'bg-white hover:bg-primary/25']"
                         @click="$inertia.get(route('therapist.patient.index', therapist))">
+                        
                         <font-awesome-icon class="text-primary" 
-                        :class="[route().current('therapist.patient.*') && 'text-white']" 
-                        icon="person" />
-                            Mes patients
-                        </li>
+                            :class="[route().current('therapist.patient.*') && 'text-white']" 
+                            icon="person" />
+                        Mes patients
+                    </li>
+
                     <li class="border pl-8 pr-2 py-2 text-sm font-medium cursor-pointer flex gap-2 items-center" 
                         :class="[route().current('therapist.agenda') ? 'bg-primary text-white' : 'bg-white hover:bg-primary/25']"
                         @click="$inertia.get(route('therapist.agenda', therapist))">
-                        <font-awesome-icon class="text-primary" :class="[route().current('therapist.agenda') && 'text-white']" icon="calendar" />Mes rendez-vous</li>
+                        
+                        <font-awesome-icon class="text-primary" :class="[route().current('therapist.agenda') && 'text-white']" icon="calendar" />
+                        Mes rendez-vous
+                    </li>
+
                     <li class="border pl-8 pr-2 py-2 flex justify-between items-center text-sm font-medium cursor-pointer hover:bg-gray-200"
                         :class="[route().current('therapist.message.*') ? 'bg-primary text-white' : 'bg-white']">
+                        
                         <div class="grow flex gap-2 items-center">
                             <font-awesome-icon class="text-primary" icon="message" />Mes messages 
                         </div>

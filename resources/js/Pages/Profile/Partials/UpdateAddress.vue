@@ -67,7 +67,7 @@ const deleteAddress = (address) => {
         </div>
         <div class="grid grid-cols-3 gap-2">
             <div v-for="(address, index) in user.addresses" :key="index" 
-                class="rounded-lg mt-2 border-2  text-gray-700 p-2"
+                class="rounded-lg mt-2 border-2  text-gray-700 p-2 bg-white"
                 :class="[address.pivot.default ? 'border-primary' : 'hover:border-primary']">
                 <div class="uppercase flex w-full justify-between items-center text-sm font-semibold">
                     {{ address.name }}

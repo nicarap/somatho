@@ -20,7 +20,7 @@ const hours = ref([
 const today = ref(moment())
 
 const props = defineProps({
-    dislayDay: {
+    numberOfDays: {
         type: String,
         default: '7'
     },
@@ -35,7 +35,9 @@ const props = defineProps({
     }
 })
 
-const emits = defineEmits(['click', 'clickHalf', 'previousWeek', 'nextWeek'])
+const displayDay = ref(moment.now())
+
+const emits = defineEmits(['click', 'clickHalf', 'previousWeek', 'nextWeek', 'today'])
 
 const translateMonth = (month) => {
     return {
@@ -105,17 +107,22 @@ const month = computed(() => props.numWeek && moment().startOf('week').week(prop
                 <tr><th :colspan="days.length+1" class="text-center p-2 text-gray-600">
                     {{ translateMonth(month) }}
                 </th></tr>
-                <tr><th :colspan="days.length+1" class="text-center p-2 text-gray-600">
-                    <div class="flex gap-4 w-full justify-center">
-                        <icon-button icon="chevron-left"  @click="$emit('previousWeek')"/> 
-                        Semaine {{ numWeek }} 
-                        <icon-button icon="chevron-right"  @click="$emit('nextWeek')"/>
-                </div>
-                </th></tr>
+                <tr>
+                    <th :colspan="days.length+1" class="text-center p-2 text-gray-600">
+                        <div class="flex gap-4 w-full justify-center">
+                            <icon-button icon="chevron-left"  @click="$emit('previousWeek')"/> 
+                            Semaine {{ numWeek }} 
+                            <icon-button icon="chevron-right"  @click="$emit('nextWeek')"/>
+                        </div>
+                        <div class="text-xs" @click="$emit('today')">
+                            Aujourd'hui
+                        </div>
+                    </th>
+                </tr>
                 <tr class="bg-white">
                     <td class="text-center border border-l-0"></td>
                     <template v-for="(d, index) in days" :key="index">
-                        <th  class="p-2 border" v-if="index < props.dislayDay">
+                        <th  class="p-2 border" v-if="index < props.numberOfDays">
                             <div>{{d.translate_day}}</div>
                             <div class="text-xs text-gray-400">{{d.momentDate.format('DD/MM/YYYY')}}</div>
                         </th>
@@ -127,11 +134,12 @@ const month = computed(() => props.numWeek && moment().startOf('week').week(prop
                     <td class="text-center border h-12 ">{{ h }}</td>
                     
                     <template v-for="(d, indexd) in days" :key="indexd">
-                        <td v-if="indexd < props.dislayDay" :class="[isPassed(d.momentDate) && 'bg-gray-300']" 
+                        <td v-if="indexd < props.numberOfDays" :class="[isPassed(d.momentDate) && 'bg-gray-300']" 
                         class="relative ">
-                                <div class="absolute top-0 bottom-1/2 bg-500 border left-0 right-0" :class="[!isPassed(d.momentDate) && 'hover:bg-gray-100']"  @click="click(d.momentDate, h)" />
-                                <div class="absolute top-1/2 bottom-0 bg-500 border left-0 right-0" :class="[!isPassed(d.momentDate) && 'hover:bg-gray-100']"  @click="clickHalf(d.momentDate, h)" />
-                                <slot :name="slotName(d.momentDate)+h.split(':')[0]" /> 
+                        <!-- v-if="d.momentDate.isSame(displayDay, 'day')"  -->
+                            <div class="absolute top-0 bottom-1/2 bg-500 border left-0 right-0" :class="[!isPassed(d.momentDate) && 'hover:bg-gray-100']"  @click="click(d.momentDate, h)" />
+                            <div class="absolute top-1/2 bottom-0 bg-500 border left-0 right-0" :class="[!isPassed(d.momentDate) && 'hover:bg-gray-100']"  @click="clickHalf(d.momentDate, h)" />
+                            <slot :name="slotName(d.momentDate)+h.split(':')[0]" /> 
                         </td>
                     </template>
                 </tr>

@@ -10,9 +10,10 @@ class Note extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['description'];
+
     public function notable(): MorphTo
     {
-        return $this->morphTo();
+        return $this->morphTo(__FUNCTION__, 'model_type', 'model_id');
     }
-    
 }

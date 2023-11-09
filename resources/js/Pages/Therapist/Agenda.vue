@@ -3,9 +3,10 @@ import TherapistLayout from "@/Layouts/TherapistLayout.vue";
 import Agenda from "@/Components/Agenda.vue";
 import moment from "moment/moment";
 import Modal from "@/Components/Modal.vue";
-import CreateTraitment from "@/Pages/Traitment/Create.vue";
+import CreateOrUpdateTraitment from "@/Pages/Therapist/Traitment/CreateOrUpdate.vue";
 import { onMounted, ref, watch, computed } from "vue";
 import { router } from "@inertiajs/vue3";
+import CompletedTraitment from "./Traitment/Completed.vue";
 
 const props = defineProps({
     therapist: {
@@ -26,10 +27,10 @@ const selectedTraitment = ref(null);
 const numWeek = ref(parseInt(moment().format('W')))
 const computedTraitments = computed(() => props.traitments)
 const storeTraitments = ref([])
+
 const setDateTime = (date, time) => {
     return moment(date + " " + time, "YYYY-MM-DD HH:mm");
 };
-
 
 const click = (start_at, hour, user) => {
     let date = setDateTime(start_at.format("YYYY-MM-DD"), hour);
@@ -54,9 +55,8 @@ const openReserveModal = (traitment) => {
         isPassed(traitment.programmed_end_at)
     )
         return false;
-
+        
     openModal.value = true;
-    selectedTraitment.value = traitment;
 
     filters.value = {
         id: traitment.id,
@@ -66,6 +66,11 @@ const openReserveModal = (traitment) => {
         programmed_start_at: traitment.programmed_start_at,
         programmed_end_at: traitment.programmed_end_at,
     };
+};
+const openReservedModal = (traitment) => {
+    selectedTraitment.value = traitment;
+    selectedTraitment.value.is_passed = isPassed(moment(traitment.programmed_end_at))
+    openModal.value = true;
 };
 
 const isPassed = (date) => date < moment();
@@ -183,6 +188,7 @@ watch(computedTraitments, (val) => storeTraitments.value = [...storeTraitments.v
     >
         <Agenda v-model:numWeek="numWeek"
             :therapist="therapist.data"
+            @today="numWeek = parseInt(moment().format('W'))"
             @previousWeek="numWeek--"
             @nextWeek="numWeek++"
             @click="click"
@@ -200,7 +206,7 @@ watch(computedTraitments, (val) => storeTraitments.value = [...storeTraitments.v
                     border-4 border-transparent border-l-primary left-0 right-0 group"
                     :class="getPosition(s.programmed_start_at, s.programmed_end_at)"
                     :style="{height: getHeight(s.programmed_start_at, s.programmed_end_at)}"
-                    @click="openReserveModal(s)"
+                    @click="openReservedModal(s)"
                 >
                     <!-- <div class="bg-primary px-1 " /> -->
                     <div class="px-2 group-hover:text-white">
@@ -220,15 +226,16 @@ watch(computedTraitments, (val) => storeTraitments.value = [...storeTraitments.v
         @close="closeReserveModal"
         maxWidth="sm"
     >
-    
-        <create-traitment
+        <create-or-update-traitment
             @updateReservation="updateReservation"
             @createReservation="createReservation"
             @cancelReservation="cancelReservation"
-            :therapist="therapist.data"
-            :filters="filters"
             @cancel="closeReserveModal"
+            :therapist="therapist.data"
+            :traitment="selectedTraitment"
+            :filters="filters"
         />
+    
     </Modal>
 
 </template>

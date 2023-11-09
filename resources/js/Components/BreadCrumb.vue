@@ -19,9 +19,9 @@ const props = defineProps({
                     {{ item.label }}
                 </Link>
             </template>
-            <tempalte v-else>
+            <template v-else>
                 {{ item.label }}
-            </tempalte>
+            </template>
         </h1>
         <template v-if="index !== items.length - 1"> / </template>
       </template>

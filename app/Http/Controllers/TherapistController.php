@@ -57,6 +57,7 @@ class TherapistController extends Controller
                     AllowedFilter::scope('start_at'),
                     AllowedFilter::scope('end_at'),
                 ])
+                ->with('notes')
                 ->get())
         ]);
     }

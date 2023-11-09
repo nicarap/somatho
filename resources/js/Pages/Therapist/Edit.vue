@@ -23,8 +23,8 @@ const profileInformationOpen = ref(false)
 
 <template>
     <therapist-layout :therapist="therapist.data" title="Modification">            
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 cursor-default bg-white shadow sm:rounded-lg flex flex-col gap-4">
+        <div class="max-w-7xl mx-auto space-y-6">
+            <div class="p-4 cursor-default sm:rounded-lg flex flex-col gap-4">
                 <UpdateProfileInformationForm
                     :user="therapist.data"
                     :must-verify-email="mustVerifyEmail"
@@ -34,7 +34,7 @@ const profileInformationOpen = ref(false)
                 <UpdateAddress :user="therapist.data" />
             </div>
             
-            <div class="p-4 cursor-default bg-white shadow sm:rounded-lg">
+            <div class="p-4 cursor-defaul sm:rounded-lg">
                 <DeleteUserForm />
             </div>
         </div>

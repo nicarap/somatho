@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\DataTransferObjects\AddressDTO;
 use App\Models\Address;
 use App\Models\Therapist;
 use App\Models\User;
@@ -15,42 +16,40 @@ use Illuminate\Support\Arr;
 class AddressService
 {
     public function __construct(
-        private AddressRepository $addressRepository, 
+        private AddressRepository $addressRepository,
         private TherapistService $therapistService,
-        private UserAddressRepository $userAddressRepository)
-    {
-        
+        private UserAddressRepository $userAddressRepository
+    ) {
     }
 
-    public function create(array $attributes, User|Therapist $requester)
+    public function create(AddressDTO $addressDTO, User|Therapist $requester)
     {
-        $address = $this->addressRepository->create($attributes);
-        $this->attachTo($address, $requester, $requester->addresses()->count() === 0 && Arr::get($attributes, 'default'));
+        $address = $this->addressRepository->create($addressDTO);
+        $this->attachTo($address, $requester, $requester->addresses()->count() === 0 && $addressDTO->default);
 
         return $address;
     }
 
     public function attachTo(Address $address, Therapist|User $user,  bool $is_default): Address
     {
-        if($user instanceof(Therapist::class)){
+        if ($user instanceof (Therapist::class)) {
             $address->therapists()->attach($user, ['default' => $is_default]);
-        }else if($user instanceof(User::class)){
+        } else if ($user instanceof (User::class)) {
             $address->users()->attach($user, ['default' => $is_default]);
         }
-        
+
         return $address;
     }
 
     public function changeDefaultAddress(Therapist $therapist, Address $address, bool $is_default)
     {
         $userAddress = UserAddress::forUser($therapist)->forAddress($address)->first();
-        
-        foreach($therapist->addresses as $other_address)
-        {
-            if($other_address->id !== $userAddress->address_id){
+
+        foreach ($therapist->addresses as $other_address) {
+            if ($other_address->id !== $userAddress->address_id) {
                 $this->unmarkAsDefault(UserAddress::forUser($therapist)->forAddress($other_address)->first());
-            }else {
-                if($is_default){
+            } else {
+                if ($is_default) {
                     $this->markAsDefault($userAddress);
                 }
             }
@@ -71,10 +70,6 @@ class AddressService
 
     public function destroy(Address $address)
     {
-        // TODO : if adress is in use traitments don't delete
-        
-        $address->therapists()->sync([]);
-        $address->patients()->sync([]);
-        return $this->addressRepository->destroy($address);
+        return $this->addressRepository->delete($address);
     }
 }

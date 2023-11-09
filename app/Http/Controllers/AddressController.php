@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTransferObjects\AddressDTO;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Services\AddressService;
@@ -21,7 +22,7 @@ class AddressController extends Controller
         DB::beginTransaction();
         
         try{
-            $address = $this->addressService->create($request->all(), Auth::user());
+            $this->addressService->create(AddressDTO::from($request->all()), Auth::user());
 
             DB::commit();
         }catch(\Exception $e){

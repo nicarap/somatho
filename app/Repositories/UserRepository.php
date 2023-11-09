@@ -13,8 +13,4 @@ class UserRepository
     {
         return User::create($entity->toArray());;
     }
-
-    public function syncRoles(User $user, array $roles){
-        return $user->syncRoles($roles);
-    }
 } 

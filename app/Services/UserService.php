@@ -23,10 +23,6 @@ class UserService
 
         $user = $this->userRepository->create($entity);
 
-        if($entity->roles){
-            $this->userRepository->syncRoles($user, $entity->roles);
-        }
-
         return $user;
     }
 
