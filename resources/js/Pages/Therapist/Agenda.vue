@@ -6,7 +6,6 @@ import Modal from "@/Components/Modal.vue";
 import CreateOrUpdateTraitment from "@/Pages/Therapist/Traitment/CreateOrUpdate.vue";
 import { onMounted, ref, watch, computed } from "vue";
 import { router } from "@inertiajs/vue3";
-import CompletedTraitment from "./Traitment/Completed.vue";
 
 const props = defineProps({
     therapist: {
@@ -16,8 +15,8 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    patients: {type: Object, default: () => {}},
 });
-
 
 const openModal = ref(false);
 const filters = ref({});
@@ -25,15 +24,13 @@ const traitmentsLoaded = ref(false);
 const traitmentsLoading = ref(false);
 const selectedTraitment = ref(null);
 const numWeek = ref(parseInt(moment().format('W')))
-const computedTraitments = computed(() => props.traitments)
-const storeTraitments = ref([])
+const storeTraitments = ref(props.traitments)
 
 const setDateTime = (date, time) => {
     return moment(date + " " + time, "YYYY-MM-DD HH:mm");
 };
 
-const click = (start_at, hour, user) => {
-    let date = setDateTime(start_at.format("YYYY-MM-DD"), hour);
+const click = (date) => {    
     openReserveModal({
         therapist: props.therapist.data,
         programmed_start_at: date.format("YYYY-MM-DD HH:mm"),
@@ -41,14 +38,14 @@ const click = (start_at, hour, user) => {
     });
 };
 
-const clickHalf = (start_at, hour, user) => {
-    let date = setDateTime(start_at.format("YYYY-MM-DD"), hour);
-    openReserveModal({
-        therapist: props.therapist.data,
-        programmed_start_at: date.add(30, "m").format("YYYY-MM-DD HH:mm"),
-        programmed_end_at: date.add(1.5, "h").format("YYYY-MM-DD HH:mm"),
-    });
-};
+// const clickHalf = (start_at, hour, user) => {
+//     let date = setDateTime(start_at.format("YYYY-MM-DD"), hour);
+//     openReserveModal({
+//         therapist: props.therapist.data,
+//         programmed_start_at: date.add(30, "m").format("YYYY-MM-DD HH:mm"),
+//         programmed_end_at: date.add(1.5, "h").format("YYYY-MM-DD HH:mm"),
+//     });
+// };
 
 const openReserveModal = (traitment) => {
     if (
@@ -73,33 +70,13 @@ const openReservedModal = (traitment) => {
     openModal.value = true;
 };
 
-const isPassed = (date) => date < moment();
+const isPassed = (date) => {
+    date < moment()
+};
 
 const closeReserveModal = () => {
     openModal.value = false;
     selectedTraitment.value = null
-};
-
-const getPosition = (start, end) => {
-    let top = "top-0";
-    let minutes = moment(start).minutes();
-
-    switch (minutes) {
-        case 0:
-            top = "top-0";
-            break;
-        case 15:
-            top = "top-1/3";
-            break;
-        case 30:
-            top = "top-1/2";
-            break;
-        case 45:
-            top = "top-2/3";
-            break;
-    }
-
-    return `${top}`;
 };
 
 const getHeight = (start, end) => {
@@ -121,7 +98,7 @@ const getDate = (timestamp, format = "yyyyMMDD") => {
 };
 
 const getSlotsName = (s) => {
-    return getDate(s.programmed_start_at, "yyyyMMDDHH");
+    return getDate(s.programmed_start_at, "yyyyMMDDHHmm");
 };
 
 const createReservation = (form) => {
@@ -164,8 +141,19 @@ const getSoins = (week) => {
     );
 };
 
+const getPatients = () => {
+    router.get(
+        route("therapist.agenda", { therapist: props.therapist.data }),
+        {},
+        {
+            only: ["patients"],
+            preserveState: true,
+        }
+    );
+}
+
 onMounted(() => {
-    getSoins(numWeek);
+    getPatients();
 });
 
 watch(traitmentsLoaded, (val) => {
@@ -178,7 +166,8 @@ watch(numWeek, (val) => {
     }
 })
 
-watch(computedTraitments, (val) => storeTraitments.value = [...storeTraitments.value, ...val])
+watch(props.traitments, (val) => storeTraitments.value = [...storeTraitments.value, ...val])
+
 </script>
 
 <template>
@@ -186,13 +175,13 @@ watch(computedTraitments, (val) => storeTraitments.value = [...storeTraitments.v
         title="Profile"
         :therapist="therapist.data"
     >
+    
         <Agenda v-model:numWeek="numWeek"
             :therapist="therapist.data"
             @today="numWeek = parseInt(moment().format('W'))"
             @previousWeek="numWeek--"
             @nextWeek="numWeek++"
             @click="click"
-            @clickHalf="clickHalf"
             :loading="traitmentsLoading"
         >
         
@@ -204,7 +193,6 @@ watch(computedTraitments, (val) => storeTraitments.value = [...storeTraitments.v
                 <div
                     class="absolute flex bg-gray-100 hover:bg-primary z-50 cursor-pointer overflow-hidden rounded-md
                     border-4 border-transparent border-l-primary left-0 right-0 group"
-                    :class="getPosition(s.programmed_start_at, s.programmed_end_at)"
                     :style="{height: getHeight(s.programmed_start_at, s.programmed_end_at)}"
                     @click="openReservedModal(s)"
                 >
@@ -231,7 +219,9 @@ watch(computedTraitments, (val) => storeTraitments.value = [...storeTraitments.v
             @createReservation="createReservation"
             @cancelReservation="cancelReservation"
             @cancel="closeReserveModal"
+            
             :therapist="therapist.data"
+            :patients="patients"
             :traitment="selectedTraitment"
             :filters="filters"
         />

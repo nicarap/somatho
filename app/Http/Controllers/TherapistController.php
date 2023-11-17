@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Therapist;
 use App\Models\Traitment;
+use App\Models\User;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -50,15 +51,16 @@ class TherapistController extends Controller
     public function agenda(Request $request, Therapist $therapist): Response
     {
         return Inertia::render('Therapist/Agenda', [
-            'therapist' => new TherapistResource($therapist),
-            'traitments' => Inertia::lazy(fn () =>
+            'therapist' => new TherapistResource($therapist->load('addresses')),
+            "patients" => Inertia::lazy(fn () => User::forTherapist($therapist)->with('addresses')->get()),
+            'traitments' => fn () =>
             QueryBuilder::for(Traitment::forTherapist($therapist)->with(['patient:id,name', 'address:id,name']))
                 ->allowedFilters([
-                    AllowedFilter::scope('start_at'),
-                    AllowedFilter::scope('end_at'),
+                    AllowedFilter::scope('start_at')->default(Carbon::now()->startOfWeek()),
+                    AllowedFilter::scope('end_at')->default(Carbon::now()->endOfWeek()),
                 ])
                 ->with('notes')
-                ->get())
+                ->get()
         ]);
     }
 

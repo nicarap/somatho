@@ -111,4 +111,9 @@ class User extends Authenticatable implements Auditable
     {
         return $this->traitments()->where('therapist_id', $therapist->id);
     }
+
+    public function scopeForTherapist(Builder $query, Therapist $therapist): Builder
+    {
+        return $query->whereRelation('therapists', 'id', $therapist->id);
+    }
 }

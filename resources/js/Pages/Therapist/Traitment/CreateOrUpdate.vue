@@ -5,54 +5,23 @@ import Complete from '@/Components/Traitment/Complete.vue';
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 
-const patients = ref([]);
-const therapistAddresses = ref([]);
-const patientAddresses = ref([]);
-
 defineEmits(["updateReservation","createReservation", "cancelReservation", "cancel"])
 
 const props = defineProps({
-    therapist: {
-        type: Object,
-        default: () => {}
-    },
-    traitment: {
-        type: Object,
-        default: () => {}
-    },
+    therapist: {type: Object, default: () => {}},
+    patients: {type: Object, default: () => {}},
+    traitment: {type: Object, default: () => {}},
     filters: {
         type: Object,
         default: () => {}
-    }
-})
-
-const getPatient = () => {
-    axios(route('api.therapist.patient.index', {therapist: props.therapist}))
-    .then((response) => { patients.value = response.data })
-}
-
-const getTherapistAddress = () => {
-    axios(route('api.therapist.address.index', {therapist: props.therapist}))
-    .then((response) => { therapistAddresses.value = response.data })
-}
-
-const getPatientAddress = (patient) => {
-    axios(route('api.patient.address.index', {user: patient}))
-    .then((response) => { patientAddresses.value = response.data })
-}
-
-const patient_id = ref(_.get(props.filters, 'id', null));
-
-onMounted(() => {
-    getPatient();
-    getTherapistAddress();
+    },
 })
 
 </script>
 
 <template>
     <template v-if="props.traitment">
-        <template v-if="props.traitment.is_passed">
+        <!-- <template v-if="props.traitment.is_passed">
             <div class="p-4 bg-primary text-white uppercase shadow flex w-full items-center justify-between">
                 <h1>Réservation passée</h1>
                 
@@ -66,7 +35,7 @@ onMounted(() => {
                 @cancel="() => $emit('cancel')"
                 @updateReservation="(f) => $emit('updateReservation', f)"
                 @cancelReservation="(f) => $emit('cancelReservation', f)"
-                v-bind="{traitment, patients, therapistAddresses, patientAddresses}">
+                v-bind="{therapist, patients, traitment}">
             </complete>
 
         </template>
@@ -82,9 +51,16 @@ onMounted(() => {
                 @cancel="() => $emit('cancel')"
                 @updateReservation="(f) => $emit('updateReservation', f)"
                 @cancelReservation="(f) => $emit('cancelReservation', f)"
-                v-bind="{traitment, patients, therapistAddresses, patientAddresses}">
+                v-bind="{therapist, patients, traitment}">
             </update>
-        </template>
+        </template> -->
+        
+        <update
+                @cancel="() => $emit('cancel')"
+                @updateReservation="(f) => $emit('updateReservation', f)"
+                @cancelReservation="(f) => $emit('cancelReservation', f)"
+                v-bind="{therapist, patients, traitment}">
+            </update>
     </template>
     <template v-else>
         <div class="p-4 bg-primary text-white uppercase shadow">
@@ -94,8 +70,7 @@ onMounted(() => {
         <create
             @cancel="() => $emit('cancel')"
             @createReservation="(f) => $emit('createReservation', f)"
-            @updatePatient="(p) => getPatientAddress(p)"
-            v-bind="{filters, patients, therapistAddresses, patientAddresses}">
+            v-bind="{filters, patients, therapist}">
         </create>
     </template>
 </template>

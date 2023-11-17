@@ -8,7 +8,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 import moment from 'moment';
-import { watch, ref, onMounted } from 'vue';
+import { watch, ref, onMounted, computed } from 'vue';
 
 const programmed_start_at = ref("");
 const programmed_end_at = ref("");
@@ -18,18 +18,16 @@ const updateNote = (note) => {
 }
 
 const props = defineProps({
+    therapist: {type: Object, default: () => {}},
     patients: {type: Object, default: () => {}},
     filters: {type: Object, default: () => {}},
-    therapistAddresses: {type: Object, default: () => {}},
-    patientAddresses: {type: Object, default: () => {}},
 })
 
-const emit = defineEmits(['cancel', 'createReservation', 'updatePatient'])
+const emit = defineEmits(['cancel', 'createReservation'])
 
 const form = useForm({
-    id: _.get(props.filters, 'id'),
-    patient_id: _.get(props.filters, 'patient_id'), 
-    address_id: _.get(props.filters, 'address_id'),
+    patient_id: null, 
+    address_id: "",
     programmed_start_at: "",
     programmed_end_at: "",
     note: "",
@@ -40,11 +38,17 @@ onMounted(() => {
     programmed_end_at.value = _.get(props.filters, 'programmed_end_at');
 })
 
-const submit = () => emit('createReservation', form);
+const therapistAddresses = computed(() => {
+    return props.therapist.addresses;
+})
 
+const patientAddresses = computed(() => {
+    return form.patient_id ? props.patients.find((p) => p.id === form.patient_id).addresses : [];
+})
+
+const submit = () => emit('createReservation', form);
 const cancel = () => emit('cancel')
 
-watch(() => form.patient_id, (val) => emit('updatePatient', val))
 watch(() => programmed_start_at.value, (val) => form.programmed_start_at = moment(val).format('YYYY-MM-DD HH:mm'))
 watch(() => programmed_end_at.value, (val) => form.programmed_end_at = moment(val).format('YYYY-MM-DD HH:mm'))
 

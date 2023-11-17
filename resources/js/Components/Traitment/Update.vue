@@ -4,18 +4,17 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 const props = defineProps({
+    therapist: {type:Object, default: () => {}},
     patients: {type: Object, default: () => {}},
-    therapistAddresses: {type: Object, default: () => {}},
-    patientAddresses: {type: Object, default: () => {}},
     traitment: {type: Object, default: () => {}},
 })
 
 const emit = defineEmits(['cancel', 'updateReservation'])
 
 const form = useForm({
-    id: _.get(props.traitment, 'id'),
     therapist_id:  _.get(props.traitment, 'therapist_id'),
     patient_id: _.get(props.traitment, 'patient_id'), 
     address_id: _.get(props.traitment, 'address_id'),
@@ -25,6 +24,14 @@ const form = useForm({
 
 const cancel = () => emit('cancel')
 const submit = () => emit('updateReservation', form);
+
+const therapistAddresses = computed(() => {
+    return props.therapist.addresses;
+})
+
+const patientAddresses = computed(() => {
+    return form.patient_id ? props.patients.find((p) => p.id === form.patient_id).addresses : [];
+})
 
 </script>
 
@@ -42,18 +49,18 @@ const submit = () => emit('updateReservation', form);
             <div class="mt-3 w-full">
                 <InputLabel for="day" value="Début de la réservation" />
                 <TextInput type="datetime-local" class="w-full"
-                    disabled v-model="form.programmed_start_at" />
+                    v-model="form.programmed_start_at" />
             </div>
             
             <div class="mt-3 w-full">
                 <InputLabel for="day" value="Fin de la réservation" />
                 <TextInput type="datetime-local" class="w-full"
-                    disabled v-model="form.programmed_end_at" />
+                    v-model="form.programmed_end_at" />
             </div>   
             
             <div class="mt-3 w-full">
                 <InputLabel for="day" value="Adresse" />
-                <select disabled id="address" 
+                <select id="address" 
                     class="border-gray-300 w-full mt-0 focus:border-primary focus:ring-primary rounded-md shadow-sm" 
                     required v-model="form.address_id">
                     <optgroup label="Mes adresses">

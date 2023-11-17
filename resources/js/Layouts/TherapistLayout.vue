@@ -47,7 +47,11 @@ defineProps({
 
                     <li class="border pl-8 pr-2 py-2 text-sm font-medium cursor-pointer flex gap-2 items-center" 
                         :class="[route().current('therapist.agenda') ? 'bg-primary text-white' : 'bg-white hover:bg-primary/25']"
-                        @click="$inertia.get(route('therapist.agenda', therapist))">
+                        @click="$inertia.get(route('therapist.agenda', {...therapist, 
+                        filter: {
+                            start_at: moment().startOf('week').format('YYYY-MM-DD'),
+                            end_at: moment().endOf('week').format('YYYY-MM-DD'),
+                        },}))">
                         
                         <font-awesome-icon class="text-primary" :class="[route().current('therapist.agenda') && 'text-white']" icon="calendar" />
                         Mes rendez-vous
@@ -64,7 +68,7 @@ defineProps({
                 </ol>
             </div>
         </template>
-
+            
         <slot />
 
     </AuthenticatedLayout>
