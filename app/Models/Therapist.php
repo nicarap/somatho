@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -12,10 +11,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class Therapist extends Authenticatable implements Auditable
+class Therapist extends Authenticatable implements Auditable, FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable, HasUuids, Notifiable, \OwenIt\Auditing\Auditable;
 
@@ -60,6 +57,15 @@ class Therapist extends Authenticatable implements Auditable
     ];
 
     /**
+     * @param Panel $panel
+     * @return bool
+     */
+    public function canAccessPanel(\Filament\Panel $panel): bool
+    {
+        return true;
+    }
+
+    /**
      * Retrieve address of the model
      *
      * @return belongsToMany
@@ -68,7 +74,7 @@ class Therapist extends Authenticatable implements Auditable
     {
         return $this->belongsToMany(Address::class, 'user_has_addresses', 'model_id')->withPivot('default');;
     }
-    
+
     /**
      * retrieve patients
      *

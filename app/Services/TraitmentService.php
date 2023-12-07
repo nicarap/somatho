@@ -20,9 +20,9 @@ class TraitmentService
     {
     }
 
-    public function create(traitmentDTO $traitment): Traitment
+    public function create(array $attributes): Traitment
     {
-        return $this->traitmentRepository->create($traitment);
+        return $this->traitmentRepository->create($attributes);
     }
 
     public function save(Traitment $traitment): Traitment

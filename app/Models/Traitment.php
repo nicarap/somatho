@@ -39,8 +39,8 @@ class Traitment extends Model
 
     protected $cast = [
         'realized_at' => 'datetime',
-        'programmed_start_at' => 'datetime:Y-m-d H:i',
-        'programmed_end_at' => 'datetime:Y-m-d H:i',
+        'programmed_start_at' => 'datetime',
+        'programmed_end_at' => 'datetime',
     ];
 
     public function notes(): MorphMany

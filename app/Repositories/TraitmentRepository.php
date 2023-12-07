@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\Models\Traitment;
-use App\DataTransferObjects\traitmentDTO;
 use Exception;
+use App\Models\Traitment;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use App\DataTransferObjects\traitmentDTO;
 
 class TraitmentRepository
 {
-    public function create(traitmentDTO $traitmentDTO): Traitment
+    public function create(array $attributes): Traitment
     {
-        $traitment = Traitment::make($traitmentDTO->toArray());
-        $traitment->therapist()->associate($traitmentDTO->therapist_id);
-        $traitment->patient()->associate($traitmentDTO->patient_id);
-        $traitment->address()->associate($traitmentDTO->address_id);
+        $traitment = Traitment::make($attributes);
+        $traitment->therapist()->associate(Arr::get($attributes, "therapist_id"));
+        $traitment->patient()->associate(Arr::get($attributes, "patient_id"));
+        $traitment->address()->associate(Arr::get($attributes, "address_id"));
 
         $this->save($traitment);
 

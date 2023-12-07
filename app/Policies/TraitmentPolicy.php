@@ -15,10 +15,15 @@ class TraitmentPolicy
         //
     }
 
-    public function create(Therapist $therapist, User $patient)
+    // public function create(Therapist $therapist, User $patient)
+    // {
+    //     if ($therapist->patients->contains($patient)) {
+    //         return true;
+    //     }
+    // }
+
+    public function create(Therapist $therapist)
     {
-        if ($therapist->patients->contains($patient)) {
-            return true;
-        }
+        return true;
     }
 }

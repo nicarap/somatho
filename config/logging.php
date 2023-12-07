@@ -89,7 +89,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
             'processors' => [PsrLogMessageProcessor::class],
         ],
@@ -126,6 +126,33 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        "mail" => [
+            'driver' => 'mail',
+            'level' => env('LOG_MAIL_LEVEL', 'notice'),
+
+            // Specify mail recipient
+            'to' => [
+                [
+                    'address' => env('LOG_MAIL_ADDRESS'),
+                    'name' => 'Error',
+                ],
+            ],
+
+            'from' => [
+                // Defaults to config('mail.from.address')
+                'address' => env('LOG_MAIL_FROM_ADDRESS'),
+                // Defaults to config('mail.from.name')
+                'name' => 'Errors'
+            ],
+
+            // Optionally overwrite the subject format pattern
+            'subject_format' => env('LOG_MAIL_SUBJECT_FORMAT', '[%datetime%] %level_name%: %message%'),
+
+            // Optionally overwrite the mailable template
+            // Two variables are sent to the view: `string $content` and `array $records`
+            // 'mailable' => NewLogMailable::class
+        ]
     ],
 
 ];

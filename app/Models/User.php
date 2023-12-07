@@ -18,9 +18,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class User extends Authenticatable implements Auditable
+class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasUuids, Notifiable, \OwenIt\Auditing\Auditable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasUuids, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -31,7 +31,9 @@ class User extends Authenticatable implements Auditable
         'name',
         'email',
         'password',
-        'tel'
+        'tel',
+        'siren',
+        'birthdate'
     ];
 
     /**

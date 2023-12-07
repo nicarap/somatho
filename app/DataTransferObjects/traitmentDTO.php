@@ -16,9 +16,7 @@ class traitmentDTO extends Data
         public string $therapist_id,
         public string $patient_id,
         public string $address_id,
-        #[WithCast(DateTimeInterfaceCast::class, 'Y-m-d H:i')]
         public DateTime $programmed_start_at,
-        #[WithCast(DateTimeInterfaceCast::class, 'Y-m-d H:i')]
         public DateTime $programmed_end_at,
         public string $price,
 
