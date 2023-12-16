@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -25,18 +27,13 @@ class Address extends Model
         'is_verified',
     ];
 
-    public function userAdresses()
+    public function patient(): BelongsTo
     {
-        return $this->belongsToMany(UserAddress::class, 'user_has_addresses');
+        return $this->belongsTo(User::class);
     }
 
-    public function patients(): MorphToMany
+    public function therapists(): BelongsToMany
     {
-        return $this->morphedByMany(User::class, 'model', 'user_has_addresses', 'address_id', 'model_id');
-    }
-
-    public function therapists(): MorphToMany
-    {
-        return $this->morphedByMany(Therapist::class, 'model', 'user_has_addresses', 'address_id', 'model_id');
+        return $this->belongsToMany(Therapist::class);
     }
 }

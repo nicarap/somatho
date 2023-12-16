@@ -79,11 +79,10 @@ class PatientResource extends Resource
                         return $query->withCount('traitments')
                             ->orderBy('traitments_count', $direction);
                     }),
-                Tables\Columns\ToggleColumn::make("email_verified_at")->updateStateUsing(function ($record, $state) {
-                    if (!$state) $record->email_verified_at = null;
-                    else $record->email_verified_at = Carbon::now();
-                    $record->save();
-                }),
+                Tables\Columns\IconColumn::make("email_verified_at")
+                    ->default(fn ($record): bool => !is_null($record->email_verified_at))
+                    ->boolean()
+                    ->label(__("filament.attributes.email_verified_at")),
                 Tables\Columns\TextColumn::make("tel")
                     ->label(__("filament.attributes.tel")),
                 Tables\Columns\TextColumn::make("siren")

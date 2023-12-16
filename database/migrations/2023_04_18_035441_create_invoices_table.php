@@ -12,29 +12,26 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('invoices', function (Blueprint $table) {
-            $table->string('id');
+            $table->id();
+            $table->string('number')->unique();
             $table->uuid('traitment_id');
 
-            $table->dateTime('realized_at');
             $table->dateTime('paid_at');
+            $table->string("filename")->nullable();
 
-            $table->string('therapist_address');
-            $table->string('therapist_complement_address')->nullable();
-            $table->string('therapist_postal_code');
-            $table->string('therapist_location');
+            $table->string('therapist_street');
+            $table->string('therapist_context')->nullable();
+            $table->string('therapist_postcode');
+            $table->string('therapist_city');
 
-            $table->string('patient_address');
-            $table->string('patient_complement_address')->nullable();
-            $table->string('patient_postal_code');
-            $table->string('patient_location');
-            
-            $table->string('tva');
+            $table->string('patient_street');
+            $table->string('patient_context')->nullable();
+            $table->string('patient_postcode');
+            $table->string('patient_city');
 
             $table->timestamps();
-            
-            $table->foreign('traitment_id')->references('id')->on('traitments');
 
-            $table->primary('id');
+            $table->foreign('traitment_id')->references('id')->on('traitments');
         });
     }
 

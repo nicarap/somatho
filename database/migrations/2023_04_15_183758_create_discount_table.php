@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('address_user_histories', function (Blueprint $table) {
+        Schema::create('discounts', function (Blueprint $table) {
             $table->id();
-            $table->uuid('user_id');
-            $table->uuid('address_id');
+            $table->string('designation');
+            $table->float('percentage')->nullable();
+            $table->integer('amount')->nullable();
             $table->timestamps();
-
-            $table->foreign('user_id')->on('users')->references('id');
-            $table->foreign('address_id')->on('addresses')->references('id');
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('address_user_histories');
+        Schema::dropIfExists('discounts');
     }
 };

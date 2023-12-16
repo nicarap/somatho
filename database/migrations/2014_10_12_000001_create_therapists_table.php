@@ -25,13 +25,18 @@ return new class extends Migration
             $table->primary('id');
         });
 
-        Schema::create('therapists_has_patients', function (Blueprint $table) {
+        Schema::create('therapist_has_addresses', function (Blueprint $table) {
+            $table->id('id');
             $table->uuid('therapist_id');
-            $table->uuid('user_id');
+            $table->uuid('address_id');
+            $table->boolean('default')->default(false);
 
+            $table->foreign('address_id')->references('id')->on('addresses');
             $table->foreign('therapist_id')->references('id')->on('therapists');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->primary(['therapist_id', 'user_id']);
+            $table->unique([
+                'therapist_id',
+                'address_id',
+            ]);
         });
     }
 
@@ -40,7 +45,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('therapists_has_patients');
+        Schema::dropIfExists('therapist_has_addresses');
         Schema::dropIfExists('therapists');
     }
 };

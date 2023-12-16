@@ -213,4 +213,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    "invoice_folder" => env("INVOICE_FOLDER", "invoice"),
+
+    "mail_to_contact_address" => env("MAIL_TO_CONTACT_ADDRESS"),
 ];

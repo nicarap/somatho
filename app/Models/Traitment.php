@@ -26,21 +26,17 @@ class Traitment extends Model
         'realized_at',
         'therapist_validated_at',
         'patient_validated_at',
+        "realized_at",
+        "info_realized",
         'price',
         'travel_cost',
         'discount',
-        'label',
-        'context',
-        'postcode',
-        'city',
-        'address_name'
-
     ];
 
     protected $cast = [
-        'realized_at' => 'datetime',
-        'programmed_start_at' => 'datetime',
-        'programmed_end_at' => 'datetime',
+        'realized_at' => 'date',
+        'programmed_start_at' => 'date',
+        'programmed_end_at' => 'date',
     ];
 
     public function notes(): MorphMany
