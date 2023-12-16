@@ -13,9 +13,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Roles;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class User extends Authenticatable
@@ -67,36 +69,16 @@ class User extends Authenticatable
     /**
      * Retrieve address of the model
      *
-     * @return belongsToMany
+     * @return BelongsTo
      */
-    public function addresses()
+    public function address(): BelongsTo
     {
-        return $this->belongsToMany(Address::class, 'user_has_addresses', 'model_id');
+        return $this->belongsTo(Address::class);
     }
 
     public function notes(): MorphMany
     {
         return $this->morphMany(Note::class, 'model');
-    }
-
-    /**
-     * retrieve user by mail
-     *
-     * @return HasMany
-     */
-    public static function findByEmail($email)
-    {
-        return User::where('email', $email)->first();
-    }
-
-    /**
-     * retrieve therapists
-     *
-     * @return HasMany
-     */
-    public function therapists(): BelongsToMany
-    {
-        return $this->belongsToMany(Therapist::class, 'therapists_has_patients');
     }
 
     /**
@@ -109,13 +91,13 @@ class User extends Authenticatable
         return $this->hasMany(Traitment::class, 'patient_id');
     }
 
-    public function therapistTraitments(Therapist $therapist)
+    /**
+     * retrieve user by mail
+     *
+     * @return HasMany
+     */
+    public static function findByEmail($email)
     {
-        return $this->traitments()->where('therapist_id', $therapist->id);
-    }
-
-    public function scopeForTherapist(Builder $query, Therapist $therapist): Builder
-    {
-        return $query->whereRelation('therapists', 'id', $therapist->id);
+        return User::where('email', $email)->first();
     }
 }

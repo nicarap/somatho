@@ -17,22 +17,31 @@ class Invoice extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'paid_at',
-        'invoice_number',
-        'label',
-        'context',
-        'postcode',
-        'tel',
-        'tva',
-        'total_price',
+        "number",
+        "traitment_id",
+        "filename",
+        "paid_at",
+        "therapist_street",
+        "therapist_context",
+        "therapist_postcode",
+        "therapist_city",
+        "patient_street",
+        "patient_context",
+        "patient_postcode",
+        "patient_city",
     ];
 
     protected $cast = [
         'realized_at' => 'datetime',
     ];
 
-    public function traitments(): BelongsTo
+    public function traitment(): BelongsTo
     {
         return $this->belongsTo(Traitment::class);
+    }
+
+    public static function findByNumber($number): Invoice|null
+    {
+        return Invoice::firstWhere("number", $number);
     }
 }

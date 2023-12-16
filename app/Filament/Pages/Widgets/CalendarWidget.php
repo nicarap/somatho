@@ -58,10 +58,13 @@ class CalendarWidget extends FullCalendarWidget
 
     public function getFormSchema(): array
     {
+        $disabled = fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_start_at);
+
         return [
             Forms\Components\Select::make('patient')
                 ->relationship("patient", "name")
                 ->reactive()
+                ->disabled($disabled)
                 ->required(),
             Forms\Components\Grid::make()
                 ->schema([
@@ -69,35 +72,43 @@ class CalendarWidget extends FullCalendarWidget
                         ->seconds(false)
                         ->default(fn () => now())
                         ->minDate(now()->subYears(150))
-                        ->reactive()
+                        ->live()
                         ->hoursStep(2)
                         ->minutesStep(15)
+                        ->disabled($disabled)
                         ->required(),
                     Forms\Components\DateTimePicker::make('programmed_end_at')
                         ->seconds(false)
-                        ->reactive()
-                        ->minDate(fn (Get $get) => $get("programmed_start_at"))
+                        ->live()
+                        ->minDate(fn (Get $get) => Carbon::parse($get("programmed_start_at")))
+                        ->maxDate(fn (Get $get) => Carbon::parse($get("programmed_start_at"))->endOfDay())
                         ->hoursStep(2)
                         ->minutesStep(15)
+                        ->disabled($disabled)
                         ->required(),
                 ]),
 
             Forms\Components\Select::make('address')
-                ->relationship("address", "label")
+                ->relationship("address", "name")
                 ->options(function (Get $get) {
-                    $addresses["Mes adresses"] = filament()->auth()->user()->addresses()->pluck("label", "addresses.id")->toArray();
+                    $addresses["Mes adresses"] = filament()->auth()->user()->addresses()->pluck("name", "addresses.id")->toArray();
                     if ($get("patient")) {
                         $patient = User::find($get("patient"));
-                        $addresses[$patient->name] = $patient->addresses()->pluck("label", "addresses.id")->toArray();
+                        if ($patient->address) $addresses[$patient->name] = [$patient->address->id => $patient->address->name];
                     }
                     return $addresses;
-                })->reactive()
+                })->live()
+                ->disabled($disabled)
                 ->required(),
             Forms\Components\Repeater::make("notes")
+                ->disabled($disabled)
                 ->schema([
                     Forms\Components\RichEditor::make("description")
                 ])
-                ->reorderableWithDragAndDrop(false)
+                ->reorderableWithDragAndDrop(false),
+            Forms\Components\Checkbox::make("realized_at")
+                ->label("Le soin à été réalisé")
+                ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at))
 
         ];
     }

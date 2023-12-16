@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use App\Models\Address;
 use App\Models\User;
 use App\Models\Therapist;
+use Exception;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DummyDataBaseSeeder extends Seeder
 {
@@ -16,25 +18,31 @@ class DummyDataBaseSeeder extends Seeder
     {
         $nb_patients = 5;
 
-        $me = Therapist::create([
-            'name' => 'Raphael Lebon',
-            'email' => 'raphael.lebon@tessi.fr',
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        ]);
+        DB::beginTransaction();
 
-        $adresses = Address::factory()->count(2)->create();
-        foreach($adresses as $adress){
-            $me->addresses()->attach($adress, ['model_type' => Therapist::class]);
-        }        
+        try {
+            $me = Therapist::create([
+                'name' => 'Raphael Lebon',
+                'email' => 'raphael.lebon@tessi.fr',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            ]);
 
-        for($i=0; $i< $nb_patients;$i++){
-            User::factory()->hasAttached(Address::factory()->count(1), ['model_type' => User::class])->create();
-        }
-        
-        $patients = User::all();
+            $adresses = Address::factory()->count(2)->create();
+            foreach ($adresses as $index => $adress) {
+                $me->addresses()->attach($adress);
+            }
 
-        foreach($patients as $index => $patient){
-            if($index < $nb_patients - 2) $patient->therapists()->attach($me);
+            for ($i = 0; $i < $nb_patients; $i++) {
+                $user = User::factory()->create();
+                $adress = Address::factory()->create();
+
+                $adress->patient()->associate($user);
+            }
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
     }
 }

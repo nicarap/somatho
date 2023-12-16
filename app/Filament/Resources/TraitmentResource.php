@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use Carbon\Carbon;
 use Filament\Forms;
+use App\Models\User;
 use Filament\Tables;
 use Filament\Infolists;
 use Filament\Forms\Form;
@@ -12,13 +14,13 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TraitmentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TraitmentResource\RelationManagers;
 use App\Filament\Resources\TraitmentResource\RelationManagers\NotesRelationManager;
-use Carbon\Carbon;
 
 class TraitmentResource extends Resource
 {
@@ -45,7 +47,7 @@ class TraitmentResource extends Resource
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist->schema([
-            InfoLists\Components\Section::make("aze")
+            InfoLists\Components\Section::make(fn ($record) => $record->patient->name)
                 ->schema([
                     InfoLists\Components\Grid::make()->schema([
                         InfoLists\Components\TextEntry::make("patient.name"),
@@ -84,7 +86,47 @@ class TraitmentResource extends Resource
             ->striped()
             ->defaultSort("programmed_start_at", "desc")
             ->filters([
-                //
+                \Filament\Tables\Filters\Filter::make("users")
+                    ->form([
+                        \Filament\Forms\Components\Select::make("users")
+                            ->label(__("filament.attributes.patient"))
+                            ->options(function () {
+                                return User::whereHas("traitments")->pluck("name", "id");
+                            })
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['users'],
+                                fn (Builder $query, $patient): Builder => $query->whereRelation('patient', "id", $patient),
+                            );
+                    })
+                    ->indicateUsing(function (array $data): ?string {
+                        if (!$data['users']) {
+                            return null;
+                        }
+
+                        return 'Patient : ' . User::find($data['users'])->name;
+                    }),
+                \Filament\Tables\Filters\Filter::make("programmed_start_at")
+                    ->form([
+                        \Filament\Forms\Components\DatePicker::make("programmed_start_at")
+                            ->label(__("filament.attributes.programmed_end_at"))
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['programmed_start_at'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('programmed_start_at', '>=', $date),
+                            );
+                    })
+                    ->indicateUsing(function (array $data): ?string {
+                        if (!$data['programmed_start_at']) {
+                            return null;
+                        }
+
+                        return 'Programmé le ' . Carbon::parse($data['programmed_start_at'])->format("j M Y");
+                    })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -110,7 +152,6 @@ class TraitmentResource extends Resource
             'index' => Pages\ListTraitments::route('/'),
             'create' => Pages\CreateTraitment::route('/create'),
             'edit' => Pages\EditTraitment::route('/{record}/edit'),
-            'view' => Pages\ViewTraitment::route('/{record}'),
         ];
     }
 }

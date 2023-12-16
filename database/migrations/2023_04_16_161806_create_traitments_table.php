@@ -16,12 +16,14 @@ return new class extends Migration
             $table->uuid('therapist_id');
             $table->uuid('patient_id');
             $table->uuid('address_id');
-            $table->dateTime('programmed_start_at');
-            $table->dateTime('programmed_end_at');
-            $table->dateTime('therapist_validated_at')->nullable();
-            $table->dateTime('patient_validated_at')->nullable();
-            $table->dateTime('realized_at')->nullable();
+            $table->timestamp('programmed_start_at');
+            $table->timestamp('programmed_end_at');
+            $table->timestamp('therapist_validated_at')->nullable();
+            $table->timestamp('patient_validated_at')->nullable();
+            $table->timestamp('realized_at')->nullable();
+            $table->string("info_realized")->nullable();
             $table->float('price');
+            $table->unsignedBigInteger("discount_id")->nullable();
             $table->float('travel_cost')->nullable();
 
             $table->softDeletes();
@@ -30,6 +32,7 @@ return new class extends Migration
             $table->foreign('therapist_id')->references('id')->on('therapists');
             $table->foreign('patient_id')->references('id')->on('users');
             $table->foreign('address_id')->references('id')->on('addresses');
+            $table->foreign('discount_id')->references('id')->on('discounts');
             $table->primary('id');
         });
     }

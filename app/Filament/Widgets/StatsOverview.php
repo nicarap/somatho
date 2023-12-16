@@ -15,14 +15,17 @@ class StatsOverview extends BaseWidget
         $end_of_week = $today->copy()->endOfWeek();
 
         return [
-            Stat::make('traitments for the week', function () use ($start_of_week, $end_of_week) {
+            Stat::make(__("filament.stats.nb_weeks_traitments"), function () use ($start_of_week, $end_of_week) {
                 return filament()->auth()->user()->traitments()->startAt($start_of_week)->endAt($end_of_week)->count();
             })
-            ->description($start_of_week->format('d/m/Y') . ' to ' . $end_of_week->format('d/m/Y')),
+                ->description($start_of_week->format('d/m/Y') . ' au ' . $end_of_week->format('d/m/Y'))
+                ->url(route("filament.admin.resources.traitments.index")),
 
-            Stat::make('traitments for the day', function () use ($today) {
+            Stat::make(__("filament.stats.nb_days_traitments"), function () use ($today) {
                 return filament()->auth()->user()->traitments()->startAt($today->startOfDay())->endAt($today->endOfDay())->count();
-            })->description($today->format('d/m/Y')),
+            })
+                ->description("Le {$today->format('d/m/Y')}")
+                ->url(route("filament.admin.resources.traitments.index")),
         ];
     }
 }

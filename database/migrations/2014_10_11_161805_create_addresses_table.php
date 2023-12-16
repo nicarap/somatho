@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('name');
-            $table->string('label');
+            $table->string('street');
             $table->string('context')->nullable();
             $table->string('postcode');
             $table->string('city');
@@ -26,23 +26,6 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-
-        Schema::create('user_has_addresses', function (Blueprint $table) {
-            $table->id('id');
-            $table->uuid('model_id');
-            $table->string('model_type');
-            $table->uuid('address_id');
-            $table->boolean('default')->default(false);
-            
-            $table->foreign('address_id')->references('id')->on('addresses');
-            $table->unique([
-                'model_id',
-                'model_type',
-                'address_id',
-            ]);
-        });
-
-
     }
 
     /**
@@ -50,7 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_has_addresses');
         Schema::dropIfExists('addresses');
     }
 };

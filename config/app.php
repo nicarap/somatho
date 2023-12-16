@@ -213,4 +213,5 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    "invoice_folder" => env("INVOICE_FOLDER", "invoice"),
 ];

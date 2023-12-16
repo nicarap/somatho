@@ -72,17 +72,7 @@ class Therapist extends Authenticatable implements Auditable, FilamentUser
      */
     public function addresses()
     {
-        return $this->belongsToMany(Address::class, 'user_has_addresses', 'model_id')->withPivot('default');;
-    }
-
-    /**
-     * retrieve patients
-     *
-     * @return HasMany
-     */
-    public function patients(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'therapists_has_patients');
+        return $this->belongsToMany(Address::class, 'therapist_has_addresses')->withPivot('default');
     }
 
     /**

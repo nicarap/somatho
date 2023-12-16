@@ -11,7 +11,7 @@ class ListPatients extends ListRecords
 {
     protected static string $resource = PatientResource::class;
 
-    protected static string $view = "filament.pages.patients.list";
+    // protected static string $view = "filament.pages.patients.list";
 
     public function getPatients()
     {

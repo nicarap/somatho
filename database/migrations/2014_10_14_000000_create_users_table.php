@@ -20,9 +20,11 @@ return new class extends Migration
             $table->string('password');
             $table->string('tel')->nullable();
             $table->string('siren')->nullable();
+            $table->uuid('address_id')->nullable();
             $table->rememberToken();
 
             $table->timestamps();
+            $table->foreign("address_id")->references("id")->on("addresses");
             $table->primary('id');
         });
     }
