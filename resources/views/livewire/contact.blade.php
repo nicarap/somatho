@@ -19,6 +19,7 @@
                         <label class="block uppercase text-gray-700 text-xs font-bold mb-2" for="email">Téléphone</label>
                         <input wire:model="tel" type="tel" autocomplete class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full" placeholder="Tel" style="transition: all 0.15s ease 0s;" />
                     </div>
+
                     <div class="relative w-full">
                         <div class="mb-2">
                             <label class="block uppercase text-gray-700 text-xs font-bold" for="message">Message / Demande de rendez-vous</label>
