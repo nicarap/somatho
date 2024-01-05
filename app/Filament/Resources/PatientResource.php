@@ -2,20 +2,34 @@
 
 namespace App\Filament\Resources;
 
+use Closure;
+use Carbon\Carbon;
+use Filament\Forms;
+use App\Models\User;
+use Filament\Tables;
+use Livewire\Livewire;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use Illuminate\Support\Arr;
+use Filament\Facades\Filament;
+use App\Livewire\Address\Create;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Grid;
+use Illuminate\Support\Facades\Http;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\Component;
+use Filament\Forms\Components\ViewField;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Client\RequestException;
+use Filament\Forms\Components\Actions\Action;
 use App\Filament\Resources\PatientResource\Pages;
 use App\Filament\Resources\PatientResource\RelationManagers;
 use App\Filament\Resources\PatientResource\RelationManagers\NotesRelationManager;
 use App\Filament\Resources\PatientResource\RelationManagers\TraitmentsRelationManager;
-use App\Models\User;
-use Carbon\Carbon;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PatientResource extends Resource
 {
@@ -42,21 +56,48 @@ class PatientResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make("name")
-                    ->label(__("filament.attributes.name"))
-                    ->required(),
-                Forms\Components\DatePicker::make("birthdate")
-                    ->label(__("filament.attributes.birthdate"))
-                    ->required(),
-                Forms\Components\TextInput::make("email")
-                    ->label(__("filament.attributes.email"))
-                    ->email()
-                    ->required(),
-                Forms\Components\TextInput::make("tel")
-                    ->label(__("filament.attributes.tel"))
-                    ->telRegex('/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/'),
-                Forms\Components\TextInput::make("siren")
-                    ->label(__("filament.attributes.siren"))
+                Section::make("Informations générales")->schema([
+                    Forms\Components\TextInput::make("name")
+                        ->label(__("filament.attributes.name"))
+                        ->required(),
+                    Forms\Components\TextInput::make("email")
+                        ->label(__("filament.attributes.email"))
+                        ->email()
+                        ->required(),
+                    Forms\Components\TextInput::make("tel")
+                        ->label(__("filament.attributes.tel"))
+                        ->telRegex('/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/'),
+                    Forms\Components\DatePicker::make("birthdate")
+                        ->label(__("filament.attributes.birthdate"))
+                        ->required(),
+                    // Forms\Components\Select::make('addresses')
+                    //     ->searchable()
+                    //     ->getSearchResultsUsing(function ($search): array {
+                    //         if (!$search) return [];
+
+                    //         $response = Http::retry(3, 100)->withQueryParameters([
+                    //             'q' => $search,
+                    //         ])->get('https://api-adresse.data.gouv.fr/search');
+
+                    //         $addresses = [];
+
+                    //         foreach (Arr::get($response->json(), "features") as $feature) {
+                    //             $addresses[] = [
+                    //                 Arr::get($feature, "properties.label") =>
+                    //                 Arr::get($feature, "properties.name") . ", " .
+                    //                     Arr::get($feature, "properties.context") . ", " .
+                    //                     Arr::get($feature, "properties.city")
+                    //             ];
+                    //         }
+
+                    //         return $addresses;
+                    //     })
+                    //     ->live()
+                    //     ->id("test")
+                    //     ->afterStateUpdated(function (Component $component) {
+                    //         dd($component);
+                    //     }),
+                ])
             ]);
     }
 

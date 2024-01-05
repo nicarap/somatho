@@ -34,6 +34,12 @@ return [
                 "single" => "Patient",
                 "plural" => "Patients",
             ]
+        ],
+        "review" => [
+            "label" => [
+                "single" => "Avis",
+                "plural" => "Avis",
+            ]
         ]
     ],
     "stats" => [
@@ -56,7 +62,10 @@ return [
         "tel" => "Téléphone",
         "siren" => "SIREN",
         "birthdate" => "Date de naissance",
-        "email_verified_at" => "Email vérifié"
+        "email_verified_at" => "Email vérifié",
+        "name" => "Nom",
+        "content" => "Contenu",
+        "value" => "Valeur"
 
     ]
 ];

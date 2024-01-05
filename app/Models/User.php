@@ -34,7 +34,6 @@ class User extends Authenticatable
         'email',
         'password',
         'tel',
-        'siren',
         'birthdate'
     ];
 
@@ -99,5 +98,10 @@ class User extends Authenticatable
     public static function findByEmail($email)
     {
         return User::where('email', $email)->first();
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, "patient_id");
     }
 }
