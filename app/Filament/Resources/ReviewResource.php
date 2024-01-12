@@ -46,7 +46,7 @@ class ReviewResource extends Resource
         return $form
             ->schema([
                 Section::make()->schema([
-                    Select::make("patient")
+                    Select::make("patient_id")
                         ->required(fn (Get $get) => !$get("name"))
                         ->relationship("patient", "name")
                         ->searchable()

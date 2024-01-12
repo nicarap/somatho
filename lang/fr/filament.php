@@ -65,7 +65,11 @@ return [
         "email_verified_at" => "Email vérifié",
         "name" => "Nom",
         "content" => "Contenu",
-        "value" => "Valeur"
+        "value" => "Valeur",
+        "published_at" => "Date de publication",
+        "title" => "Titre",
+        "gtp" => "Demander à chatGTP",
+        "pinned" => "Epinglé"
 
     ]
 ];
