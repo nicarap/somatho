@@ -17,15 +17,6 @@ use App\Http\Controllers\TherapistController;
 use App\Http\Controllers\Therapist\AddressController as TherapistAddressController;
 use App\Http\Controllers\Therapist\PatientController as TherapistPatientController;
 use App\Http\Controllers\Therapist\TraitmentController as TherapistTraitmentController;
-use App\Http\Controllers\UserController;
-use App\Livewire\Article\ArticleList;
-use App\Livewire\Article\ArticleShow;
-use App\Livewire\Articles;
-use App\Livewire\Home;
-use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
