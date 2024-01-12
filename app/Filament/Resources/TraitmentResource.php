@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
+use Filament\Forms\Get;
 use Filament\Infolists;
 use Filament\Forms\Form;
 use App\Models\Traitment;
@@ -43,6 +44,62 @@ class TraitmentResource extends Resource
         return __("filament.resources.traitment.label.plural");
     }
 
+    public static function form(Form $form): Form
+    {
+        $disabled = fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_start_at);
+
+        return $form->schema([
+            Forms\Components\Section::make()->schema([
+                Forms\Components\Grid::make(1)->schema([
+                    Forms\Components\Select::make('patient')
+                        ->relationship("patient", "name")
+                        ->reactive()
+                        ->disabled($disabled)
+                        ->required(),
+                ]),
+                Forms\Components\Grid::make()
+                    ->schema([
+                        Forms\Components\DateTimePicker::make('programmed_start_at')
+                            ->seconds(false)
+                            ->default(fn () => now())
+                            ->minDate(now()->subYears(150))
+                            ->live()
+                            ->hoursStep(2)
+                            ->minutesStep(15)
+                            ->disabled($disabled)
+                            ->required(),
+                        Forms\Components\DateTimePicker::make('programmed_end_at')
+                            ->seconds(false)
+                            ->live()
+                            ->minDate(fn (Get $get) => Carbon::parse($get("programmed_start_at")))
+                            ->maxDate(fn (Get $get) => Carbon::parse($get("programmed_start_at"))->endOfDay())
+                            ->hoursStep(2)
+                            ->minutesStep(15)
+                            ->disabled($disabled)
+                            ->required(),
+                    ]),
+
+
+                Forms\Components\Grid::make(1)->schema([
+                    Forms\Components\Select::make('address')
+                        ->relationship("address", "name")
+                        ->options(function (Get $get) {
+                            $addresses["Mes adresses"] = filament()->auth()->user()->addresses()->pluck("name", "addresses.id")->toArray();
+                            if ($get("patient")) {
+                                $patient = User::find($get("patient"));
+                                if ($patient->address) $addresses[$patient->name] = [$patient->address->id => $patient->address->name];
+                            }
+                            return $addresses;
+                        })->live()
+                        ->disabled($disabled)
+                        ->required(),
+                ]),
+                Forms\Components\Checkbox::make("realized_at")
+                    ->label("Le soin à été réalisé")
+                    ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
+            ])
+        ]);
+    }
 
     public static function infolist(Infolist $infolist): Infolist
     {

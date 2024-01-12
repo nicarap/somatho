@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages\Widgets;
 
+use Exeption;
 use Carbon\Carbon;
 use Filament\Forms;
 use App\Models\User;
@@ -9,6 +10,7 @@ use Filament\Forms\Get;
 use App\Models\Traitment;
 use Illuminate\Support\Arr;
 use App\Services\TraitmentService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Saade\FilamentFullCalendar\Actions;
 use App\DataTransferObjects\traitmentDTO;
@@ -21,15 +23,8 @@ class CalendarWidget extends FullCalendarWidget
 
     public Model | string | null $model = Traitment::class;
 
-    /**
-     * FullCalendar will call this function whenever it needs new event data.
-     * This is triggered when the user clicks prev/next or switches views on the calendar.
-     */
     public function fetchEvents(array $fetchInfo): array
     {
-        // You can use $fetchInfo to filter events by date.
-        // This method should return an array of event-like objects. See: https://github.com/saade/filament-fullcalendar/blob/3.x/#returning-events
-        // You can also return an array of EventData objects. See: https://github.com/saade/filament-fullcalendar/blob/3.x/#the-eventdata-class
         return Traitment::query()
             ->where("programmed_start_at", ">=", $fetchInfo['start'])
             ->where("programmed_end_at", ">=", $fetchInfo['start'])
@@ -51,7 +46,10 @@ class CalendarWidget extends FullCalendarWidget
     protected function modalActions(): array
     {
         return [
-            Actions\EditAction::make(),
+            Actions\EditAction::make()
+                ->using(function (array $data, TraitmentService $traitmentService) {
+                    dd($data);
+                }),
             Actions\DeleteAction::make(),
         ];
     }
@@ -101,14 +99,19 @@ class CalendarWidget extends FullCalendarWidget
                 ->disabled($disabled)
                 ->required(),
             Forms\Components\Repeater::make("notes")
+                ->relationship()
                 ->disabled($disabled)
-                ->schema([
+                ->schema(fn ($record): array => $record ? [
+                    Forms\Components\MarkdownEditor::make("description")
+                ] : [
                     Forms\Components\RichEditor::make("description")
                 ])
                 ->reorderableWithDragAndDrop(false),
             Forms\Components\Checkbox::make("realized_at")
                 ->label("Le soin à été réalisé")
-                ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at))
+                ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
+            // Forms\Components\ViewField::make('rating')
+            //     ->view('forms.components.leaflet')
 
         ];
     }
@@ -118,21 +121,32 @@ class CalendarWidget extends FullCalendarWidget
         return [
             Actions\CreateAction::make()
                 ->using(function (array $data, TraitmentService $traitmentService) {
-                    $traitment = $traitmentService->create(array_merge($data, [
-                        'price' => 70,
-                        'therapist_id' => filament()->auth()->user(),
-                        'patient_id' => $data["patient"],
-                        'address_id' => $data["address"]
-                    ]));
+                    DB::beginTransaction();
 
-                    if ($notes = Arr::get($data, "notes")) {
-                        foreach ($notes as $note) {
-                            $traitmentService->addNote($traitment, $note);
+                    try {
+                        $traitment = $traitmentService->create(array_merge($data, [
+                            'price' => 70,
+                            'therapist_id' => filament()->auth()->user(),
+                            'patient_id' => $data["patient"],
+                            'address_id' => $data["address"]
+                        ]));
+
+                        $traitment->save();
+
+                        if ($notes = Arr::get($data, "notes")) {
+                            foreach ($notes as $note) {
+                                $traitmentService->addNote($traitment, $note);
+                            }
                         }
-                    }
 
-                    $traitmentService->therapistValidation($traitment, Carbon::now());
-                    $traitmentService->patientValidation($traitment, Carbon::now());
+                        $traitmentService->therapistValidation($traitment, Carbon::now());
+                        $traitmentService->patientValidation($traitment, Carbon::now());
+
+                        Db::commit();
+                    } catch (\Exception $e) {
+                        dd($e);
+                        Db::rollback();
+                    }
                 })
                 ->mountUsing(
                     function (Forms\Form $form, array $arguments) {

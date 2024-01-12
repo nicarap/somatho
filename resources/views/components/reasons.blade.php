@@ -1,9 +1,9 @@
 <div class="container mx-auto px-4 relative z-40 pt-20">
     <div class="items-center flex flex-wrap">
-        <div class="w-full md:w-4/12 ml-auto mr-auto px-4">
+        <div class="w-full md:w-4/12 ml-auto mr-auto px-4 gs_reveal gs_reveal_fromLeft">
             <img alt="..." class="max-w-full rounded-lg shadow-lg" src="{{ asset('images/me.jpg') }}" />
         </div>
-        <div class="w-full md:w-5/12 ml-auto mr-auto px-4">
+        <div class="w-full md:w-5/12 ml-auto mr-auto px-4 gs_reveal gs_reveal_fromRight">
             <div class="md:pr-12">
                 <div class="fill-secondary-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-secondary-200">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-2/3" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
