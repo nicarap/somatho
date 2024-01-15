@@ -29,13 +29,18 @@ use App\Http\Controllers\Therapist\TraitmentController as TherapistTraitmentCont
 |
 */
 
-Route::get('/', Home::class)->name('home');
 
-Route::get('articles', ArticleList::class)->name('article.viewAny');
+Route::get('/', fn () => view('pages.home'))->name('home');
 
+Route::get('articles', fn () => view('pages.articles'))->name('article.viewAny');
 Route::get('articles/{article:slug}', function (Article $article) {
     return view('pages.articles', ["article" => $article]);
 })->name('article.view');
+
+Route::get('/about', fn () => view('pages.about'))->name('about');
+Route::get('/somatopathy', fn () => view('pages.somatopathy'))->name('somatopathy');
+
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

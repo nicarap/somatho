@@ -1,9 +1,9 @@
 <div class="container mx-auto px-4">
     <div class="flex flex-wrap justify-center text-center mb-24">
         <div class="w-full lg:w-6/12 px-4">
-            <h2 class="text-4xl font-semibold">Avis des patients</h2>
+            <h2 class="text-4xl font-semibold uppercase text-primary-500">Avis des patients</h2>
             <p class="mt-4 text-md leading-relaxed text-gray-600">
-                Quelques témoignanges des personnes qui m'ont fait confiance pour les aider au travers des soins somatopathiques.
+                Découvrez les témoignages inspirants à travers les retours authentiques des personnes qui m'ont fait confiance pour un soin en somatopathie.
             </p>
         </div>
     </div>

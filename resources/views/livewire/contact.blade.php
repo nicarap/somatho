@@ -1,7 +1,7 @@
 <form wire:submit="submit" class="container mx-auto px-4">
     <div class="flex flex-wrap justify-center">
         <div class="w-full lg:w-6/12 px-4">
-            <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-primary-400">
+            <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-primary-500">
                 <div class="flex-auto p-5 lg:p-10">
                     <h4 class="text-2xl font-semibold">Vous souhaitez prendre un rendez-vous ?</h4>
                     <p class="leading-relaxed mt-1 mb-4 text-gray-600">
