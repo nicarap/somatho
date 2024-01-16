@@ -1,15 +1,15 @@
 <div class="container mx-auto px-4">
     <div class="flex flex-wrap justify-center text-center mb-24">
         <div class="w-full lg:w-6/12 px-4">
-            <h2 class="text-4xl font-semibold uppercase text-primary-500">Avis des patients</h2>
-            <p class="mt-4 text-md leading-relaxed text-gray-600">
+            <h2 class="text-4xl font-semibold text-primary-500">Avis des patients</h2>
+            <p class="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700">
                 Découvrez les témoignages inspirants à travers les retours authentiques des personnes qui m'ont fait confiance pour un soin en somatopathie.
             </p>
         </div>
     </div>
-    <div class="grid gap-6 text-center md:grid-cols-3 lg:gap-12">
+    <div class="flex gap-6 text-center justify-center lg:gap-12">
         @foreach($reviews as $review)
-        <div class="@if($loop->even) -translate-y-6 @endif md:mb-0 border p-4 rounded-md shadow-md gs_reveal">
+        <div class="@if($loop->even) -translate-y-6 @endif w-full max-w-sm md:mb-0 border p-4 rounded-md shadow-md gs_reveal">
             <div class="mb-6 flex justify-center">
                 <img src="https://tecdn.b-cdn.net/img/Photos/Avatars/img%20(1).jpg" class="w-32 rounded-full shadow-lg dark:shadow-black/30" />
             </div>

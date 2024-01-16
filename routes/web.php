@@ -1,14 +1,15 @@
 <?php
 
 use Inertia\Inertia;
-use App\Livewire\Home;
 use App\Models\Article;
-use App\Livewire\Articles;
+use App\Livewire\Pages\Home;
 use Illuminate\Http\Request;
-use App\Livewire\Article\ArticleList;
-use App\Livewire\Article\ArticleShow;
+use App\Livewire\Pages\About;
+use App\Livewire\Pages\Articles;
+use App\Livewire\Pages\Article as ArticleComponent;
+use App\Livewire\Pages\Traitment;
+use App\Livewire\Pages\Somatopathy;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ProfileController;
@@ -30,16 +31,12 @@ use App\Http\Controllers\Therapist\TraitmentController as TherapistTraitmentCont
 */
 
 
-Route::get('/', fn () => view('pages.home'))->name('home');
-
-Route::get('articles', fn () => view('pages.articles'))->name('article.viewAny');
-Route::get('articles/{article:slug}', function (Article $article) {
-    return view('pages.articles', ["article" => $article]);
-})->name('article.view');
-
-Route::get('/about', fn () => view('pages.about'))->name('about');
-Route::get('/somatopathy', fn () => view('pages.somatopathy'))->name('somatopathy');
-
+Route::get('/', Home::class)->name('home');
+Route::get('/about', About::class)->name('about');
+Route::get('/somatopathy', Somatopathy::class)->name('somatopathy');
+Route::get('/traitments', Traitment::class)->name('traitments');
+Route::get('/articles', Articles::class)->name('articles');
+Route::get('articles/{article:slug}', ArticleComponent::class)->name('article');
 
 
 Route::middleware(['auth', 'verified'])->group(function () {

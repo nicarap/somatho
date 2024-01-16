@@ -15,21 +15,16 @@ module.exports = {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                // #4b7c7f foncé
-                // #6f999f moins foncé
-                // #9abbc1 moins moins foncé
-                // #afd4db clair
-                // #d8ad3e jaune
-                // #cacbac marron clair
                 primary: {
-                    '50': '#afd4db',
-                    '200': '#9abbc1',
-                    '500': '#6f999f',
-                    '900': '#4b7c7f',
+                    '50': '#dcebeb', // text-gray-700
+                    '200': '#8ebaba', // text-gray-700
+                    '500': '#4b7c7f', // text-wite
+                    '900': '#325053', // text-wite
                 },
                 secondary: {
                     '50': '#cacbac',
                     '500': '#d8ad3e',
+                    '900': '#ca7d04',
                 },
             }
         },

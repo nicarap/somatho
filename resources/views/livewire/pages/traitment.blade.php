@@ -1,4 +1,10 @@
-<div class="container mx-auto px-4 pt-20">
+<div>
+    <x-slot:main-title>
+        <h1 class="text-7xl font-serif font-light leading-relaxed mt-4 mb-4 text-secondary-500">
+            La consultation
+        </h1>
+    </x-slot:main-title>
+
     <div class="flex flex-wrap text-center justify-center">
         <div class="w-full lg:w-6/12 px-4">
             <h2 class="text-4xl font-semibold text-primary-900">Consultation</h2>
@@ -9,7 +15,7 @@
     </div>
     <div class="flex flex-wrap mt-12 justify-center">
         <div class="w-full lg:w-3/12 px-4 text-center">
-            <div class="fill-primary-200 p-3 w-12 h-12 shadow-lg rounded-full bg-primary-900 inline-flex items-center justify-center">
+            <div class="fill-primary-500 p-3 border-2 border-primary-500 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-primary-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-2/3" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                     <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z" />
                 </svg>
