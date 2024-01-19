@@ -5,91 +5,91 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
     "use strict"; 
 	
 	/** SLIDER */
-    let slideIndex = 0;
-    let slides = $(".slider-item");
-    let slideCount = slides.length;
-  	let sliderInterval = 5000;
-  	let intervalSlider;
-	let progressBarFill = document.getElementById('progress-bar-fill');
+    // let slideIndex = 0;
+    // let slides = $(".slider-item");
+    // let slideCount = slides.length;
+  	// let sliderInterval = 5000;
+  	// let intervalSlider;
+	// let progressBarFill = document.getElementById('progress-bar-fill');
 
-    function showNextSlide() {
-		if (slideIndex < slideCount - 1) {
-			slideIndex++;
-		} else {
-			slideIndex = 0;
-		}
-		updateSlider();
-    }
+    // function showNextSlide() {
+	// 	if (slideIndex < slideCount - 1) {
+	// 		slideIndex++;
+	// 	} else {
+	// 		slideIndex = 0;
+	// 	}
+	// 	updateSlider();
+    // }
 
-    function updateSlider() {
-		$("[data-slider]").each(function(index, element){
-			if(parseInt($(element).attr("data-slider")) === parseInt(slideIndex + 1)){
-				$(element).addClass("bg-secondary-400");
-			}else{
-				$(element).removeClass("bg-secondary-400");
-			}
-		});
-		let translateValue = -slideIndex * 100 + "%";
-		$(".slider-wrapper").css("transform", "translateX(" + translateValue + ")");
+    // function updateSlider() {
+	// 	$("[data-slider]").each(function(index, element){
+	// 		if(parseInt($(element).attr("data-slider")) === parseInt(slideIndex + 1)){
+	// 			$(element).addClass("bg-secondary-400");
+	// 		}else{
+	// 			$(element).removeClass("bg-secondary-400");
+	// 		}
+	// 	});
+	// 	let translateValue = -slideIndex * 100 + "%";
+	// 	$(".slider-wrapper").css("transform", "translateX(" + translateValue + ")");
 		
-		resetProgressBar();
-		startProgressBarAnimation();
+	// 	resetProgressBar();
+	// 	startProgressBarAnimation();
 
-		intervalSlider = setInterval(() => {
-			showNextSlide();
-		}, sliderInterval);
-    }
+	// 	intervalSlider = setInterval(() => {
+	// 		showNextSlide();
+	// 	}, sliderInterval);
+    // }
 
-	function currentSlide(index) {
-		slideIndex = index - 1;
-		updateSlider();
-		resetProgressBar();
-	}
+	// function currentSlide(index) {
+	// 	slideIndex = index - 1;
+	// 	updateSlider();
+	// 	resetProgressBar();
+	// }
 
-	function startSlider() {
-		updateSlider();
-		// intervalSlider = setInterval(() => {
-		// 	showNextSlide();
-		// }, sliderInterval); // 5 seconds
-		startProgressBarAnimation();
-	}
+	// function startSlider() {
+	// 	updateSlider();
+	// 	// intervalSlider = setInterval(() => {
+	// 	// 	showNextSlide();
+	// 	// }, sliderInterval); // 5 seconds
+	// 	startProgressBarAnimation();
+	// }
 
-	function resetProgressBar() {
-		progressBarFill.style.width = '0%';
-		// startProgressBarAnimation();
-	}
+	// function resetProgressBar() {
+	// 	progressBarFill.style.width = '0%';
+	// 	// startProgressBarAnimation();
+	// }
 
-	function resetAndRestartInterval() {
-		clearInterval(intervalSlider);
-		intervalSlider = setInterval(() => {
-			showNextSlide();
-		}, sliderInterval);
-	}
+	// function resetAndRestartInterval() {
+	// 	clearInterval(intervalSlider);
+	// 	intervalSlider = setInterval(() => {
+	// 		showNextSlide();
+	// 	}, sliderInterval);
+	// }
 
-	function startProgressBarAnimation() {
-		progressBarFill.style.width = '100%';
-		let startTime = Date.now();
+	// function startProgressBarAnimation() {
+	// 	progressBarFill.style.width = '100%';
+	// 	let startTime = Date.now();
 
-		function animateProgressBar() {
-			let currentTime = Date.now();
-			let elapsed = currentTime - startTime;
-			let timeLeft = sliderInterval - elapsed;
-			let progress = Math.max(0, timeLeft / sliderInterval) * 100;
-			progressBarFill.style.width = progress + '%';
+	// 	function animateProgressBar() {
+	// 		let currentTime = Date.now();
+	// 		let elapsed = currentTime - startTime;
+	// 		let timeLeft = sliderInterval - elapsed;
+	// 		let progress = Math.max(0, timeLeft / sliderInterval) * 100;
+	// 		progressBarFill.style.width = progress + '%';
 
-			if (timeLeft > 0) {
-				requestAnimationFrame(animateProgressBar);
-			} else {
-				resetAndRestartInterval();
-			}
-		}
-		requestAnimationFrame(animateProgressBar);
-	}
+	// 		if (timeLeft > 0) {
+	// 			requestAnimationFrame(animateProgressBar);
+	// 		} else {
+	// 			resetAndRestartInterval();
+	// 		}
+	// 	}
+	// 	requestAnimationFrame(animateProgressBar);
+	// }
 
-    $(document).on('click', '.control', function (e){
-		e.preventDefault()
-		currentSlide($(e.currentTarget).attr('data-slider'))
-	})
+    // $(document).on('click', '.control', function (e){
+	// 	e.preventDefault()
+	// 	currentSlide($(e.currentTarget).attr('data-slider'))
+	// })
 
 	// END SLIDER
 
@@ -205,7 +205,6 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 	  }
 
 	  document.addEventListener("DOMContentLoaded", function() {
-		startSlider()
 		gsap.registerPlugin(ScrollTrigger);
 
 		ScrollTrigger.config({ limitCallbacks: true });

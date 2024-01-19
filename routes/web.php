@@ -34,7 +34,7 @@ use App\Http\Controllers\Therapist\TraitmentController as TherapistTraitmentCont
 Route::get('/', Home::class)->name('home');
 Route::get('/about', About::class)->name('about');
 Route::get('/somatopathy', Somatopathy::class)->name('somatopathy');
-Route::get('/traitments', Traitment::class)->name('traitments');
+Route::get('/traitments', Traitment::class)->name('traitment');
 Route::get('/articles', Articles::class)->name('articles');
 Route::get('articles/{article:slug}', ArticleComponent::class)->name('article');
 

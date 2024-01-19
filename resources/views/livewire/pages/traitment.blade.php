@@ -1,66 +1,147 @@
 <div>
     <x-slot:main-title>
-        <h1 class="text-7xl font-serif font-light leading-relaxed mt-4 mb-4 text-secondary-500">
-            La consultation
+        <h1 class="text-5xl text-center font-serif font-light leading-relaxed mt-4 mb-4 text-secondary-500">
+            La Consultation en Somatopathie : <p>Un Voyage vers l'Équilibre</p>
         </h1>
     </x-slot:main-title>
 
-    <div class="flex flex-wrap text-center justify-center">
-        <div class="w-full lg:w-6/12 px-4">
-            <h2 class="text-4xl font-semibold text-primary-900">Consultation</h2>
-            <p class="text-lg leading-relaxed mt-4 mb-4 text-gray-100">
-                La séance peut se dérouler au centre Seconde Vie à Saint Pierre ou a domicile dans l'ouest et le sud de l'île.
-            </p>
+    <main class="relative">
+        <div class="bottom-auto -top-[69px] left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
+             style="height: 70px;">
+            <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+                 version="1.1" viewBox="0 0 2560 100" x="0" y="0">
+                <polygon class="text-primary-200 fill-current" points="2560 0 2560 100 0 100"></polygon>
+            </svg>
         </div>
-    </div>
-    <div class="flex flex-wrap mt-12 justify-center">
-        <div class="w-full lg:w-3/12 px-4 text-center">
-            <div class="fill-primary-500 p-3 border-2 border-primary-500 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-primary-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-2/3" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                    <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z" />
+        <div class="pb-20 relative bg-primary-200">
+            <x-traitment></x-traitment>
+            <div class="custom-shape-divider-top-1703755415"
+                 style="
+                    position: absolute;
+                    left: 0;
+                    top: 100%;
+                    width: 100%;
+                    overflow: hidden;
+                    line-height: 0;
+                    ">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                     preserveAspectRatio="none" class="fill-primary-200">
+                    <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+                          opacity=".25" class="shape-fill"></path>
+                    <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+                          opacity=".5" class="shape-fill"></path>
+                    <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+                          class="shape-fill"></path>
                 </svg>
             </div>
-            <h5 class="text-xl mt-5 font-semibold text-primary-900">Déroulement d'une séance</h5>
-            <ul class="mt-2 text-gray-800">
-                <li>
-                    Séance de 1h à 1h30
-                </li>
-                <li>
-                    Tenu correcte exigé (pas de string)
-                </li>
-            </ul>
         </div>
-        <div class="w-full lg:w-3/12 px-4 text-center">
-            <div class="fill-primary-200 p-3 w-12 h-12 shadow-lg rounded-full bg-primary-900 inline-flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-2/3" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                    <path d="M48.1 240c-.1 2.7-.1 5.3-.1 8v16c0 2.7 0 5.3 .1 8H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H60.3C89.9 419.9 170 480 264 480h24c17.7 0 32-14.3 32-32s-14.3-32-32-32H264c-57.9 0-108.2-32.4-133.9-80H256c17.7 0 32-14.3 32-32s-14.3-32-32-32H112.2c-.1-2.6-.2-5.3-.2-8V248c0-2.7 .1-5.4 .2-8H256c17.7 0 32-14.3 32-32s-14.3-32-32-32H130.1c25.7-47.6 76-80 133.9-80h24c17.7 0 32-14.3 32-32s-14.3-32-32-32H264C170 32 89.9 92.1 60.3 176H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H48.1z" />
-                </svg>
+        <div class="bg-gray-100">
+            <div class="container mx-auto px-4 pb-32 pt-20">
+                <h2 class="z-20 text-4xl font-semibold text-center relative text-primary-900 pb-32">
+                    Déroulement d'une séance
+                </h2>
+                <div class="flex gap-16 relative z-20">
+                    <div class="">
+                        <div
+                             class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                            <span class="text-white font-serif text-3xl">1</span>
+                        </div>
+                        <h3 class="font-semibold mb-4 text-center text-xl">Accueil et Écoute Bienveillante</h3>
+
+                        <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-700">
+                            À votre arrivée, vous serez chaleureusement accueilli(e) pour discuter de vos préoccupations
+                            et
+                            objectifs.
+                        </p>
+                    </div>
+                    <div class="">
+                        <div
+                             class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                            <span class="text-white font-serif text-3xl">2</span>
+                        </div>
+                        <h3 class="font-semibold mb-4 text-center text-xl">Exploration des Émotions et du Vécu</h3>
+
+                        <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-700">
+                            Nous explorons ensemble vos expériences émotionnelles passées et actuelles pour identifier
+                            d'éventuelles tensions.
+                        </p>
+                    </div>
+                    <div class="">
+                        <div
+                             class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                            <span class="text-white font-serif text-3xl">3</span>
+                        </div>
+                        <h3 class="font-semibold mb-4 text-center text-xl">Techniques Douces et Personnalisées</h3>
+
+                        <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-700">
+                            La séance inclut des gestes doux adaptés à vos besoins basés sur la Méthode Poyet pour
+                            libérer
+                            les tensions articulaires.
+                        </p>
+                    </div>
+                    <div class="">
+                        <div
+                             class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                            <span class="text-white font-serif text-3xl">4</span>
+                        </div>
+                        <h3 class="font-semibold mb-4 text-center text-xl">Dialogue et Feedback</h3>
+
+                        <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-700">
+                            Au cours de la séance, vous serez encouragé(e) à partager vos sensations et votre ressenti.
+                        </p>
+                    </div>
+                </div>
             </div>
-            <h6 class="text-xl mt-5 font-semibold text-primary-900">
-                Tarifs
-            </h6>
-            <div class="text-gray-800">
-                <div class="font-bold">Adultes : 70€</div>
-                <div class="font-bold">Nourrissons : 50 €</div>
-                <p class="mt-2 mb-4 ">
-                    Règlements par chèque ou espèces
-                </p>
+            <div class="bg-primary-500 py-32">
+                <div class="container mx-auto px-4 ">
+                    <div class="flex gap-16 justify-center relative z-20">
+                        <div class="">
+                            <div
+                                 class="h-12 w-12 bg-secondary-500 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                                <span class="text-white font-serif text-3xl">5</span>
+                            </div>
+                            <h3 class="text-gray-200 font-semibold mb-4 text-center text-xl">
+                                Intégration des Dimensions Physiques et Émotionnelles
+                            </h3>
+
+                            <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-200">
+                                La Somatopathie considère le corps et l'esprit comme indissociables.
+                                Je travaillerai à intégrer ces deux dimensions pour favoriser un équilibre global.
+                            </p>
+                        </div>
+                        <div class="">
+                            <div
+                                 class="h-12 w-12 bg-secondary-500 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                                <span class="text-white font-serif text-3xl">6</span>
+                            </div>
+                            <h3 class="text-gray-200 font-semibold mb-4 text-center text-xl">
+                                Conseils et Pratiques d'Auto-Soin
+                            </h3>
+
+                            <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-200">
+                                À la fin de la consultation, des conseils personnalisés et des pratiques d'auto-soin
+                                peuvent
+                                vous être proposés.
+                            </p>
+                        </div>
+                        <div class="">
+                            <div
+                                 class="h-12 w-12 bg-secondary-500 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                                <span class="text-white font-serif text-3xl">7</span>
+                            </div>
+                            <h3 class="text-gray-200 font-semibold mb-4 text-center text-xl">Suivi et Plan Personnalisé
+                            </h3>
+
+                            <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-200">
+                                En fonction de vos besoins, un plan de suivi peut être établi pour optimiser les
+                                résultats
+                                de votre démarche vers le bien-être.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="w-full lg:w-3/12 px-4 text-center">
-            <div class="fill-primary-200 p-3 w-12 h-12 shadow-lg rounded-full bg-primary-900 inline-flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-2/3" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                    <path d="M512 80c0 18-14.3 34.6-38.4 48c-29.1 16.1-72.5 27.5-122.3 30.9c-3.7-1.8-7.4-3.5-11.3-5C300.6 137.4 248.2 128 192 128c-8.3 0-16.4 .2-24.5 .6l-1.1-.6C142.3 114.6 128 98 128 80c0-44.2 86-80 192-80S512 35.8 512 80zM160.7 161.1c10.2-.7 20.7-1.1 31.3-1.1c62.2 0 117.4 12.3 152.5 31.4C369.3 204.9 384 221.7 384 240c0 4-.7 7.9-2.1 11.7c-4.6 13.2-17 25.3-35 35.5c0 0 0 0 0 0c-.1 .1-.3 .1-.4 .2l0 0 0 0c-.3 .2-.6 .3-.9 .5c-35 19.4-90.8 32-153.6 32c-59.6 0-112.9-11.3-148.2-29.1c-1.9-.9-3.7-1.9-5.5-2.9C14.3 274.6 0 258 0 240c0-34.8 53.4-64.5 128-75.4c10.5-1.5 21.4-2.7 32.7-3.5zM416 240c0-21.9-10.6-39.9-24.1-53.4c28.3-4.4 54.2-11.4 76.2-20.5c16.3-6.8 31.5-15.2 43.9-25.5V176c0 19.3-16.5 37.1-43.8 50.9c-14.6 7.4-32.4 13.7-52.4 18.5c.1-1.8 .2-3.5 .2-5.3zm-32 96c0 18-14.3 34.6-38.4 48c-1.8 1-3.6 1.9-5.5 2.9C304.9 404.7 251.6 416 192 416c-62.8 0-118.6-12.6-153.6-32C14.3 370.6 0 354 0 336V300.6c12.5 10.3 27.6 18.7 43.9 25.5C83.4 342.6 135.8 352 192 352s108.6-9.4 148.1-25.9c7.8-3.2 15.3-6.9 22.4-10.9c6.1-3.4 11.8-7.2 17.2-11.2c1.5-1.1 2.9-2.3 4.3-3.4V304v5.7V336zm32 0V304 278.1c19-4.2 36.5-9.5 52.1-16c16.3-6.8 31.5-15.2 43.9-25.5V272c0 10.5-5 21-14.9 30.9c-16.3 16.3-45 29.7-81.3 38.4c.1-1.7 .2-3.5 .2-5.3zM192 448c56.2 0 108.6-9.4 148.1-25.9c16.3-6.8 31.5-15.2 43.9-25.5V432c0 44.2-86 80-192 80S0 476.2 0 432V396.6c12.5 10.3 27.6 18.7 43.9 25.5C83.4 438.6 135.8 448 192 448z" />
-                </svg>
-            </div>
-            <h5 class="text-xl mt-5 font-semibold text-primary-900">
-                Remboursement
-            </h5>
-            <p class="mt-2 mb-4 text-gray-800">
-                La séance n'est pas prise en charge par la sécurité sociale.
-                Néanmoins de plus en plus de mutuelles prennent en charge la totalité ou une partie de la consultation ostéopathique.
-                Renseignez-Vous auprès de votre mutuelle.
-            </p>
-        </div>
-    </div>
+
+    </main>
 </div>
