@@ -126,8 +126,6 @@ class PatientResource extends Resource
                     ->label(__("filament.attributes.email_verified_at")),
                 Tables\Columns\TextColumn::make("tel")
                     ->label(__("filament.attributes.tel")),
-                Tables\Columns\TextColumn::make("siren")
-                    ->label(__("filament.attributes.siren")),
             ])
             ->filters([
                 //

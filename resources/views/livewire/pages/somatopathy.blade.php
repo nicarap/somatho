@@ -113,7 +113,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 pt-32">
-                    <div class="w-full px-4 mr-auto ml-auto gs_reveal gs_reveal_fromLeft">
+                    <div class="w-full px-4 mr-auto ml-auto gs_reveal">
                         <div class="fill-secondary-900 gap-4 inline-flex items-center justify-center ">
                             <div class="w- h- p-4 rounded-full bg-secondary-500 fill-secondary-900 ">
                                 <div class="w-full"></div>
@@ -146,7 +146,7 @@
                         </ul>
                     </div>
 
-                    <div class="w-full px-4 mr-auto ml-auto gs_reveal gs_reveal_fromLeft">
+                    <div class="w-full px-4 mr-auto ml-auto gs_reveal">
                         <div class="fill-secondary-900 gap-4 inline-flex items-center justify-center ">
                             <div class="w- h- p-4 rounded-full bg-secondary-500 fill-secondary-900 ">
                                 <div class="w-full"></div>
@@ -175,7 +175,7 @@
                         </ul>
                     </div>
 
-                    <div class="w-full px-4 mr-auto ml-auto gs_reveal gs_reveal_fromLeft">
+                    <div class="w-full px-4 mr-auto ml-auto gs_reveal">
                         <div class="fill-secondary-900 gap-4 inline-flex items-center justify-center ">
                             <div class="w- h- p-4 rounded-full bg-secondary-500 fill-secondary-900 ">
                                 <div class="w-full"></div>
@@ -206,7 +206,7 @@
             </div>
         </div>
 
-        <div id="about" class="relative bg-primary-500 overflow-hidden mt-16">
+        <div class="relative bg-primary-500 overflow-hidden">
             <div class="max-w-7xl mx-auto">
                 <div
                      class="relative z-10 pb-8 bg-primary-500 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
@@ -247,7 +247,7 @@
                 <small>*: Il est toujours recommandé de consulter un professionnel de la santé qualifié pour discuter de
                     toute condition médicale ou problème de santé. La somatopathie peut être complémentaire, mais ne
                     remplace pas les soins médicaux traditionnels.</small>
-            </div>
-        </div> --}}
+            </div>--}}
+        </div> 
     </main>
 </div>

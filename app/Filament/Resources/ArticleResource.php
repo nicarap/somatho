@@ -59,7 +59,16 @@ class ArticleResource extends Resource
                         ->label(__("filament.attributes.content"))
                         ->required(),
                     Forms\Components\FileUpload::make('image'),
-                    Forms\Components\Grid::make()->schema([
+                    Forms\Components\Grid::make(3)->schema([
+                        Forms\Components\Select::make("tags")
+                            ->relationship("tags", "name")->preload()->searchable()->multiple()
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('name')
+                                    ->required(),
+                                Forms\Components\ColorPicker::make('color')
+                                    ->required(),
+                            ])
+                            ->label(__("filament.attributes.tags")),
                         Forms\Components\Toggle::make("is_pinned")
                             ->label(__("filament.attributes.pinned")),
                         Forms\Components\DatePicker::make("published_at")
@@ -74,10 +83,16 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make("title"),
-                Tables\Columns\TextColumn::make("content")->html()->limit(50),
-                Tables\Columns\ToggleColumn::make("is_pinned"),
-                Tables\Columns\TextColumn::make("published_at")->date(),
+                Tables\Columns\TextColumn::make("title")
+                    ->label(__("filament.attributes.title")),
+                Tables\Columns\TextColumn::make("content")->html()->limit(50)
+                    ->label(__("filament.attributes.content")),
+                Tables\Columns\ViewColumn::make("tags")->view('tables.columns.tags')
+                    ->label(__("filament.attributes.tags")),
+                Tables\Columns\ToggleColumn::make("is_pinned")
+                    ->label(__("filament.attributes.pinned")),
+                Tables\Columns\TextColumn::make("published_at")->date()
+                    ->label(__("filament.attributes.published_at")),
             ])
             ->filters([
                 //

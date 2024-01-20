@@ -143,5 +143,43 @@
             </div>
         </div>
 
+        <div class="relative bg-primary-200 overflow-hidden">
+            <div class="max-w-7xl mx-auto">
+                <div
+                     class="relative w-1/2 z-10 pb-8 bg-primary-200 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                    <div class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                        <div class="sm:text-center lg:text-left">
+                            <p class="text-white text-xl text-center">
+                                La somatopathie, puissant levier de guérison, travaillera en synergie avec
+                                votre corps pour restaurer l'équilibre physique et émotionnel. Découvrez comment nos
+                                consultations spécialisées peuvent être la clé pour apaiser les tensions, libérer les
+                                blocages et revitaliser votre bien-être physique.
+                            </p>
+                        </div>
+
+                        <div class="lg:flex justify-center mt-4">
+                            <a href="{{ route('home') }}/#contact"
+                               class="bg-secondary-500 text-gray-600 active:bg-primary-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300"
+                               type="submit" style="transition: all 0.15s ease 0s;">
+                                Je prend rendez-vous !
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                @php($image = asset('images/carte_visite.jpg'))
+                <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-auto bg-no-repeat bg-fixed bg-right-bottom"
+                     style="background-image: url({{ $image }})">
+                </div>
+            </div>
+
+            {{-- <div class="pb-20 bg-primary-500 ">
+            <div class="max-w-7xl mx-auto">
+                <small>*: Il est toujours recommandé de consulter un professionnel de la santé qualifié pour discuter de
+                    toute condition médicale ou problème de santé. La somatopathie peut être complémentaire, mais ne
+                    remplace pas les soins médicaux traditionnels.</small>
+            </div> --}}
+        </div>
+
     </main>
 </div>

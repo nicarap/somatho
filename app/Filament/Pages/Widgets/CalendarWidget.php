@@ -9,6 +9,7 @@ use App\Models\User;
 use Filament\Forms\Get;
 use App\Models\Traitment;
 use Illuminate\Support\Arr;
+use App\Services\UserService;
 use App\Services\TraitmentService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -62,6 +63,25 @@ class CalendarWidget extends FullCalendarWidget
             Forms\Components\Select::make('patient')
                 ->relationship("patient", "name")
                 ->reactive()
+                ->searchable()
+                ->preload()
+                ->createOptionForm([
+                    Forms\Components\Section::make("Informations générales")->schema([
+                        Forms\Components\TextInput::make("name")
+                            ->label(__("filament.attributes.name"))
+                            ->required(),
+                        Forms\Components\TextInput::make("email")
+                            ->label(__("filament.attributes.email"))
+                            ->email()
+                            ->required(),
+                        Forms\Components\TextInput::make("tel")
+                            ->label(__("filament.attributes.tel"))
+                            ->telRegex('/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/'),
+                        Forms\Components\DatePicker::make("birthdate")
+                            ->label(__("filament.attributes.birthdate"))
+                            ->required(),
+                    ])
+                ])
                 ->disabled($disabled)
                 ->required(),
             Forms\Components\Grid::make()
@@ -98,15 +118,15 @@ class CalendarWidget extends FullCalendarWidget
                 })->live()
                 ->disabled($disabled)
                 ->required(),
-            Forms\Components\Repeater::make("notes")
-                ->relationship()
-                ->disabled($disabled)
-                ->schema(fn ($record): array => $record ? [
-                    Forms\Components\MarkdownEditor::make("description")
-                ] : [
-                    Forms\Components\RichEditor::make("description")
-                ])
-                ->reorderableWithDragAndDrop(false),
+            // Forms\Components\Repeater::make("notes")
+            //     ->relationship()
+            //     ->disabled($disabled)
+            //     ->schema(fn ($record): array => $record ? [
+            //         Forms\Components\MarkdownEditor::make("description")
+            //     ] : [
+            //         Forms\Components\RichEditor::make("description")
+            //     ])
+            //     ->reorderableWithDragAndDrop(false),
             Forms\Components\Checkbox::make("realized_at")
                 ->label("Le soin à été réalisé")
                 ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),

@@ -7,6 +7,9 @@
             <h2 class="text-xl font-semibold">{{ $article->title }}</h2>
             <small>Publié le {{ $article->published_at->format('d/m/y') }}</small>
         </div>
+
+        <livewire:components.tags :tags="$article->tags"></livewire:components.tags>
+
         <!-- <article class="prose-sm whitespace-pre-wrap max-h-52 max-w-12 truncate *:text-ellipsis overflow-hidden">{!! $article->content !!}</article> -->
         <div class="flex justify-end mt-8">
             <a href="{{ route('article', ['article' => $article]) }}"
