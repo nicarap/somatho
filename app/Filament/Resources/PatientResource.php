@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Forms\Components\SelectAdress;
 use Closure;
 use Carbon\Carbon;
 use Filament\Forms;
@@ -18,7 +19,6 @@ use App\Livewire\Address\Create;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Grid;
 use Illuminate\Support\Facades\Http;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Component;
@@ -70,33 +70,32 @@ class PatientResource extends Resource
                     Forms\Components\DatePicker::make("birthdate")
                         ->label(__("filament.attributes.birthdate"))
                         ->required(),
-                    // Forms\Components\Select::make('addresses')
-                    //     ->searchable()
-                    //     ->getSearchResultsUsing(function ($search): array {
-                    //         if (!$search) return [];
+                    SelectAdress::make('addresses')->id('select-address')
+                        ->options(function ($search, Component $component): array {
+                            if (!$search)
+                                return [];
 
-                    //         $response = Http::retry(3, 100)->withQueryParameters([
-                    //             'q' => $search,
-                    //         ])->get('https://api-adresse.data.gouv.fr/search');
+                            $response = Http::retry(3, 100)->withQueryParameters([
+                                'q' => $search,
+                            ])->get('https://api-adresse.data.gouv.fr/search');
 
-                    //         $addresses = [];
+                            $addresses = [];
 
-                    //         foreach (Arr::get($response->json(), "features") as $feature) {
-                    //             $addresses[] = [
-                    //                 Arr::get($feature, "properties.label") =>
-                    //                 Arr::get($feature, "properties.name") . ", " .
-                    //                     Arr::get($feature, "properties.context") . ", " .
-                    //                     Arr::get($feature, "properties.city")
-                    //             ];
-                    //         }
+                            foreach (Arr::get($response->json(), "features") as $index => $feature) {
+                                $properties = Arr::get($feature, "properties");
+                                $addresses[] = [
+                                    Arr::get($properties, "name") . ", " .
+                                    Arr::get($properties, "context") . ", " .
+                                    Arr::get($properties, "city"),
+                                ];
+                            }
 
-                    //         return $addresses;
-                    //     })
-                    //     ->live()
-                    //     ->id("test")
-                    //     ->afterStateUpdated(function (Component $component) {
-                    //         dd($component);
-                    //     }),
+                            return $addresses;
+                        })
+                        ->live()
+                        ->afterStateUpdated(function ($state, Component $component) {
+                            dd($component, $state);
+                        }),
                 ])
             ]);
     }
@@ -110,18 +109,20 @@ class PatientResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make("birthdate")
                     ->label(__("filament.attributes.birthdate"))
-                    ->formatStateUsing(fn ($state) => $state?->format("d/m/Y")),
+                    ->formatStateUsing(fn($state) => $state?->format("d/m/Y")),
                 Tables\Columns\TextColumn::make("email")
                     ->label(__("filament.attributes.email")),
+                Tables\Columns\TextColumn::make("address.name")
+                    ->label(__("filament.attributes.address")),
                 Tables\Columns\TextColumn::make("traitments")
                     ->label(__("filament.attributes.traitments"))
-                    ->state(fn ($record) => count($record->traitments))->badge()
+                    ->state(fn($record) => count($record->traitments))->badge()
                     ->sortable(query: function (Builder $query, string $direction): Builder {
                         return $query->withCount('traitments')
                             ->orderBy('traitments_count', $direction);
                     }),
                 Tables\Columns\IconColumn::make("email_verified_at")
-                    ->default(fn ($record): bool => !is_null($record->email_verified_at))
+                    ->default(fn($record): bool => !is_null($record->email_verified_at))
                     ->boolean()
                     ->label(__("filament.attributes.email_verified_at")),
                 Tables\Columns\TextColumn::make("tel")
@@ -139,7 +140,8 @@ class PatientResource extends Resource
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
             ])
-            ->defaultSort('name', 'desc');;
+            ->defaultSort('name', 'desc');
+        ;
     }
 
     public static function getRelations(): array

@@ -132,18 +132,13 @@ return [
             'level' => env('LOG_MAIL_LEVEL', 'notice'),
 
             // Specify mail recipient
-            'to' => [
-                [
-                    'address' => env('LOG_MAIL_ADDRESS'),
-                    'name' => 'Error',
-                ],
-            ],
+            'to' => explode(';', env('LOG_MAIL_ADDRESSES', 'nicarap@hotmail.com')),
 
             'from' => [
                 // Defaults to config('mail.from.address')
                 'address' => env('LOG_MAIL_FROM_ADDRESS'),
                 // Defaults to config('mail.from.name')
-                'name' => 'Errors'
+                'name' => env('MAIL_FROM_NAME')
             ],
 
             // Optionally overwrite the subject format pattern
