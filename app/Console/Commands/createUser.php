@@ -2,9 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\DataTransferObjects\RolesDTO;
 use Illuminate\Console\Command;
-use App\DataTransferObjects\UserDTO;
 use App\Models\Roles;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Hash;
@@ -53,12 +51,12 @@ class createUser extends Command
 
         $role = Roles::findByName($roleName);
 
-        $user = $this->userService->create(UserDTO::from([
+        $user = $this->userService->create([
             'name' => $name, 
             'email' => $email, 
             'password' => Hash::make($password),
             'roles' => [$role],
-        ]));
+        ]);
         
         $this->info('User created.');
     }

@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTransferObjects\UserDTO;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -63,7 +61,7 @@ class UserController extends Controller
     {
         // $this->authorize('create', User::class);
 
-        $user = $this->userService->create(UserDTO::from($request->all()));
+        $user = $this->userService->create($request->all());
 
         return Inertia::render('Users/Show', [
             'user' => $user,

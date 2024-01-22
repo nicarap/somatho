@@ -3,17 +3,13 @@
 namespace App\Http\Controllers\Therapist;
 
 use App\Http\Controllers\Controller;
-use App\DataTransferObjects\traitmentDTO;
 use App\Http\Requests\Traitments\StoreTraitmentRequest;
-use App\Http\Resources\TherapistResource;
-use App\Models\Address;
 use App\Models\Therapist;
 use App\Models\User;
 use App\Models\Traitment;
 use App\Services\TraitmentService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class TraitmentController extends Controller
@@ -29,10 +25,12 @@ class TraitmentController extends Controller
         DB::beginTransaction();
 
         try {
-            $traitment = $this->traitmentService->create(traitmentDTO::from(array_merge($request->all(), [
-                'price' => 70,
-                'therapist_id' => $therapist->id
-            ])));
+            dd($request);
+            // TODO : To remove
+            // $traitment = $this->traitmentService->create(traitmentDTO::from(array_merge($request->all(), [
+            //     'price' => 70,
+            //     'therapist_id' => $therapist->id
+            // ])));
 
             if ($request->get('note')) {
                 $this->traitmentService->addNote($traitment, $request->get('note'));

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Therapist;
 
-use App\DataTransferObjects\UserDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TherapistResource;
 use App\Http\Resources\TraitmentResource;
@@ -42,7 +41,7 @@ class PatientController extends Controller
         DB::beginTransaction();
 
         try {
-            $patient = $this->userService->create(UserDTO::from($request->all()));
+            $patient = $this->userService->create($request->all());
             $patient->therapists()->attach($therapist);
 
             DB::commit();

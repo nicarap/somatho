@@ -4,17 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use Exception;
-use App\Models\User;
-use App\Models\Address;
 use App\Models\Invoice;
-use App\Models\Therapist;
 use App\Models\Traitment;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use App\DataTransferObjects\UserDTO;
-use App\Exceptions\UserAlreadyExist;
-use App\Repositories\UserRepository;
 use App\Repositories\InvoiceRepository;
 
 class InvoiceService

@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\DataTransferObjects\AddressDTO;
 use App\Models\Address;
 use App\Models\Therapist;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Repositories\AddressRepository;
 use App\Repositories\UserAddressRepository;
-use Illuminate\Support\Arr;
 
 class AddressService
 {
@@ -22,10 +20,10 @@ class AddressService
     ) {
     }
 
-    public function create(AddressDTO $addressDTO, User|Therapist $requester)
+    public function create(array $address, User|Therapist $requester)
     {
-        $address = $this->addressRepository->create($addressDTO);
-        $this->attachTo($address, $requester, $requester->addresses()->count() === 0 && $addressDTO->default);
+        $address = $this->addressRepository->create($address);
+        $this->attachTo($address, $requester, $requester->addresses()->count() === 0 && $address);
 
         return $address;
     }

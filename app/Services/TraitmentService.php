@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\DataTransferObjects\traitmentDTO;
-use App\DataTransferObjects\UserDTO;
-use App\Exceptions\UserAlreadyExist;
-use App\Models\Therapist;
 use App\Models\Traitment;
 use App\Models\Note;
 use App\Repositories\NoteRepository;

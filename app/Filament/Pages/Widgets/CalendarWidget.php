@@ -9,12 +9,10 @@ use App\Models\User;
 use Filament\Forms\Get;
 use App\Models\Traitment;
 use Illuminate\Support\Arr;
-use App\Services\UserService;
 use App\Services\TraitmentService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Saade\FilamentFullCalendar\Actions;
-use App\DataTransferObjects\traitmentDTO;
 use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
 use Saade\FilamentFullCalendar\Widgets\Concerns\InteractsWithEvents;
 

@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Models\User;
-use App\DataTransferObjects\UserDTO;
 
 class UserRepository
 {
-    public function create(UserDTO $entity): User
+    public function create(array $entity): User
     {
-        return User::create($entity->toArray());;
+        return User::create($entity);;
     }
 } 
