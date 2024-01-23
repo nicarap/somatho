@@ -11,6 +11,7 @@ use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Actions\Action;
@@ -33,7 +34,7 @@ class ArticleResource extends Resource
                         ->label(__("filament.attributes.gtp"))
                         ->autocomplete()
                         ->suffixAction(
-                            Action::make('copyCostToPrice')
+                            Action::make('generateGPT')
                                 ->icon('heroicon-m-clipboard')
                                 ->action(function (Set $set, $state) {
                                     $client = new Client();
@@ -58,7 +59,7 @@ class ArticleResource extends Resource
                     Forms\Components\RichEditor::make("content")
                         ->label(__("filament.attributes.content"))
                         ->required(),
-                    Forms\Components\FileUpload::make('image'),
+                    Forms\Components\FileUpload::make('image')->required(),
                     Forms\Components\Grid::make(3)->schema([
                         Forms\Components\Select::make("tags")
                             ->relationship("tags", "name")->preload()->searchable()->multiple()
@@ -72,6 +73,7 @@ class ArticleResource extends Resource
                         Forms\Components\Toggle::make("is_pinned")
                             ->label(__("filament.attributes.pinned")),
                         Forms\Components\DatePicker::make("published_at")
+                            ->default(fn () => Carbon::now())
                             ->label(__("filament.attributes.published_at"))
                             ->required(),
                     ])

@@ -63,7 +63,8 @@
     </nav>
     <header class="relative pt-16 pb-16 flex content-center items-center justify-center" style="min-height: 90vh;"
             id="home">
-        <div class="absolute top-0 w-full h-full bg-cover bg-bottom bg-fixed background-poyet">
+        <div class="absolute top-0 w-full h-full bg-cover bg-center bg-fixed"
+             style="background-image: url(@if (isset($image)) {{ asset('storage/' . $image) }} @else {{ asset('images/DSC_0593.jpg') }} @endif)">
             <span id=" blackOverlay"
                   class="w-full h-full absolute opacity-50 bg-gradient-to-b backdrop-blur-sm to-primary-900 from-black"></span>
         </div>

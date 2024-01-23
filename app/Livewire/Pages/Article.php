@@ -16,6 +16,7 @@ class Article extends Component
         $this->meta = [
             "title" => "{$article->title} - Amélie Bonzi",
             "description" => $article->description ?? null,
+            "image" => $article->image
         ];
     }
 

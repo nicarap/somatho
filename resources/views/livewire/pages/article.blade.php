@@ -36,11 +36,11 @@
                 </div>
             </div>
 
-            <div class="mt-4 p-4 border bg-gray-100">
+            {{-- <div class="mt-4 p-4 border bg-gray-100">
                 <span>Laisser un commentaire :</span>
                 <livewire:components.article.comment :article="$article"></livewire:components.article.comment>
                 Commentaire
-            </div>
+            </div> --}}
         </div>
     </section>
 </div>

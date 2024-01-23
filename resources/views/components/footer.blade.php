@@ -76,7 +76,7 @@
         <div class="flex flex-wrap items-center md:justify-between justify-center">
             <div class="w-full px-4 mx-auto text-center">
                 <div class="text-xs text-gray-200 font-semibold py-1">
-                    Copyright © 2023 Propulsed by
+                    Copyright © {{ Carbon\Carbon::now()->format('Y') }} Propulsed by
                     <a href="#" class="text-gray-200 hover:text-secondary-50">Raphaël LEBON, développeur Web</a>.
                 </div>
             </div>
