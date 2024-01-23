@@ -3,7 +3,9 @@
 namespace App\Policies;
 
 use App\Models\Therapist;
+use App\Models\Traitment;
 use App\Models\User;
+use Carbon\Carbon;
 
 class TraitmentPolicy
 {
@@ -15,15 +17,18 @@ class TraitmentPolicy
         //
     }
 
-    // public function create(Therapist $therapist, User $patient)
-    // {
-    //     if ($therapist->patients->contains($patient)) {
-    //         return true;
-    //     }
-    // }
-
     public function create(Therapist $therapist)
     {
         return true;
+    }
+
+    public function update(Therapist $therapist, Traitment $traitment)
+    {
+        return !$traitment->isRealized();
+    }
+
+    public function delete(Therapist $therapist, Traitment $traitment)
+    {
+        return $traitment->programmed_start_at > Carbon::now();
     }
 }

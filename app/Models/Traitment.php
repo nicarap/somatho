@@ -29,7 +29,10 @@ class Traitment extends Model
         'price',
         'travel_cost',
         'discount',
-        "note"
+        "note",
+        "therapist_id",
+        "patient_id",
+        "address_id"
     ];
 
     protected $cast = [
@@ -61,6 +64,11 @@ class Traitment extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'patient_id');
+    }
+
+    public function isRealized(): bool
+    {
+        return !is_null($this->realized_at);
     }
 
     public function scopeForTherapist(Builder $query, Therapist $therapist): Builder

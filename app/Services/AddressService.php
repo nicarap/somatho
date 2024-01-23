@@ -15,15 +15,14 @@ class AddressService
 {
     public function __construct(
         private AddressRepository $addressRepository,
-        private TherapistService $therapistService,
         private UserAddressRepository $userAddressRepository
     ) {
     }
 
-    public function create(array $address, User|Therapist $requester)
+    // Create a new address with the given data
+    public function create(array $address): Address
     {
         $address = $this->addressRepository->create($address);
-        $this->attachTo($address, $requester, $requester->addresses()->count() === 0 && $address);
 
         return $address;
     }

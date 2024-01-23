@@ -5,6 +5,9 @@ return [
         "calendar" => [
             "label" => ["single" => "Calendrier"]
         ],
+        "profile" => [
+            "label" => ["single" => "Profile"]
+        ],
         "traitment" => [
             "label" => [
                 "single" => "Soin",
@@ -70,6 +73,15 @@ return [
         "gtp" => "Demander à chatGTP",
         "pinned" => "Epinglé",
         "tags" => "Tags",
-
+        "manual_adress" => "Saisir l'adresse manuellement",
+        "invoice_sended" => "Facture envoyée",
+        "addresses" => [
+            "name" => "Nom de l'adresse",
+            "street" => "Rue",
+            "context" => "Contexte",
+            "postcode" => "Code Postal",
+            "city" => "Ville",
+            "default" => "Adresse par défaut"
+        ]
     ]
 ];

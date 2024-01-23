@@ -49,7 +49,7 @@ class TraitmentsRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()->url(fn ($record) => route('filament.admin.resources.traitments.view', $record)),
+                // Tables\Actions\ViewAction::make()->url(fn ($record) => route('filament.admin.resources.traitments.view', $record)),
             ])
             ->bulkActions([
                 //

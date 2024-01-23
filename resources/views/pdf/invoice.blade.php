@@ -89,6 +89,7 @@
         <div class="invoice-header">
             <h2 class="text-primary">Facture</h2>
             @php($therapist = $invoice->traitment->therapist)
+            @php($therapist_address = $invoice->traitment->therapist->addresses()->firstWhere('default', true) ?? $invoice->traitment->therapist->addresses()->first())
             <table style="width: 100%;">
                 <tbody>
                     <tr>
@@ -96,19 +97,19 @@
                         <td><span class="subtitle">thérapeute</span></td>
                     </tr>
                     <tr>
-                        <td>{{ $therapist->addresses()->firstWhere("default", true)->street }}</td>
+                        <td>{{ $therapist_address->street }}</td>
                         <td><span>{{ $therapist->name }}</span></td>
                     </tr>
                     <tr>
-                        <td><span>{{ $therapist->addresses()->firstWhere("default", true)->context }}</span></td>
+                        <td><span>{{ $therapist_address->context }}</span></td>
                         <td><span>{{ $therapist->tel }}</span></td>
                     </tr>
                     <tr>
-                        <td><span>{{ $therapist->addresses()->firstWhere("default", true)->postcode }}</span></td>
+                        <td><span>{{ $therapist_address->postcode }}</span></td>
                         <td><span>{{ $therapist->email }}</span></td>
                     </tr>
                     <tr>
-                        <td><span>{{ $therapist->addresses()->firstWhere("default", true)->city }}</span></td>
+                        <td><span>{{ $therapist_address->city }}</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -154,7 +155,8 @@
             <table class="invoice-table" style="margin-top: 20px;">
                 <thead>
                     <tr>
-                        <th class="subtitle">Prestation du {{ \Carbon\Carbon::parse($invoice->realized_at)->format("d/m/Y") }}</th>
+                        <th class="subtitle">Prestation du
+                            {{ \Carbon\Carbon::parse($invoice->realized_at)->format('d/m/Y') }}</th>
                         <th class="subtitle">Tarif</th>
                     </tr>
                 </thead>
@@ -172,8 +174,11 @@
                         <td class="bg-gray total-price" style="padding:0; font-size: 16px;">
                             <table style="width: 100%; border:0">
                                 <tr>
-                                    <td style="border:0; white-space: nowrap;"><span class="subtitle">Total :</span></td>
-                                    <td style="border:0; text-align: right;" class="text-primary"><strong>{{ $invoice->traitment->price }}€</strong></td>
+                                    <td style="border:0; white-space: nowrap;"><span class="subtitle">Total :</span>
+                                    </td>
+                                    <td style="border:0; text-align: right;" class="text-primary">
+                                        <strong>{{ $invoice->traitment->price }}€</strong>
+                                    </td>
                                 </tr>
                             </table>
                         </td>
@@ -186,7 +191,9 @@
             <table style="width: 100%;">
                 <tbody>
                     <tr style="font-size:10px">
-                        <td>Note d'honoraire émise le {{ \Carbon\Carbon::parse($invoice->created_at)->format("d/m/Y") }} à {{ \Carbon\Carbon::parse($invoice->created_at)->format("H:i") }}</td>
+                        <td>Note d'honoraire émise le
+                            {{ \Carbon\Carbon::parse($invoice->created_at)->format('d/m/Y') }} à
+                            {{ \Carbon\Carbon::parse($invoice->created_at)->format('H:i') }}</td>
                     </tr>
                     <tr style="font-size:10px">
                         <td>N° SIRET {{ $invoice->traitment->therapist->siren }}</td>

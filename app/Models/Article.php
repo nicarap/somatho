@@ -29,14 +29,9 @@ class Article extends Model
         return 'slug';
     }
 
-    public function tags():BelongsToMany
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, "articles_has_tags");
-    }
-
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class);
     }
 
     public function scopePublished(Builder $query)

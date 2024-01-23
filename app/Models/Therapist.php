@@ -65,6 +65,10 @@ class Therapist extends Authenticatable implements Auditable, FilamentUser
         return true;
     }
 
+    public function therapistAddresses(): HasMany
+    {
+        return $this->hasMany(TherapistAddress::class);
+    }
     /**
      * Retrieve address of the model
      *

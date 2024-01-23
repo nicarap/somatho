@@ -33,24 +33,42 @@ class SendInvoiceAction extends Action
     {
         parent::setUp();
 
-        $this->label(__('filament.resources.traitment.actions.send_invoice.label'));
+        $disabled = !$this->record->patient->address()->exists();
+        $invoice_already_exist = $this->record->invoice()->exists();
 
-        $this->requiresConfirmation();
+        $this->icon("heroicon-o-envelope");
 
-        $this->modalHeading(fn (): string => __('filament.resources.traitment.actions.send_invoice.modal.heading', ['patient' => $this->record->patient->name]));
+        if ($invoice_already_exist) {
+            $this->color("success");
 
-        $this->modalDescription(fn (): string => __('filament.resources.traitment.actions.send_invoice.modal.description', ['date' => Carbon::parse($this->record->programmed_start_at)->format("d/m/Y H:i")]));
+            $this->label("Facture envoyé");
 
-        $this->modalSubmitActionLabel(__('filament.resources.traitment.actions.send_invoice.cta'));
+            $this->tooltip("Envoyé à nouveau");
+        } else {
+            $this->label(__('filament.resources.traitment.actions.send_invoice.label'));
 
-        $this->successNotification(
-            Notification::make()
-                ->title(__('filament.resources.traitment.actions.send_invoice.notifications.invoice_sended.success.title'))
-                ->body(__('filament.resources.traitment.actions.send_invoice.notifications.invoice_sended.success.description'))
-                ->success()
-        );
+            $this->requiresConfirmation();
 
-        $this->groupedIcon('heroicon-m-pencil-square');
+            $this->modalHeading(fn (): string => __('filament.resources.traitment.actions.send_invoice.modal.heading', ['patient' => $this->record->patient->name]));
+
+            $this->modalDescription(fn (): string => __('filament.resources.traitment.actions.send_invoice.modal.description', ['date' => Carbon::parse($this->record->programmed_start_at)->format("d/m/Y H:i")]));
+
+            $this->modalSubmitActionLabel(__('filament.resources.traitment.actions.send_invoice.cta'));
+
+            if ($disabled) {
+                $this->disabled();
+                $this->icon("heroicon-o-exclamation-circle");
+            }
+
+            $this->successNotification(
+                Notification::make()
+                    ->title(__('filament.resources.traitment.actions.send_invoice.notifications.invoice_sended.success.title'))
+                    ->body(__('filament.resources.traitment.actions.send_invoice.notifications.invoice_sended.success.description'))
+                    ->success()
+            );
+
+            $this->groupedIcon('heroicon-m-pencil-square');
+        }
 
         $this->action(function (): void {
             $this->process(function (Model $record) {

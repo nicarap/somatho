@@ -5,10 +5,12 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Http;
 use Filament\Forms\Components\Section;
@@ -17,7 +19,6 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PatientResource\Pages;
 use App\Filament\Resources\PatientResource\RelationManagers\NotesRelationManager;
 use App\Filament\Resources\PatientResource\RelationManagers\TraitmentsRelationManager;
-use Illuminate\Http\Request;
 
 class PatientResource extends Resource
 {
@@ -57,11 +58,13 @@ class PatientResource extends Resource
                     Forms\Components\DatePicker::make("birthdate")
                         ->label(__("filament.attributes.birthdate"))
                         ->required(),
-                    Forms\Components\TextInput::make("tel")
-                        ->afterStateUpdated(function ($state, Set $set) {
-                        })
-                        ->label(__("filament.attributes.tel")),
+                    Forms\Components\Toggle::make("manual_address")
+                        ->live()
+                        ->default(false)
+                        ->label(__("filament.attributes.manual_address")),
                     Forms\Components\Select::make('address')
+                        ->visible(fn (Get $get) => !$get("manual_address"))
+                        ->live()
                         ->searchable(fn ($record) => !($record && $record->address()->exists()))
                         ->options(fn ($record) => ($record && $record->address()->exists()) ? [$record->address->name] : [])
                         ->getSearchResultsUsing(function ($search, Request $request): array {
@@ -92,6 +95,27 @@ class PatientResource extends Resource
 
                             return $addresses;
                         }),
+                    Forms\Components\Section::make()->schema([
+                        Forms\Components\TextInput::make("address_name")
+                            ->label(__("filament.attributes.addresses.name"))
+                            ->live(),
+                        Forms\Components\Grid::make()->schema([
+                            Forms\Components\TextInput::make("address_street")
+                                ->label(__("filament.attributes.addresses.street"))
+                                ->live(),
+                            Forms\Components\TextInput::make("address_context")
+                                ->label(__("filament.attributes.addresses.context"))
+                                ->live()
+                        ]),
+                        Forms\Components\Grid::make()->schema([
+                            Forms\Components\TextInput::make("address_postcode")
+                                ->label(__("filament.attributes.addresses.postcode"))
+                                ->live(),
+                            Forms\Components\TextInput::make("address_city")
+                                ->label(__("filament.attributes.addresses.city"))
+                                ->live(),
+                        ]),
+                    ])->visible(fn (Get $get) => $get("manual_address"))
                 ])
             ]);
     }

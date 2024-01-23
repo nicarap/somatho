@@ -46,8 +46,8 @@ class CalendarWidget extends FullCalendarWidget
     protected function modalActions(): array
     {
         return [
-            Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\EditAction::make()->disabled(fn ($record) => $record->isRealized()),
+            Actions\DeleteAction::make()->visible(fn ($record) => $record->programmed_start_at > Carbon::now()),
         ];
     }
 

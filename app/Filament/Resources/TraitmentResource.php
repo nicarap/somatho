@@ -18,6 +18,7 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Actions\Action;
 use App\Filament\Resources\TraitmentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TraitmentResource\RelationManagers;
@@ -51,11 +52,20 @@ class TraitmentResource extends Resource
         return $form->schema([
             Forms\Components\Section::make()->schema([
                 Forms\Components\Grid::make(1)->schema([
-                    Forms\Components\Select::make('patient')
+                    Forms\Components\Select::make('patient_id')
                         ->relationship("patient", "name")
                         ->reactive()
                         ->disabled($disabled)
-                        ->required(),
+                        ->required()
+                        ->suffixAction(
+                            Action::make('goToUser')
+                                ->disabled(fn ($record) => is_null($record))
+                                ->label("Voir l'utilisateur")
+                                ->icon('heroicon-o-eye')
+                                ->url(function ($state) {
+                                    return $state ? route('filament.admin.resources.patients.edit', $state) : "#";
+                                })
+                        ),
                 ]),
                 Forms\Components\Grid::make()
                     ->schema([
@@ -64,23 +74,23 @@ class TraitmentResource extends Resource
                             ->default(fn () => now())
                             ->minDate(now()->subYears(150))
                             ->live()
-                            ->hoursStep(2)
-                            ->minutesStep(15)
                             ->disabled($disabled)
                             ->required(),
                         Forms\Components\DateTimePicker::make('programmed_end_at')
                             ->seconds(false)
                             ->live()
-                            ->minDate(fn (Get $get) => Carbon::parse($get("programmed_start_at")))
+                            ->minDate(fn (Get $get) => $get("programmed_start_at") ? Carbon::parse($get("programmed_start_at")) : now()->addHours())
+                            ->default(fn () => now()->addHours())
                             ->maxDate(fn (Get $get) => Carbon::parse($get("programmed_start_at"))->endOfDay())
-                            ->hoursStep(2)
-                            ->minutesStep(15)
                             ->disabled($disabled)
                             ->required(),
                     ]),
-                Forms\Components\RichEditor::make("note"),
-                Forms\Components\Grid::make(1)->schema([
-                    Forms\Components\Select::make('address')
+                Forms\Components\Grid::make(2)->schema([
+                    Forms\Components\TextInput::make("price")
+                        ->numeric()
+                        ->default(70)
+                        ->disabled($disabled),
+                    Forms\Components\Select::make('address_id')
                         ->relationship("address", "name")
                         ->options(function (Get $get) {
                             $addresses["Mes adresses"] = filament()->auth()->user()->addresses()->pluck("name", "addresses.id")->toArray();
@@ -93,8 +103,10 @@ class TraitmentResource extends Resource
                         ->disabled($disabled)
                         ->required(),
                 ]),
+                Forms\Components\RichEditor::make("note"),
                 Forms\Components\Checkbox::make("realized_at")
                     ->label("Le soin à été réalisé")
+                    ->disabled(fn ($record) => $record->isRealized())
                     ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
             ])
         ]);
@@ -128,16 +140,9 @@ class TraitmentResource extends Resource
                     ->label(__("filament.attributes.address")),
                 TextColumn::make("price")
                     ->label(__("filament.attributes.price")),
-                TextColumn::make("discount")
-                    ->label(__("filament.attributes.discount")),
-                IconColumn::make("therapist_validated_at")
-                    ->default(fn ($record): bool => !is_null($record->therapist_validated_at))
+                IconColumn::make("invoice")
                     ->boolean()
-                    ->label(__("filament.attributes.therapist_validated_at")),
-                IconColumn::make("patient_validated_at")
-                    ->boolean()
-                    ->default(fn ($record): bool => !is_null($record->patient_validated_at))
-                    ->label(__("filament.attributes.patient_validated_at")),
+                    ->label(__("filament.attributes.invoice_sended")),
             ])
             ->striped()
             ->defaultSort("programmed_start_at", "desc")
