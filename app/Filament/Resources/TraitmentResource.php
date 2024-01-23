@@ -78,8 +78,7 @@ class TraitmentResource extends Resource
                             ->disabled($disabled)
                             ->required(),
                     ]),
-
-
+                Forms\Components\RichEditor::make("note"),
                 Forms\Components\Grid::make(1)->schema([
                     Forms\Components\Select::make('address')
                         ->relationship("address", "name")
@@ -125,7 +124,7 @@ class TraitmentResource extends Resource
                 TextColumn::make("programmed_end_at")
                     ->label(__("filament.attributes.programmed_end_at"))
                     ->formatStateUsing(fn ($state) => Carbon::parse($state)->format("d/m/Y h:i")),
-                TextColumn::make("address.label")
+                TextColumn::make("address.name")
                     ->label(__("filament.attributes.address")),
                 TextColumn::make("price")
                     ->label(__("filament.attributes.price")),
@@ -198,9 +197,7 @@ class TraitmentResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            NotesRelationManager::class,
-        ];
+        return [];
     }
 
     public static function getPages(): array

@@ -13,7 +13,8 @@ class SelectAdress extends Field
 
     public function options(array|Arrayable|string|Closure|null $options): static
     {
-        $this->options = ["test" => "aze"];
+        dd($options());
+        $this->options = $options();
 
         return $this;
     }

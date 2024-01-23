@@ -54,7 +54,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily', "mail"],
             'ignore_exceptions' => false,
         ],
 
@@ -138,7 +138,7 @@ return [
                 // Defaults to config('mail.from.address')
                 'address' => env('LOG_MAIL_FROM_ADDRESS'),
                 // Defaults to config('mail.from.name')
-                'name' => env('MAIL_FROM_NAME')
+                'name' => env('MAIL_FROM_NAME', env('APP_NAME'))
             ],
 
             // Optionally overwrite the subject format pattern

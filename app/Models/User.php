@@ -5,17 +5,18 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use Laravel\Sanctum\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class User extends Model
+class User extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use HasApiTokens, HasFactory, Notifiable, HasRoles, HasUuids, Notifiable;
 
     /**
@@ -27,7 +28,9 @@ class User extends Model
         'name',
         'email',
         'tel',
-        'birthdate'
+        'birthdate',
+        "address_id",
+        "note"
     ];
 
     /**
@@ -48,11 +51,6 @@ class User extends Model
     public function address(): BelongsTo
     {
         return $this->belongsTo(Address::class);
-    }
-
-    public function notes(): MorphMany
-    {
-        return $this->morphMany(Note::class, 'model');
     }
 
     /**

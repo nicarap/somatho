@@ -2,39 +2,26 @@
 
 namespace App\Filament\Resources;
 
-use App\Forms\Components\SelectAdress;
-use Closure;
-use Carbon\Carbon;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
-use Livewire\Livewire;
-use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Arr;
-use Filament\Facades\Filament;
-use App\Livewire\Address\Create;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Grid;
 use Illuminate\Support\Facades\Http;
 use Filament\Forms\Components\Section;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Component;
-use Filament\Forms\Components\ViewField;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Client\RequestException;
-use Filament\Forms\Components\Actions\Action;
 use App\Filament\Resources\PatientResource\Pages;
-use App\Filament\Resources\PatientResource\RelationManagers;
 use App\Filament\Resources\PatientResource\RelationManagers\NotesRelationManager;
 use App\Filament\Resources\PatientResource\RelationManagers\TraitmentsRelationManager;
+use Illuminate\Http\Request;
 
 class PatientResource extends Resource
 {
     protected static ?string $model = User::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function getBreadcrumb(): string
@@ -70,31 +57,40 @@ class PatientResource extends Resource
                     Forms\Components\DatePicker::make("birthdate")
                         ->label(__("filament.attributes.birthdate"))
                         ->required(),
-                    SelectAdress::make('addresses')->id('select-address')
-                        ->options(function ($search, Component $component): array {
-                            if (!$search)
+                    Forms\Components\TextInput::make("tel")
+                        ->afterStateUpdated(function ($state, Set $set) {
+                        })
+                        ->label(__("filament.attributes.tel")),
+                    Forms\Components\Select::make('address')
+                        ->searchable(fn ($record) => !($record && $record->address()->exists()))
+                        ->options(fn ($record) => ($record && $record->address()->exists()) ? [$record->address->name] : [])
+                        ->getSearchResultsUsing(function ($search, Request $request): array {
+                            if (!$search || $search === "" || strlen($search) <= 3 || strlen($search) >= 200)
                                 return [];
+
+                            session(["addresses" => []]);
 
                             $response = Http::retry(3, 100)->withQueryParameters([
                                 'q' => $search,
                             ])->get('https://api-adresse.data.gouv.fr/search');
 
                             $addresses = [];
+                            $session_addresses = [];
 
                             foreach (Arr::get($response->json(), "features") as $index => $feature) {
                                 $properties = Arr::get($feature, "properties");
-                                $addresses[] = [
+
+                                $addresses[$index] =
                                     Arr::get($properties, "name") . ", " .
                                     Arr::get($properties, "context") . ", " .
-                                    Arr::get($properties, "city"),
-                                ];
+                                    Arr::get($properties, "city");
+
+                                $session_addresses[] = $properties;
                             }
 
+                            session(["addresses" => $session_addresses]);
+
                             return $addresses;
-                        })
-                        ->live()
-                        ->afterStateUpdated(function ($state, Component $component) {
-                            dd($component, $state);
                         }),
                 ])
             ]);
@@ -109,20 +105,20 @@ class PatientResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make("birthdate")
                     ->label(__("filament.attributes.birthdate"))
-                    ->formatStateUsing(fn($state) => $state?->format("d/m/Y")),
+                    ->formatStateUsing(fn ($state) => $state?->format("d/m/Y")),
                 Tables\Columns\TextColumn::make("email")
                     ->label(__("filament.attributes.email")),
                 Tables\Columns\TextColumn::make("address.name")
                     ->label(__("filament.attributes.address")),
                 Tables\Columns\TextColumn::make("traitments")
                     ->label(__("filament.attributes.traitments"))
-                    ->state(fn($record) => count($record->traitments))->badge()
+                    ->state(fn ($record) => count($record->traitments))->badge()
                     ->sortable(query: function (Builder $query, string $direction): Builder {
                         return $query->withCount('traitments')
                             ->orderBy('traitments_count', $direction);
                     }),
                 Tables\Columns\IconColumn::make("email_verified_at")
-                    ->default(fn($record): bool => !is_null($record->email_verified_at))
+                    ->default(fn ($record): bool => !is_null($record->email_verified_at))
                     ->boolean()
                     ->label(__("filament.attributes.email_verified_at")),
                 Tables\Columns\TextColumn::make("tel")
@@ -140,15 +136,13 @@ class PatientResource extends Resource
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
             ])
-            ->defaultSort('name', 'desc');
-        ;
+            ->defaultSort('name', 'desc');;
     }
 
     public static function getRelations(): array
     {
         return [
             TraitmentsRelationManager::class,
-            NotesRelationManager::class,
         ];
     }
 

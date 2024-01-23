@@ -17,14 +17,14 @@ class Address extends Model
     use HasFactory, HasUuids, SoftDeletes;
 
     protected $fillable = [
-        'label',
-        'name',
-        'context',
-        'postcode',
-        'city',
-        'longitude',
-        'latitude',
-        'is_verified',
+        "name",
+        "street",
+        "context",
+        "postcode",
+        "city",
+        "longitude",
+        "latitude",
+        "is_verified",
     ];
 
     public function patient(): BelongsTo

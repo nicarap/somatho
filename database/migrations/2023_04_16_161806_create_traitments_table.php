@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('therapist_id');
             $table->uuid('patient_id');
             $table->uuid('address_id');
+            $table->longText('note')->nullable();
             $table->timestamp('programmed_start_at');
             $table->timestamp('programmed_end_at');
             $table->timestamp('therapist_validated_at')->nullable();
