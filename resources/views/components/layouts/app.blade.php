@@ -39,42 +39,61 @@
 <body class="text-gray-800 antialiased scroll-smooth">
 
     <nav
-         class="navbar-fixed group top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 aria-[fixed=false]:bg-primary-900 transition-all duration-300">
+        class="navbar-fixed h-20 group top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 aria-[fixed=false]:bg-primary-900 fill-primary-500 aria-[fixed=false]:fill-secondary-900 transition-all duration-300">
         <div class="container px-4 mx-auto flex flex-wrap items-center justify-between gap-16">
             <div class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-                <button class="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-                        type="button" onclick="toggleNavbar('example-collapse-navbar')">
-                    <i class="text-white fas fa-bars"></i>
-                </button>
-
                 <div class="fill-secondary-500 aspect-auto w-12">@include('logo.b')</div>
+
+                <button
+                    class="cursor-pointer text-xl leading-none px-3 py-1 w-14 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+                    type="button" id="toggleNavbar">
+                    <svg class="h-full w-full" viewBox="-2.5 0 19 19" xmlns="http://www.w3.org/2000/svg"
+                        class="cf-icon-svg">
+                        <path
+                            d="M.789 4.836a1.03 1.03 0 0 1 1.03-1.029h10.363a1.03 1.03 0 1 1 0 2.059H1.818A1.03 1.03 0 0 1 .79 4.836zm12.422 4.347a1.03 1.03 0 0 1-1.03 1.029H1.819a1.03 1.03 0 0 1 0-2.059h10.364a1.03 1.03 0 0 1 1.029 1.03zm0 4.345a1.03 1.03 0 0 1-1.03 1.03H1.819a1.03 1.03 0 1 1 0-2.059h10.364a1.03 1.03 0 0 1 1.029 1.03z" />
+                    </svg>
+                </button>
             </div>
             <div class="lg:flex flex-1 flex-grow items-center bg-white lg:bg-transparent lg:shadow-none hidden">
                 <x-navigation />
             </div>
             <div class="lg:flex items-center justify-end bg-white lg:bg-transparent lg:shadow-none hidden">
                 <a href="#contact"
-                   class="bg-secondary-500 text-gray-600 active:bg-primary-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300"
-                   type="submit" style="transition: all 0.15s ease 0s;">
+                    class="bg-secondary-500 text-gray-600 active:bg-primary-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300"
+                    type="submit" style="transition: all 0.15s ease 0s;">
                     Prendre contact
                 </a>
             </div>
         </div>
     </nav>
-    <header class="relative pt-16 pb-16 flex content-center items-center justify-center" style="min-height: 90vh;"
-            id="home">
+    <header class="relative py-16 flex flex-col items-center items-center justify-center" style="min-height: 90vh;"
+        id="home">
         <div class="absolute top-0 w-full h-full bg-cover bg-center bg-fixed"
-             style="background-image: url(@if (isset($image)) {{ asset('storage/' . $image) }} @else {{ asset('images/DSC_0593.jpg') }} @endif)">
+            style="background-image: url(@if (isset($image)) {{ asset('storage/' . $image) }} @else {{ asset('images/DSC_0593.jpg') }} @endif)">
             <span id=" blackOverlay"
-                  class="w-full h-full absolute opacity-50 bg-gradient-to-b backdrop-blur-sm to-primary-900 from-black"></span>
+                class="w-full h-full absolute opacity-50 bg-gradient-to-b backdrop-blur-sm to-primary-900 from-black"></span>
         </div>
-        <div class="container relative mx-auto -mt-16">
+
+        <div id="collapse-navbar" aria-expanded="false"
+            class="aria-expanded:translate-x-0 transition-all right-0 duration-300 translate-x-full z-50 mt-20 w-full h-full fixed inset-0 bg-primary-900">
+            <x-navigation></x-navigation>
+        </div>
+
+        <div class="container relative mx-auto -mt-16 h-full flex-1 flex flex-col justify-evenly items-center py-16">
             <div class="items-center flex flex-wrap">
-                <div class="w-full lg:w-8/12 mx-auto">
+                <div class="w-full 2xl:w-8/12 lg:w-4/12 mx-auto">
                     <div class="flex flex-col items-center gap-2">
                         {{ $mainTitle }}
                     </div>
                 </div>
+            </div>
+
+            <div class="flex md:hidden items-center justify-end bg-transparent shadow-none ">
+                <a href="{{ route('home') }}/#contact"
+                    class="bg-secondary-500 text-gray-600 active:bg-primary-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300"
+                    type="submit" style="transition: all 0.15s ease 0s;">
+                    Prendre rendez-vous
+                </a>
             </div>
         </div>
     </header>
@@ -85,12 +104,5 @@
 
     <x-footer></x-footer>
 </body>
-
-<script>
-    function toggleNavbar(collapseID) {
-        document.getElementById(collapseID).classList.toggle("hidden");
-        document.getElementById(collapseID).classList.toggle("block");
-    }
-</script>
 
 </html>
