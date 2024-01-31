@@ -6,6 +6,7 @@ use Exeption;
 use Carbon\Carbon;
 use Filament\Forms;
 use App\Models\User;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Get;
 use App\Models\Traitment;
 use Illuminate\Support\Arr;
@@ -23,7 +24,7 @@ class CalendarWidget extends FullCalendarWidget
 {
     use InteractsWithEvents;
 
-    public Model | string | null $model = Traitment::class;
+    public Model|string|null $model = Traitment::class;
 
     public function fetchEvents(array $fetchInfo): array
     {
@@ -32,7 +33,7 @@ class CalendarWidget extends FullCalendarWidget
             ->where("programmed_end_at", ">=", $fetchInfo['start'])
             ->get()
             ->map(
-                fn (Traitment $traitment) => [
+                fn(Traitment $traitment) => [
                     'id' => $traitment->id,
                     'title' => $traitment->patient->name,
                     'start' => $traitment->programmed_start_at,
@@ -46,14 +47,14 @@ class CalendarWidget extends FullCalendarWidget
     protected function modalActions(): array
     {
         return [
-            Actions\EditAction::make()->disabled(fn ($record) => $record->isRealized()),
-            Actions\DeleteAction::make()->visible(fn ($record) => $record->programmed_start_at > Carbon::now()),
+            Actions\EditAction::make()->disabled(fn($record) => $record->isRealized()),
+            Actions\DeleteAction::make()->visible(fn($record) => $record->programmed_start_at > Carbon::now()),
         ];
     }
 
     public function getFormSchema(): array
     {
-        $disabled = fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_start_at);
+        $disabled = fn($record) => $record && Carbon::now() > Carbon::parse($record->programmed_start_at);
 
         return [
             Forms\Components\Select::make('patient')
@@ -94,8 +95,8 @@ class CalendarWidget extends FullCalendarWidget
                     Forms\Components\DateTimePicker::make('programmed_end_at')
                         ->seconds(false)
                         ->live()
-                        ->minDate(fn (Get $get) => Carbon::parse($get("programmed_start_at")))
-                        ->maxDate(fn (Get $get) => Carbon::parse($get("programmed_start_at"))->endOfDay())
+                        ->minDate(fn(Get $get) => Carbon::parse($get("programmed_start_at")))
+                        ->maxDate(fn(Get $get) => Carbon::parse($get("programmed_start_at"))->endOfDay())
                         ->hoursStep(2)
                         ->minutesStep(15)
                         ->disabled($disabled)
@@ -108,16 +109,25 @@ class CalendarWidget extends FullCalendarWidget
                     $addresses["Mes adresses"] = filament()->auth()->user()->addresses()->pluck("name", "addresses.id")->toArray();
                     if ($get("patient")) {
                         $patient = User::find($get("patient"));
-                        if ($patient->address) $addresses[$patient->name] = [$patient->address->id => $patient->address->name];
+                        if ($patient->address)
+                            $addresses[$patient->name] = [$patient->address->id => $patient->address->name];
                     }
                     return $addresses;
                 })->live()
+                ->suffixAction(function ($record) {
+                    if (!$record && ($record->address->longitude && $record->address->latitude))
+                        return;
+                    return Action::make("gps")
+                        ->icon('heroicon-m-clipboard')
+                        ->openUrlInNewTab()
+                        ->url("https://www.google.com/maps/place/{$record->address->latitude},{$record->address->longitude}");
+                })
                 ->disabled($disabled)
                 ->required(),
             Forms\Components\RichEditor::make("note"),
             Forms\Components\Checkbox::make("realized_at")
                 ->label("Le soin à été réalisé")
-                ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
+                ->visible(fn($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
 
         ];
     }
