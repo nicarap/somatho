@@ -59,6 +59,10 @@ class Profile extends Page implements HasForms, HasInfolists
         $this->therapist->addresses()->updateExistingPivot($address->id, ["default" => true]);
     }
 
+    public function createAddress()
+    {
+        dd("test");
+    }
     public function profileInfolist(Infolist $infolist): Infolist
     {
         return $infolist
@@ -70,11 +74,11 @@ class Profile extends Page implements HasForms, HasInfolists
                         'xl' => 6,
                         '2xl' => 8,
                     ])->schema([
-                            Infolists\Components\TextEntry::make("name")
-                                ->label(__("filament.attributes.name")),
-                            Infolists\Components\TextEntry::make("email")
-                                ->label(__("filament.attributes.email"))
-                        ]),
+                        Infolists\Components\TextEntry::make("name")
+                            ->label(__("filament.attributes.name")),
+                        Infolists\Components\TextEntry::make("email")
+                            ->label(__("filament.attributes.email"))
+                    ]),
                 Infolists\Components\RepeatableEntry::make('addresses')
                     ->schema([
                         Infolists\Components\TextEntry::make('name')

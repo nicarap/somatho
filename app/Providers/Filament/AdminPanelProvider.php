@@ -30,9 +30,12 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->authGuard("therapist")
+            ->brandLogo(asset('images/logo.svg'))
+            ->brandLogoHeight('3rem')
             ->colors([
                 'primary' => "#52b8e3",
             ])
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -45,9 +48,9 @@ class AdminPanelProvider extends PanelProvider
             ->userMenuItems([
                 MenuItem::make()
                     ->label('Log viewer')
-                    ->url(fn(): string => route('log-viewer.index'))
+                    ->url(fn (): string => route('log-viewer.index'))
                     ->icon('heroicon-o-cog-6-tooth'),
-                'profile' => MenuItem::make()->label('Edit profile')->url(fn(): string => route("filament.admin.pages.profile")),
+                'profile' => MenuItem::make()->label('Edit profile')->url(fn (): string => route("filament.admin.pages.profile")),
                 // ...
             ])
             ->plugins([

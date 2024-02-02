@@ -217,4 +217,10 @@ return [
     "invoice_folder" => env("INVOICE_FOLDER", "invoice"),
 
     "mail_to_contact_address" => env("MAIL_TO_CONTACT_ADDRESS"),
+
+    "social_medias" => [
+        "facebook" => env("SOCIAL_MEDIA_LINK_FB"),
+        "instagram" => env("SOCIAL_MEDAI_LINK_INSTA"),
+        "whatapps" => env("SOCIAL_MEDAI_LINK_WHATAPPS")
+    ]
 ];

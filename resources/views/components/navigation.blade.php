@@ -1,4 +1,4 @@
-<ul class="flex flex-col lg:flex-row gap-2 list-none lg:mx-auto">
+<ul class="flex flex-col xl:flex-row gap-2 list-none xl:mx-auto">
     <li class="flex items-center">
         <a class="hover:text-secondary-500 {{ Route::currentRouteName() === 'home' ? 'text-secondary-500' : 'text-white' }} hover:underline duration-100 transition-all px-3 py-4 lg:py-2 flex items-center text-md uppercase font-bold"
            href="{{ \Request::route()->getName() === 'home' ? '#home' : route('home') }}">
