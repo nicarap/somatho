@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id');
             $table->string('name');
             $table->dateTime('birthdate');
+            $table->longText('note')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('tel')->nullable();

@@ -32,8 +32,8 @@ class Address extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function therapists(): BelongsToMany
+    public function therapist(): BelongsTo
     {
-        return $this->belongsToMany(Therapist::class);
+        return $this->belongsTo(Therapist::class);
     }
 }

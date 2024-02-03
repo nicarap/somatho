@@ -5,6 +5,7 @@ namespace App\Models;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -25,7 +26,8 @@ class Therapist extends Authenticatable implements Auditable, FilamentUser
         'name',
         'email',
         'password',
-        'tel'
+        'tel',
+        "address_id"
     ];
 
     /**
@@ -64,19 +66,14 @@ class Therapist extends Authenticatable implements Auditable, FilamentUser
     {
         return true;
     }
-
-    public function therapistAddresses(): HasMany
-    {
-        return $this->hasMany(TherapistAddress::class);
-    }
     /**
      * Retrieve address of the model
      *
-     * @return belongsToMany
+     * @return BelongsTo
      */
-    public function addresses()
+    public function address(): BelongsTo
     {
-        return $this->belongsToMany(Address::class, 'therapist_has_addresses')->withPivot('default');
+        return $this->belongsTo(Address::class);
     }
 
     /**

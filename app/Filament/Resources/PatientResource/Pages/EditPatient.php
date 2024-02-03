@@ -3,10 +3,11 @@
 namespace App\Filament\Resources\PatientResource\Pages;
 
 use Filament\Actions;
+use App\Models\Address;
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Resources\Pages\EditRecord;
 use App\Filament\Resources\PatientResource;
-use App\Models\Address;
 
 class EditPatient extends EditRecord
 {
@@ -34,19 +35,22 @@ class EditPatient extends EditRecord
                 $data["address_id"] = $address->id;
             } else {
                 $addresses = collect(session("addresses", []));
-                if (count($addresses) > 0 && $data["address"]) {
-                    $attributes = $addresses->firstOrFail(fn ($value, $index) => $index == $data["address"]);
+                if (count($addresses) > 0 && $data["address"] !== null) {
+                    $attributes = $addresses->firstOrFail(fn ($value, $index) => intval($index) === intval($data["address"]));
 
                     $address = Address::create(array_merge($attributes, [
                         "longitude" => Arr::get($attributes, "x"),
                         "latitude" => Arr::get($attributes, "y"),
                         "is_verified" => true,
                     ]));
+
+                    $data["address_id"] = $address->id;
                 }
             }
 
             $record->update($data);
         } catch (\Exception $e) {
+            dd($e);
             logger()->error($e->getMessage());
         }
 

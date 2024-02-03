@@ -21,16 +21,15 @@ class DummyDataBaseSeeder extends Seeder
         DB::beginTransaction();
 
         try {
+
+            $adress_me = Address::factory()->create();
+
             $me = Therapist::create([
                 'name' => 'Raphael Lebon',
                 'email' => 'raphael.lebon@tessi.fr',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                "address_id" => $adress_me->id
             ]);
-
-            $adresses = Address::factory()->count(2)->create();
-            foreach ($adresses as $index => $adress) {
-                $me->addresses()->attach($adress);
-            }
 
             for ($i = 0; $i < $nb_patients; $i++) {
                 $user = User::factory()->create();

@@ -56,8 +56,14 @@ class SendInvoiceAction extends Action
             $this->modalSubmitActionLabel(__('filament.resources.traitment.actions.send_invoice.cta'));
 
             if ($disabled) {
-                $this->disabled();
+                $this->tooltip("Impossible de créer la facture car le client n'a pas d'adresse");
                 $this->icon("heroicon-o-exclamation-circle");
+                $this->requiresConfirmation();
+
+                $this->modalIconColor("danger");
+                $this->modalHeading("Oups ...");
+                $this->modalDescription("Impossible de créer la facture car le client n'a pas d'adresse");
+                $this->modalSubmitActionLabel("Ok");
             }
 
             $this->successNotification(
@@ -70,7 +76,11 @@ class SendInvoiceAction extends Action
             $this->groupedIcon('heroicon-m-pencil-square');
         }
 
-        $this->action(function (): void {
+        $this->action(function () use ($disabled): void {
+            if ($disabled) {
+                $this->failure();
+                return;
+            }
             $this->process(function (Model $record) {
                 if (!$record->invoice) {
                     GenerateInvoiceJob::dispatch($record)->onQueue("invoice");

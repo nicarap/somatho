@@ -52,10 +52,11 @@ return [
     "attributes" => [
         "patient" => "Patient",
         "programmed_start_at" => "Début de la séance",
-        "programmed_end_at" => "fin de la séance",
+        "programmed_end_at" => "Fin de la séance",
         "address" => "Adresse",
         "price" => "Prix",
         "discount" => "Réduction",
+        "realized_at" => "Le soin à été réalisé",
         "therapist_validated_at" => "Validé par le thérapeute",
         "patient_validated_at" => "Validé par le patient",
         "traitments" => "Soins",
@@ -82,6 +83,9 @@ return [
             "postcode" => "Code Postal",
             "city" => "Ville",
             "default" => "Adresse par défaut"
-        ]
+        ],
+        "status" => "Statut",
+        "manual_address" => "Saisir l'adresse manuellement",
+        "note" => "Note"
     ]
 ];

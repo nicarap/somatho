@@ -17,7 +17,7 @@ class CreateTraitment extends CreateRecord
     {
         $data["therapist_id"] = filament()->auth()->user()->id;
         $data["therapist_validated_at"] = Carbon::now();
-        $data["therapistpatient_validated_at_validated_at"] = Carbon::now();
+        $data["patient_validated_at"] = Carbon::now();
 
         return static::getModel()::create($data);
     }

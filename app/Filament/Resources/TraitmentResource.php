@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\PatientResource\RelationManagers\TraitmentsRelationManager;
 use Carbon\Carbon;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
 use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Infolists;
 use Filament\Forms\Form;
 use App\Models\Traitment;
@@ -53,13 +55,14 @@ class TraitmentResource extends Resource
             Forms\Components\Section::make()->schema([
                 Forms\Components\Grid::make(1)->schema([
                     Forms\Components\Select::make('patient_id')
+                        ->label(__("filament.attributes.patient"))
                         ->relationship("patient", "name")
-                        ->reactive()
+                        ->live()
                         ->disabled($disabled)
                         ->required()
                         ->suffixAction(
                             Action::make('goToUser')
-                                ->disabled(fn ($record) => is_null($record))
+                                ->disabled(fn ($state) => is_null($state))
                                 ->label("Voir l'utilisateur")
                                 ->icon('heroicon-o-eye')
                                 ->url(function ($state) {
@@ -70,41 +73,47 @@ class TraitmentResource extends Resource
                 Forms\Components\Grid::make()
                     ->schema([
                         Forms\Components\DateTimePicker::make('programmed_start_at')
+                            ->label(__("filament.attributes.programmed_start_at"))
+                            ->minDate(fn () => !$disabled ? now()->format("Y-m-d H:i") : null)
+                            ->default(fn () => now()->format("Y-m-d H:i"))
                             ->seconds(false)
-                            ->default(fn () => now())
-                            ->minDate(now()->subYears(150))
                             ->live()
                             ->disabled($disabled)
                             ->required(),
                         Forms\Components\DateTimePicker::make('programmed_end_at')
+                            ->label(__("filament.attributes.programmed_end_at"))
+                            ->minDate(fn (Get $get) => $get("programmed_start_at") ? $get("programmed_start_at") : null)
+                            ->maxDate(fn (Get $get) => Carbon::parse($get("programmed_start_at"))->endOfDay())
                             ->seconds(false)
                             ->live()
-                            ->minDate(fn (Get $get) => $get("programmed_start_at") ? Carbon::parse($get("programmed_start_at")) : now()->addHours())
-                            ->default(fn () => now()->addHours())
-                            ->maxDate(fn (Get $get) => Carbon::parse($get("programmed_start_at"))->endOfDay())
                             ->disabled($disabled)
                             ->required(),
                     ]),
                 Forms\Components\Grid::make(2)->schema([
                     Forms\Components\TextInput::make("price")
+                        ->label(__("filament.attributes.price"))
                         ->numeric()
                         ->default(70)
                         ->disabled($disabled),
                     Forms\Components\Select::make('address_id')
+                        ->label(__("filament.attributes.address"))
                         ->relationship("address", "name")
                         ->options(function (Get $get) {
-                            $addresses["Mes adresses"] = filament()->auth()->user()->addresses()->pluck("name", "addresses.id")->toArray();
-                            if ($get("patient")) {
-                                $patient = User::find($get("patient"));
-                                if ($patient->address) $addresses[$patient->name] = [$patient->address->id => $patient->address->name];
+                            $addresses = filament()->auth()->user()->address()->get()->pluck("name", "id")->toArray();
+                            if ($get("patient_id")) {
+                                $patient = User::find($get("patient_id"));
+                                if ($patient->address()->exists()) $addresses = array_merge($addresses, [$patient->address->id => $patient->address->name]);
                             }
                             return $addresses;
-                        })->live()
+                        })
+                        ->live()
                         ->disabled($disabled)
                         ->required(),
                 ]),
-                Forms\Components\RichEditor::make("note"),
+                Forms\Components\RichEditor::make("note")
+                    ->label(__("filament.attributes.note")),
                 Forms\Components\Checkbox::make("realized_at")
+                    ->label(__("filament.attributes.realized_at"))
                     ->label("Le soin à été réalisé")
                     ->disabled(fn ($record) => $record->isRealized())
                     ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
@@ -140,9 +149,31 @@ class TraitmentResource extends Resource
                     ->label(__("filament.attributes.address")),
                 TextColumn::make("price")
                     ->label(__("filament.attributes.price")),
-                IconColumn::make("invoice")
-                    ->boolean()
-                    ->label(__("filament.attributes.invoice_sended")),
+                TextColumn::make("price")
+                    ->badge()
+                    ->formatStateUsing(function ($record): string {
+                        if ($record->wasBilled()) {
+                            return 'Facture éditée';
+                        } else if ($record->isRealized()) {
+                            return  'En attente de facture';
+                        } else if ($record->isPassed()) {
+                            return  'Soin à valider';
+                        } else {
+                            return  'Soin à venir';
+                        }
+                    })
+                    ->color(function ($record): string {
+                        if ($record->wasBilled()) {
+                            return  'success';
+                        } else if ($record->isRealized()) {
+                            return  'warning';
+                        } else if ($record->isPassed()) {
+                            return  'danger';
+                        } else {
+                            return  'gray';
+                        }
+                    })
+                    ->label(__("filament.attributes.status")),
             ])
             ->striped()
             ->defaultSort("programmed_start_at", "desc")

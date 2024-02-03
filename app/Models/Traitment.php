@@ -71,6 +71,16 @@ class Traitment extends Model
         return !is_null($this->realized_at);
     }
 
+    public function isPassed(): bool
+    {
+        return $this->programmed_end_at < Carbon::now();
+    }
+
+    public function wasBilled(): bool
+    {
+        return $this->invoice()->exists();
+    }
+
     public function scopeForTherapist(Builder $query, Therapist $therapist): Builder
     {
         return $query->where('therapist_id', $therapist->id);

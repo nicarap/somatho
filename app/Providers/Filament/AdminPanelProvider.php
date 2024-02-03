@@ -50,7 +50,7 @@ class AdminPanelProvider extends PanelProvider
                     ->label('Log viewer')
                     ->url(fn (): string => route('log-viewer.index'))
                     ->icon('heroicon-o-cog-6-tooth'),
-                'profile' => MenuItem::make()->label('Edit profile')->url(fn (): string => route("filament.admin.pages.profile")),
+                'profile' => MenuItem::make()->url(fn (): string => route("filament.admin.pages.profile")),
                 // ...
             ])
             ->plugins([

@@ -95,27 +95,30 @@ class PatientResource extends Resource
 
                             return $addresses;
                         }),
-                    Forms\Components\Section::make()->schema([
+                    Forms\Components\Grid::make()->schema([
                         Forms\Components\TextInput::make("address_name")
                             ->label(__("filament.attributes.addresses.name"))
-                            ->live(),
+                            ->required()
+                            ->columnSpan(2),
                         Forms\Components\Grid::make()->schema([
                             Forms\Components\TextInput::make("address_street")
                                 ->label(__("filament.attributes.addresses.street"))
-                                ->live(),
+                                ->required(),
                             Forms\Components\TextInput::make("address_context")
                                 ->label(__("filament.attributes.addresses.context"))
-                                ->live()
+                                ->required()
                         ]),
                         Forms\Components\Grid::make()->schema([
                             Forms\Components\TextInput::make("address_postcode")
                                 ->label(__("filament.attributes.addresses.postcode"))
-                                ->live(),
+                                ->required(),
                             Forms\Components\TextInput::make("address_city")
                                 ->label(__("filament.attributes.addresses.city"))
-                                ->live(),
+                                ->required(),
                         ]),
-                    ])->visible(fn (Get $get) => $get("manual_address"))
+                    ])->visible(fn (Get $get) => $get("manual_address")),
+                    Forms\Components\RichEditor::make("note")
+                        ->label(__("filament.attributes.note")),
                 ])
             ]);
     }

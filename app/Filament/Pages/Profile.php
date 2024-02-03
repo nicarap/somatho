@@ -20,6 +20,11 @@ class Profile extends Page implements HasForms, HasInfolists
     use InteractsWithInfolists;
     use InteractsWithForms;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected $listeners = [
         'refreshComponent' => '$refresh'
     ];
@@ -49,20 +54,11 @@ class Profile extends Page implements HasForms, HasInfolists
         $this->therapist = filament()->auth()->user();
     }
 
-    public function markAsDefault(Address $address)
+    public function editAddress()
     {
-        // TODO : Mouve to livewire component Previews ?
-        foreach ($this->therapist->addresses as $therapist_address) {
-            $this->therapist->addresses()->updateExistingPivot($therapist_address->id, ["default" => false]);
-        }
-
-        $this->therapist->addresses()->updateExistingPivot($address->id, ["default" => true]);
+        redirect()->route("filament.admin.resources.addresses.edit", ["record" => $this->therapist->address]);
     }
 
-    public function createAddress()
-    {
-        dd("test");
-    }
     public function profileInfolist(Infolist $infolist): Infolist
     {
         return $infolist
@@ -79,22 +75,6 @@ class Profile extends Page implements HasForms, HasInfolists
                         Infolists\Components\TextEntry::make("email")
                             ->label(__("filament.attributes.email"))
                     ]),
-                Infolists\Components\RepeatableEntry::make('addresses')
-                    ->schema([
-                        Infolists\Components\TextEntry::make('name')
-                            ->label(__("filament.attributes.addresses.name")),
-                        Infolists\Components\TextEntry::make('default')
-                            ->label(__("filament.attributes.addresses.default")),
-                        Infolists\Components\TextEntry::make('street')
-                            ->label(__("filament.attributes.addresses.street")),
-                        Infolists\Components\TextEntry::make('context')
-                            ->label(__("filament.attributes.addresses.context")),
-                        Infolists\Components\TextEntry::make('postcode')
-                            ->label(__("filament.attributes.addresses.postcode")),
-                        Infolists\Components\TextEntry::make('city')
-                            ->label(__("filament.attributes.addresses.city")),
-                    ])
-                    ->columns(2)
             ]);
     }
 }

@@ -22,10 +22,10 @@ class TraitmentPolicy
         return true;
     }
 
-    public function update(Therapist $therapist, Traitment $traitment)
-    {
-        return !$traitment->isRealized();
-    }
+    // public function update(Therapist $therapist, Traitment $traitment)
+    // {
+    //     return !$traitment->isRealized();
+    // }
 
     public function delete(Therapist $therapist, Traitment $traitment)
     {
