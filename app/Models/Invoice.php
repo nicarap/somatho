@@ -32,7 +32,7 @@ class Invoice extends Model
     ];
 
     protected $cast = [
-        'realized_at' => 'datetime',
+        'paid_at' => 'datetime',
     ];
 
     public function traitment(): BelongsTo

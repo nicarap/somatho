@@ -77,4 +77,9 @@ class User extends Model implements Auditable
     {
         return $this->hasMany(Review::class, "patient_id");
     }
+
+    public function hasEmail(): bool
+    {
+        return $this->email !== null;
+    }
 }

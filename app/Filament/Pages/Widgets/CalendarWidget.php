@@ -33,7 +33,7 @@ class CalendarWidget extends FullCalendarWidget
             ->where("programmed_end_at", ">=", $fetchInfo['start'])
             ->get()
             ->map(
-                fn(Traitment $traitment) => [
+                fn (Traitment $traitment) => [
                     'id' => $traitment->id,
                     'title' => $traitment->patient->name,
                     'start' => $traitment->programmed_start_at,
@@ -47,88 +47,90 @@ class CalendarWidget extends FullCalendarWidget
     protected function modalActions(): array
     {
         return [
-            Actions\EditAction::make()->disabled(fn($record) => $record->isRealized()),
-            Actions\DeleteAction::make()->visible(fn($record) => $record->programmed_start_at > Carbon::now()),
+            Actions\EditAction::make()
+                ->disabled(fn ($record) => $record->isRealized())
+                ->mutateFormDataUsing(function (array $data): array {
+                    if ($data['realized_at']) $data['realized_at'] = Carbon::now();
+
+                    return $data;
+                }),
+            Actions\DeleteAction::make()
+                ->label("Annuler le soin")
+                ->visible(fn ($record) => $record->programmed_start_at > Carbon::now())
         ];
     }
 
     public function getFormSchema(): array
     {
-        $disabled = fn($record) => $record && Carbon::now() > Carbon::parse($record->programmed_start_at);
+        $disabled = fn ($record) => $record && (Carbon::now() > Carbon::parse($record->programmed_start_at) || $record->isCanceled());
 
         return [
-            Forms\Components\Select::make('patient')
-                ->relationship("patient", "name")
-                ->reactive()
-                ->searchable()
-                ->preload()
-                ->createOptionForm([
-                    Forms\Components\TextInput::make("name")
-                        ->label(__("filament.attributes.name"))
-                        ->required(),
-                    Forms\Components\TextInput::make("email")
-                        ->label(__("filament.attributes.email"))
-                        ->email()
-                        ->required(),
-                    Forms\Components\TextInput::make("tel")
-                        ->label(__("filament.attributes.tel"))
-                        ->telRegex('/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/'),
-                    Forms\Components\DatePicker::make("birthdate")
-                        ->label(__("filament.attributes.birthdate"))
-                        ->required(),
-                    Forms\Components\TextInput::make("tel")
-                        ->label(__("filament.attributes.tel")),
-                ])
-                ->disabled($disabled)
-                ->required(),
-
-            Forms\Components\Grid::make()
-                ->schema([
-                    Forms\Components\DateTimePicker::make('programmed_start_at')
-                        ->seconds(false)
-                        ->minDate(now())
+            Forms\Components\Section::make()->schema([
+                Forms\Components\Grid::make(1)->schema([
+                    Forms\Components\Select::make('patient_id')
+                        ->label(__("filament.attributes.patient"))
+                        ->relationship("patient", "name")
                         ->live()
-                        ->hoursStep(2)
-                        ->minutesStep(15)
                         ->disabled($disabled)
-                        ->required(),
-                    Forms\Components\DateTimePicker::make('programmed_end_at')
-                        ->seconds(false)
+                        ->required()
+                        ->suffixAction(
+                            Action::make('goToUser')
+                                ->disabled(fn ($state) => is_null($state))
+                                ->label("Voir l'utilisateur")
+                                ->icon('heroicon-o-eye')
+                                ->url(function ($state) {
+                                    return $state ? route('filament.admin.resources.patients.edit', $state) : "#";
+                                })
+                        ),
+                ]),
+                Forms\Components\Grid::make()
+                    ->schema([
+                        Forms\Components\DateTimePicker::make('programmed_start_at')
+                            ->label(__("filament.attributes.programmed_start_at"))
+                            ->minDate(fn () => !$disabled ? now()->format("Y-m-d H:i") : null)
+                            ->default(fn () => now()->format("Y-m-d H:i"))
+                            ->seconds(false)
+                            ->live()
+                            ->disabled($disabled)
+                            ->required(),
+                        Forms\Components\DateTimePicker::make('programmed_end_at')
+                            ->label(__("filament.attributes.programmed_end_at"))
+                            ->minDate(fn (Get $get) => $get("programmed_start_at") ? $get("programmed_start_at") : null)
+                            ->maxDate(fn (Get $get) => Carbon::parse($get("programmed_start_at"))->endOfDay())
+                            ->seconds(false)
+                            ->live()
+                            ->disabled($disabled)
+                            ->required(),
+                    ]),
+                Forms\Components\Grid::make(2)->schema([
+                    Forms\Components\TextInput::make("price")
+                        ->label(__("filament.attributes.price"))
+                        ->numeric()
+                        ->default(70)
+                        ->disabled($disabled),
+                    Forms\Components\Select::make('address_id')
+                        ->label(__("filament.attributes.address"))
+                        ->relationship("address", "name")
+                        ->options(function (Get $get) {
+                            $addresses = filament()->auth()->user()->address()->get()->pluck("name", "id")->toArray();
+                            if ($get("patient_id")) {
+                                $patient = User::find($get("patient_id"));
+                                if ($patient->address()->exists()) $addresses = array_merge($addresses, [$patient->address->id => $patient->address->name]);
+                            }
+                            return $addresses;
+                        })
                         ->live()
-                        ->minDate(fn(Get $get) => Carbon::parse($get("programmed_start_at")))
-                        ->maxDate(fn(Get $get) => Carbon::parse($get("programmed_start_at"))->endOfDay())
-                        ->hoursStep(2)
-                        ->minutesStep(15)
                         ->disabled($disabled)
                         ->required(),
                 ]),
-
-            Forms\Components\Select::make('address')
-                ->relationship("address", "name")
-                ->options(function (Get $get) {
-                    $addresses["Mes adresses"] = filament()->auth()->user()->addresses()->pluck("name", "addresses.id")->toArray();
-                    if ($get("patient")) {
-                        $patient = User::find($get("patient"));
-                        if ($patient->address)
-                            $addresses[$patient->name] = [$patient->address->id => $patient->address->name];
-                    }
-                    return $addresses;
-                })->live()
-                ->suffixAction(function ($record) {
-                    if (!$record && ($record->address->longitude && $record->address->latitude))
-                        return;
-                    return Action::make("gps")
-                        ->icon('heroicon-m-clipboard')
-                        ->openUrlInNewTab()
-                        ->url("https://www.google.com/maps/place/{$record->address->latitude},{$record->address->longitude}");
-                })
-                ->disabled($disabled)
-                ->required(),
-            Forms\Components\RichEditor::make("note"),
-            Forms\Components\Checkbox::make("realized_at")
-                ->label("Le soin à été réalisé")
-                ->visible(fn($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
-
+                Forms\Components\RichEditor::make("note")
+                    ->label(__("filament.attributes.note")),
+                Forms\Components\Checkbox::make("realized_at")
+                    ->label(__("filament.attributes.realized_at"))
+                    ->label("Le soin à été réalisé")
+                    ->disabled(fn ($record) => $record->isRealized())
+                    ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
+            ])
         ];
     }
 
@@ -141,10 +143,7 @@ class CalendarWidget extends FullCalendarWidget
 
                     try {
                         $traitment = $traitmentService->create(array_merge($data, [
-                            'price' => 70,
                             'therapist_id' => filament()->auth()->user(),
-                            'patient_id' => $data["patient"],
-                            'address_id' => $data["address"]
                         ]));
 
                         $traitment->save();
@@ -154,7 +153,6 @@ class CalendarWidget extends FullCalendarWidget
 
                         Db::commit();
                     } catch (\Exception $e) {
-                        dd($e);
                         Db::rollback();
                     }
                 })

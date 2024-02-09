@@ -1,6 +1,8 @@
 <x-filament-panels::page>
     {{ $this->profileInfolist }}
 
+    {{ $this->form }}
+
     <x-filament::grid class="gap-4">
         @php($address = $therapist->address)
 

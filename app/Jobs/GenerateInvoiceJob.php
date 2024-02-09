@@ -39,7 +39,7 @@ class GenerateInvoiceJob implements ShouldQueue
     {
         DB::beginTransaction();
 
-        $therapist_address = $this->traitment->therapist->addresses()->firstWhere("default", true) ?? $this->traitment->therapist->addresses()->first();
+        $therapist_address = $this->traitment->therapist->address;
         try {
             $invoice = $invoiceService->create([
                 "programmed_start_at" => $this->traitment->programmed_start_at,
@@ -66,7 +66,8 @@ class GenerateInvoiceJob implements ShouldQueue
 
             Storage::put($file, $output);
 
-            Notification::send($this->traitment->patient, new SendInvoiceNotification($invoice));
+            $destinataires = array_merge($this->traitment->patient->hasEmail() ? [$this->traitment->patient] : [], [auth()->user()]);
+            Notification::send($destinataires, new SendInvoiceNotification($this->traitment->invoice));
 
             DB::commit();
         } catch (Exception $e) {

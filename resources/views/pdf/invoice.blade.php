@@ -89,7 +89,7 @@
         <div class="invoice-header">
             <h2 class="text-primary">Facture</h2>
             @php($therapist = $invoice->traitment->therapist)
-            @php($therapist_address = $invoice->traitment->therapist->addresses()->firstWhere('default', true) ?? $invoice->traitment->therapist->addresses()->first())
+            @php($therapist_address = $invoice->traitment->therapist->address)
             <table style="width: 100%;">
                 <tbody>
                     <tr>
@@ -162,7 +162,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="width: 100%; font-size:normal"> Soin somatopathique </td>
+                        <td style="width: 100%; font-size:normal"> Soin somatopathie </td>
                         <td style="text-align: right;">{{ $invoice->traitment->price }}€</td>
                     </tr>
                     <tr>
@@ -196,7 +196,7 @@
                             {{ \Carbon\Carbon::parse($invoice->created_at)->format('H:i') }}</td>
                     </tr>
                     <tr style="font-size:10px">
-                        <td>N° SIRET {{ $invoice->traitment->therapist->siren }}</td>
+                        <td>N° SIRET : {{ $invoice->traitment->therapist->siren }}</td>
                     </tr>
                     <tr style="font-size:10px">
                         <td>TVA non applicable en vertu de l'article 261 du Code Général des impôts.</td>

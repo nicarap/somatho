@@ -45,22 +45,23 @@ class PatientResource extends Resource
         return $form
             ->schema([
                 Section::make("Informations générales")->schema([
-                    Forms\Components\TextInput::make("name")
-                        ->label(__("filament.attributes.name"))
-                        ->required(),
+                    Forms\Components\Grid::make(3)->schema([
+                        Forms\Components\TextInput::make("name")
+                            ->label(__("filament.attributes.name"))
+                            ->required(),
+                        Forms\Components\TextInput::make("tel")
+                            ->label(__("filament.attributes.tel"))
+                            ->telRegex('/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/'),
+                        Forms\Components\DatePicker::make("birthdate")
+                            ->label(__("filament.attributes.birthdate"))
+                            ->required(),
+                    ]),
                     Forms\Components\TextInput::make("email")
                         ->label(__("filament.attributes.email"))
-                        ->email()
-                        ->required(),
-                    Forms\Components\TextInput::make("tel")
-                        ->label(__("filament.attributes.tel"))
-                        ->telRegex('/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/'),
-                    Forms\Components\DatePicker::make("birthdate")
-                        ->label(__("filament.attributes.birthdate"))
-                        ->required(),
+                        ->email(),
                     Forms\Components\Toggle::make("manual_address")
                         ->live()
-                        ->default(false)
+                        ->formatStateUsing(fn ($record) => $record && $record->address()->exists())
                         ->label(__("filament.attributes.manual_address")),
                     Forms\Components\Select::make('address')
                         ->visible(fn (Get $get) => !$get("manual_address"))
@@ -98,21 +99,26 @@ class PatientResource extends Resource
                     Forms\Components\Grid::make()->schema([
                         Forms\Components\TextInput::make("address_name")
                             ->label(__("filament.attributes.addresses.name"))
+                            ->formatStateUsing(fn ($record) => $record && $record->address()->exists() ? $record->address->name : "")
                             ->required()
                             ->columnSpan(2),
                         Forms\Components\Grid::make()->schema([
                             Forms\Components\TextInput::make("address_street")
+                                ->formatStateUsing(fn ($record) => $record && $record->address()->exists() ? $record->address->street : "")
                                 ->label(__("filament.attributes.addresses.street"))
                                 ->required(),
                             Forms\Components\TextInput::make("address_context")
+                                ->formatStateUsing(fn ($record) => $record && $record->address()->exists() ? $record->address->context : "")
                                 ->label(__("filament.attributes.addresses.context"))
                                 ->required()
                         ]),
                         Forms\Components\Grid::make()->schema([
                             Forms\Components\TextInput::make("address_postcode")
+                                ->formatStateUsing(fn ($record) => $record && $record->address()->exists() ? $record->address->postcode : "")
                                 ->label(__("filament.attributes.addresses.postcode"))
                                 ->required(),
                             Forms\Components\TextInput::make("address_city")
+                                ->formatStateUsing(fn ($record) => $record && $record->address()->exists() ? $record->address->city : "")
                                 ->label(__("filament.attributes.addresses.city"))
                                 ->required(),
                         ]),

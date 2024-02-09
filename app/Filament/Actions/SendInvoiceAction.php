@@ -44,6 +44,13 @@ class SendInvoiceAction extends Action
             $this->label("Facture envoyé");
 
             $this->tooltip("Envoyé à nouveau");
+
+            $this->successNotification(
+                Notification::make()
+                    ->title(__('filament.resources.traitment.actions.send_invoice.notifications.invoice_sended.success.title'))
+                    ->body(__('filament.resources.traitment.actions.send_invoice.notifications.invoice_sended.success.description'))
+                    ->success()
+            );
         } else {
             $this->label(__('filament.resources.traitment.actions.send_invoice.label'));
 
@@ -81,11 +88,13 @@ class SendInvoiceAction extends Action
                 $this->failure();
                 return;
             }
+
             $this->process(function (Model $record) {
                 if (!$record->invoice) {
                     GenerateInvoiceJob::dispatch($record)->onQueue("invoice");
                 } else {
-                    FacadesNotification::send([$this->record->patient], new SendInvoiceNotification($this->record->invoice));
+                    $destinataires = array_merge($this->record->patient->hasEmail() ? [$this->record->patient] : [], [auth()->user()]);
+                    FacadesNotification::send($destinataires, new SendInvoiceNotification($this->record->invoice));
                 }
             });
 

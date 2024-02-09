@@ -24,15 +24,6 @@ class TraitmentsRelationManager extends RelationManager
 
         return $form->schema([
             Forms\Components\Section::make()->schema([
-                Forms\Components\Grid::make(1)->schema([
-                    Forms\Components\Select::make('therapist_id')
-                        ->label(__("filament.attributes.therapist"))
-                        ->relationship("therapist", "name")
-                        ->reactive()
-                        ->default(fn () => filament()->auth()->user())
-                        ->disabled(true)
-                        ->required()
-                ]),
                 Forms\Components\Grid::make()
                     ->schema([
                         Forms\Components\DateTimePicker::make('programmed_start_at')
@@ -63,14 +54,14 @@ class TraitmentsRelationManager extends RelationManager
                         ->relationship("address", "name")
                         ->options(function (Get $get, RelationManager $livewire) {
                             $addresses = filament()->auth()->user()->address()->get()->pluck("name", "id")->toArray();
-                            $patient = $livewire->getOwnerRecord();
-                            if ($patient->address()->exists()) {
-                                $addresses = array_merge($addresses, [$patient->address->id => $patient->address->name]);
+                            if ($get("patient_id")) {
+                                $patient = $livewire->getOwnerRecord();
+                                if ($patient->address()->exists()) $addresses = array_merge($addresses, [$patient->address->id => $patient->address->name]);
                             }
 
-                            dd($addresses);
                             return $addresses;
-                        })->live()
+                        })
+                        ->live()
                         ->disabled($disabled)
                         ->required(),
                 ]),
@@ -87,34 +78,21 @@ class TraitmentsRelationManager extends RelationManager
 
     public function table(Table $table): Table
     {
-        return $table
-            ->recordTitleAttribute('id')
-            ->columns([
-                Tables\Columns\TextColumn::make('programmed_start_at')
-                    ->formatStateUsing(fn ($state) => $state ? Carbon::parse($state)->format('d/m/Y') : null),
-                Tables\Columns\TextColumn::make('programmed_end_at')
-                    ->formatStateUsing(fn ($state) => $state ? Carbon::parse($state)->format('d/m/Y') : null),
-                Tables\Columns\TextColumn::make('address.label'),
-                Tables\Columns\ToggleColumn::make('therapist_validated_at'),
-                Tables\Columns\ToggleColumn::make('patient_validated_at'),
-                Tables\Columns\TextColumn::make('realized_at'),
-                Tables\Columns\TextColumn::make('price'),
-                Tables\Columns\TextColumn::make('travel_cost'),
-            ])
-            ->filters([
-                //
+        return TraitmentResource::table($table)
+            ->actions([
+                Tables\Actions\EditAction::make()
+                    ->url(fn ($record) => route("filament.admin.resources.traitments.edit", ["record" => $record])),
+                Tables\Actions\DeleteAction::make()
+                    ->visible(fn ($record) => $record->programmed_start_at > Carbon::now()),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
-            ])
-            ->actions([
-                // Tables\Actions\ViewAction::make()->url(fn ($record) => route('filament.admin.resources.traitments.view', $record)),
-            ])
-            ->bulkActions([
-                //
-            ])
-            ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()->mutateFormDataUsing(function (array $data): array {
+                    $data['therapist_id'] = auth()->id();
+                    $data['therapist_validated_at'] = Carbon::now();
+                    $data['patient_validated_at'] = Carbon::now();
+
+                    return $data;
+                }),
             ]);
     }
 }

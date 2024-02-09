@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Models\Address;
+use App\Models\Therapist;
 use Filament\Forms;
 use Filament\Infolists;
 use Filament\Forms\Form;
@@ -47,11 +48,13 @@ class Profile extends Page implements HasForms, HasInfolists
     {
         return "heroicon-o-calendar-days";
     }
-    public $therapist;
+    public Therapist $therapist;
+    public ?array $data = [];
 
     public function mount()
     {
         $this->therapist = filament()->auth()->user();
+        $this->form->fill($this->therapist->toArray());
     }
 
     public function editAddress()
@@ -76,5 +79,12 @@ class Profile extends Page implements HasForms, HasInfolists
                             ->label(__("filament.attributes.email"))
                     ]),
             ]);
+    }
+
+    public function form(Form $form): Form
+    {
+        return $form->schema([
+            Forms\Components\TextInput::make("name")
+        ])->model($this->therapist);
     }
 }

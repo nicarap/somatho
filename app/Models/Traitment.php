@@ -36,9 +36,9 @@ class Traitment extends Model
     ];
 
     protected $cast = [
-        'realized_at' => 'date',
-        'programmed_start_at' => 'date',
-        'programmed_end_at' => 'date',
+        'realized_at' => 'datetime',
+        'programmed_start_at' => 'datetime',
+        'programmed_end_at' => 'datetime',
     ];
 
     public function invoice(): HasOne
@@ -79,6 +79,16 @@ class Traitment extends Model
     public function wasBilled(): bool
     {
         return $this->invoice()->exists();
+    }
+
+    public function isBegins(): bool
+    {
+        return $this->programmed_start_at <= Carbon::now();
+    }
+
+    public function isInProgress(): bool
+    {
+        return $this->isBegins() && !$this->isPassed();
     }
 
     public function scopeForTherapist(Builder $query, Therapist $therapist): Builder

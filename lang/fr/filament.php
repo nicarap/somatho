@@ -38,6 +38,12 @@ return [
                 "plural" => "Patients",
             ]
         ],
+        "invoice" => [
+            "label" => [
+                "single" => "Facture",
+                "plural" => "Factures",
+            ]
+        ],
         "review" => [
             "label" => [
                 "single" => "Avis",
@@ -86,6 +92,11 @@ return [
         ],
         "status" => "Statut",
         "manual_address" => "Saisir l'adresse manuellement",
-        "note" => "Note"
+        "note" => "Note",
+        "programmed" => "Soin programmé",
+        "therapist" => "Thérapeute",
+        "invoice_number" => "Numéro de facture",
+        "traitment" => "Soin",
+        "paid_at" => "Payé le",
     ]
 ];
