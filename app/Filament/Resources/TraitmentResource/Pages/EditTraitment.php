@@ -25,7 +25,9 @@ class EditTraitment extends EditRecord
         if (Arr::get($data, "realized_at") !== null) {
             if (intval($data["realized_at"]) === 1) {
                 $data["realized_at"] = Carbon::now();
+                $data["canceled_at"] = null;
             } else {
+                $data["canceled_at"] = Carbon::now();
                 $data["realized_at"] = null;
             }
         }

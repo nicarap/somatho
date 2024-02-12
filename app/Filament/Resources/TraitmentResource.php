@@ -112,10 +112,12 @@ class TraitmentResource extends Resource
                 ]),
                 Forms\Components\RichEditor::make("note")
                     ->label(__("filament.attributes.note")),
-                Forms\Components\Checkbox::make("realized_at")
+                Forms\Components\Radio::make("realized_at")
                     ->label(__("filament.attributes.realized_at"))
                     ->label("Le soin à été réalisé")
-                    ->disabled(fn ($record) => $record->isRealized())
+                    ->options([true => "Oui", false => "Non"])
+                    ->formatStateUsing(fn ($record): bool => $record->isCanceled() ? false : ($record->isRealized() ? true : null))
+                    ->disabled(fn ($record) => $record->isRealized() ||  $record->isCanceled())
                     ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
             ])
         ]);
@@ -154,11 +156,13 @@ class TraitmentResource extends Resource
                     ->badge()
                     ->formatStateUsing(function ($record): string {
                         if ($record->trashed()) {
-                            return "Soin annulé";
+                            return "Soin supprimé";
                         } else if ($record->wasBilled()) {
                             return 'Facture éditée';
                         } else if ($record->isRealized()) {
                             return  'En attente de facture';
+                        } else if ($record->isCanceled()) {
+                            return  'Soin annulé';
                         } else if ($record->isPassed()) {
                             return  'Soin à valider';
                         } else if ($record->isInProgress()) {
@@ -175,6 +179,8 @@ class TraitmentResource extends Resource
                         } else if ($record->isRealized()) {
                             return  'warning';
                         } else if ($record->isPassed()) {
+                            return  'warning';
+                        } else if ($record->isCanceled()) {
                             return  'danger';
                         } else if ($record->isInProgress()) {
                             return  'success';

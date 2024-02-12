@@ -50,7 +50,12 @@ class CalendarWidget extends FullCalendarWidget
             Actions\EditAction::make()
                 ->disabled(fn ($record) => $record->isRealized())
                 ->mutateFormDataUsing(function (array $data): array {
-                    if ($data['realized_at']) $data['realized_at'] = Carbon::now();
+                    if ($data['realized_at'] === 1) {
+                        $data['realized_at'] = Carbon::now();
+                    } else {
+                        $data['realized_at'] = null;
+                        $data['canceled_at'] = Carbon::now();
+                    }
 
                     return $data;
                 }),
@@ -125,10 +130,12 @@ class CalendarWidget extends FullCalendarWidget
                 ]),
                 Forms\Components\RichEditor::make("note")
                     ->label(__("filament.attributes.note")),
-                Forms\Components\Checkbox::make("realized_at")
+                Forms\Components\Radio::make("realized_at")
                     ->label(__("filament.attributes.realized_at"))
                     ->label("Le soin à été réalisé")
-                    ->disabled(fn ($record) => $record->isRealized())
+                    ->options([true => "Oui", false => "Non"])
+                    ->formatStateUsing(fn ($record): bool => $record->isCanceled() ? false : ($record->isRealized() ? true : null))
+                    ->disabled(fn ($record) => $record->isRealized() ||  $record->isCanceled())
                     ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
             ])
         ];

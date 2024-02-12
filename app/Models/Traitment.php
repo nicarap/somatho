@@ -25,6 +25,7 @@ class Traitment extends Model
         'therapist_validated_at',
         'patient_validated_at',
         "realized_at",
+        "canceled_at",
         "info_realized",
         'price',
         'travel_cost',
@@ -36,6 +37,7 @@ class Traitment extends Model
     ];
 
     protected $cast = [
+        'canceled_at' => 'datetime',
         'realized_at' => 'datetime',
         'programmed_start_at' => 'datetime',
         'programmed_end_at' => 'datetime',
@@ -76,6 +78,11 @@ class Traitment extends Model
         return $this->programmed_end_at < Carbon::now();
     }
 
+    public function isCanceled(): bool
+    {
+        return $this->canceled_at !== null;
+    }
+
     public function wasBilled(): bool
     {
         return $this->invoice()->exists();
@@ -88,7 +95,7 @@ class Traitment extends Model
 
     public function isInProgress(): bool
     {
-        return $this->isBegins() && !$this->isPassed();
+        return $this->isBegins() && !$this->isPassed() && !$this->isCanceled();
     }
 
     public function scopeForTherapist(Builder $query, Therapist $therapist): Builder

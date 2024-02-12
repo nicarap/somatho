@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('therapist_validated_at')->nullable();
             $table->timestamp('patient_validated_at')->nullable();
             $table->timestamp('realized_at')->nullable();
+            $table->timestamp('canceled_at')->nullable();
             $table->string("info_realized")->nullable();
             $table->float('price');
             $table->unsignedBigInteger("discount_id")->nullable();
