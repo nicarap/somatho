@@ -20,7 +20,7 @@ class SendInvoiceNotification extends Notification
      */
     public function __construct(public Invoice $invoice)
     {
-        //
+        $this->afterCommit();
     }
 
     /**
@@ -39,9 +39,10 @@ class SendInvoiceNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         $filepath = Storage::path(config("app.invoice_folder") . DIRECTORY_SEPARATOR . Str::slug($this->invoice->traitment->patient->name));
+        $date = Carbon::parse($this->invoice->traitment->realized_at)->format("d/m/Y à H:i");
 
         return (new MailMessage)
-            ->line('Voici votre facture concernant le soin de somatothérapie réalisé le ' . Carbon::parse($this->invoice->traitment->realized_at)->format("d/m/Y à H:i"))
+            ->view("mail.send_invoice", ["invoice" => $this->invoice])
             ->attach($filepath . DIRECTORY_SEPARATOR . $this->invoice->filename);
     }
 

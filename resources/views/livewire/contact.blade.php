@@ -1,4 +1,5 @@
 <form wire:submit="submit" class="container mx-auto">
+    @csrf
     <div class="relative flex flex-col min-w-0 break-words w-full shadow-lg md:rounded-lg bg-primary-500">
         <div class="flex-auto p-5 lg:p-10">
             <h4 class="text-2xl text-gray-100 font-semibold">Vous souhaitez prendre un rendez-vous ?</h4>
@@ -8,19 +9,19 @@
             <div class="relative w-full mb-3 mt-6">
                 <label class="block uppercase text-gray-200 text-xs font-bold mb-2" for="full-name">Nom &
                     Prénom</label>
-                <input wire:model="name" type="text"
+                <input wire:model="name" type="text" required
                        class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                        placeholder="Nom & Prénom" style="transition: all 0.15s ease 0s;" />
             </div>
             <div class="relative w-full mb-3">
                 <label class="block uppercase text-gray-200 text-xs font-bold mb-2" for="email">Email</label>
-                <input wire:model="email" type="email"
+                <input wire:model="email" type="email" required
                        class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                        placeholder="Email" style="transition: all 0.15s ease 0s;" />
             </div>
             <div class="relative w-full mb-3">
                 <label class="block uppercase text-gray-200 text-xs font-bold mb-2" for="email">Téléphone</label>
-                <input wire:model="tel" type="tel" autocomplete
+                <input wire:model="tel" type="tel" autocomplete required
                        class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                        placeholder="Tel" style="transition: all 0.15s ease 0s;" />
             </div>
@@ -41,8 +42,8 @@
                         </ul>
                     </span>
                 </div>
-                <textarea wire:model="message" rows="4" cols="80"
-                          class="border-0 px-3 py-3 placeholder-gray-400 text-gray-200 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+                <textarea wire:model="message" rows="4" cols="80" required
+                          class="border-0 px-3 py-3 placeholder-gray-400 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                           placeholder="Ex: Douleur au dos, accident de moto, Séparation, Enceinte..."></textarea>
             </div>
             <span class="text-xs leading-relaxed text-gray-200">Tous les champs sont obligatoire.</span>
@@ -70,14 +71,28 @@
                               d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
                     </svg>
 
-                    <span class="text-xs leading-relaxed text-red-200">Votre message à été envoyé avec
-                        succès.</span>
+                    <span class="text-xs leading-relaxed text-red-200">Votre message n'a pas pu être envoyé.</span>
+                </div>
+            @endif
+
+            @if ($message_captcha_error)
+                <div class="flex gap-2 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-red-200" height="16" width="16"
+                         viewBox="0 0 512 512">
+                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+                        <path
+                              d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
+                    </svg>
+
+                    <span class="text-xs leading-relaxed text-red-200">Google pense que vous êtes un robot. Veuillez
+                        rééssayer</span>
                 </div>
             @endif
 
             <div class="text-center mt-6">
-                <button type="submit"
-                        class="bg-secondary-500 text-gray-600 active:bg-primary-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300">
+                <button type="submit" data-sitekey="{{ env('CAPTCHA_SITE_KEY') }}" data-callback='handle'
+                        data-action='submit'
+                        class="g-recaptcha bg-secondary-500 text-gray-600 active:bg-primary-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300">
                     <div class="flex gap-2 items-center">
                         <svg wire:loading="submit" xmlns="http://www.w3.org/2000/svg" class="fill-white animate-spin"
                              height="16" width="16" viewBox="0 0 512 512">
@@ -125,3 +140,17 @@
         </div>
     </div>
 </form>
+
+<script src="https://www.google.com/recaptcha/api.js?render={{ env('CAPTCHA_SITE_KEY') }}"></script>
+<script>
+    function handle(e) {
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ env('CAPTCHA_SITE_KEY') }}', {
+                    action: 'submit'
+                })
+                .then(function(token) {
+                    @this.set('captcha', token);
+                });
+        })
+    }
+</script>

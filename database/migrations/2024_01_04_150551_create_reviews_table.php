@@ -14,11 +14,9 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->string("name")->nullable();
-            $table->uuid("patient_id")->nullable();
             $table->longText("content");
             $table->float("value");
 
-            $table->foreign("patient_id")->references("id")->on("users");
             $table->timestamps();
         });
     }

@@ -66,8 +66,9 @@ class GenerateInvoiceJob implements ShouldQueue
 
             Storage::put($file, $output);
 
-            $destinataires = array_merge($this->traitment->patient->hasEmail() ? [$this->traitment->patient] : [], [auth()->user()]);
-            Notification::send($destinataires, new SendInvoiceNotification($this->traitment->invoice));
+            $destinataires = array_merge($this->traitment->patient->hasEmail() ? [$this->traitment->patient] : [], [$this->traitment->therapist]);
+
+            Notification::send($destinataires, new SendInvoiceNotification($invoice));
 
             DB::commit();
         } catch (Exception $e) {

@@ -2,6 +2,38 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-57V5T79GXJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-57V5T79GXJ');
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NCHRQ4X9');
+    </script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#52b8e3" />
@@ -29,15 +61,20 @@
     <meta property="og:url" content="{{ env('APP_URL') }}" /> <!-- where do you want your post to link to -->
     <meta name="twitter:card" content="summary_large_image" /> <!-- to have large image post format in Twitter -->
 
-
     <title>{{ $title }}</title>
 
     @vite('resources/css/app.css')
     @vite('resources/js/public.js')
+
+    @livewireScripts
+    @livewireStyles
 </head>
 
 <body class="text-gray-800 antialiased scroll-smooth">
-
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCHRQ4X9" height="0" width="0"
+                style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <nav
          class="navbar-fixed h-20 group top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 aria-[fixed=false]:bg-primary-900 fill-primary-500 aria-[fixed=false]:fill-secondary-900 transition-all duration-300">
         <div class="container px-4 mx-auto flex flex-wrap items-center justify-between gap-16">
@@ -45,11 +82,20 @@
                 <div class="fill-secondary-500 aspect-auto w-12">@include('logo.b')</div>
 
                 <button class="cursor-pointer text-xl fill-secondary-500 leading-none px-3 py-1 w-14 border border-solid border-transparent rounded bg-transparent block xl:hidden outline-none focus:outline-none"
-                        type="button" id="toggleNavbar">
+                        type="button" id="openNavbar">
                     <svg class="h-full w-full" viewBox="-2.5 0 19 19" xmlns="http://www.w3.org/2000/svg"
                          class="cf-icon-svg">
                         <path
                               d="M.789 4.836a1.03 1.03 0 0 1 1.03-1.029h10.363a1.03 1.03 0 1 1 0 2.059H1.818A1.03 1.03 0 0 1 .79 4.836zm12.422 4.347a1.03 1.03 0 0 1-1.03 1.029H1.819a1.03 1.03 0 0 1 0-2.059h10.364a1.03 1.03 0 0 1 1.029 1.03zm0 4.345a1.03 1.03 0 0 1-1.03 1.03H1.819a1.03 1.03 0 1 1 0-2.059h10.364a1.03 1.03 0 0 1 1.029 1.03z" />
+                    </svg>
+                </button>
+
+                <button class="hidden cursor-pointer text-xl fill-secondary-500 leading-none px-3 py-1 w-12 border border-solid border-transparent rounded bg-transparent block xl:hidden outline-none focus:outline-none"
+                        type="button" id="closeNavbar">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path
+                              d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
                     </svg>
                 </button>
             </div>

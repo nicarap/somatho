@@ -13,12 +13,7 @@ use Filament\Forms\Components\TextArea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ReviewResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\ReviewResource\RelationManagers;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Get;
 
 class ReviewResource extends Resource
 {
@@ -46,16 +41,8 @@ class ReviewResource extends Resource
         return $form
             ->schema([
                 Section::make()->schema([
-                    Select::make("patient_id")
-                        ->required(fn (Get $get) => !$get("name"))
-                        ->relationship("patient", "name")
-                        ->searchable()
-                        ->live()
-                        ->label(__("filament.attributes.patient")),
                     TextInput::make("name")
-                        ->live()
-                        ->disabled(fn (Get $get) => $get("patient"))
-                        ->required(fn (Get $get) => !$get("patient"))
+                        ->required()
                         ->label(__("filament.attributes.name")),
                     TextArea::make("content")
                         ->required()

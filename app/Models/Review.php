@@ -14,11 +14,5 @@ class Review extends Model
         "name",
         "content",
         "value",
-        "patient_id"
     ];
-
-    public function patient(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 }

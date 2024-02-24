@@ -45,10 +45,6 @@
                                href="{{ route('home') }}">Accueil</a>
                         </li>
                         <li>
-                            <a class="@if (Route::currentRouteName() === 'about') text-secondary-50 @else hover:text-secondary-50 text-gray-200 @endif font-semibold block pb-2 text-sm"
-                               href="{{ route('about') }}">A propos de moi</a>
-                        </li>
-                        <li>
                             <a class="@if (Route::currentRouteName() === 'somatopathy') text-secondary-50 @else hover:text-secondary-50 text-gray-200 @endif font-semibold block pb-2 text-sm"
                                href="{{ route('somatopathy') }}">La somatopathie</a>
                         </li>
@@ -60,10 +56,12 @@
                             <a class="hover:text-secondary-50 text-gray-200 font-semibold block pb-2 text-sm"
                                href="{{ route('home') }}/#contact">Contact</a>
                         </li>
-                        <li>
-                            <a class="text-gray-200 hover:text-secondary-50 font-semibold block pb-2 text-sm"
-                               href="{{ route('articles') }}">Articles</a>
-                        </li>
+                        @if (App\Models\Article::count() > 0)
+                            <li>
+                                <a class="text-gray-200 hover:text-secondary-50 font-semibold block pb-2 text-sm"
+                                   href="{{ route('articles') }}">Articles</a>
+                            </li>
+                        @endif
                         <li>
                             <a class="hover:text-secondary-50 text-gray-200 font-semibold block pb-2 text-sm"
                                href="https://www.secondeviereunion.com/">Centre Seconde Vie</a>

@@ -66,9 +66,9 @@
                                 Je suis Amelie Bonzi et je met à votre disposition une passion dédiée à l'amélioration
                                 de votre bien-être grâce à la Somatopathie.
                             </p>
-                            <a href="{{ route('about') }}"
+                            <a href="#about"
                                class="bg-primary-900 text-white hover:bg-primary-500 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300">
-                                Plus d'informations
+                                Plus d'information
                             </a>
                         </div>
                     </div>
@@ -88,7 +88,6 @@
                     width: 100%;
                     overflow: hidden;
                     line-height: 0;
-                    transform: rotate(-1deg);
                     ">
                 <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
                      preserveAspectRatio="none" class="fill-primary-200">
@@ -104,9 +103,11 @@
         </div>
     </section>
 
-    <section class="pt-20 pb-48">
-        <livewire:reviews></livewire:reviews>
-    </section>
+    @if ($hasReviews)
+        <section class="pt-20 pb-48">
+            <livewire:reviews></livewire:reviews>
+        </section>
+    @endif
 
     <section class="relative block bg-primary-200">
         <div class="bottom-auto top-1 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20"
@@ -125,7 +126,18 @@
             </a>
         </div>
 
-        <div class="relative block pt-16 md:pb-20 lg:pt-28 bg-primary-200" id="contact">
+        @if ($link = env('GOOGLE_MAP_LINK'))
+            <div class="overflow-hidden py-8">
+                <div class="relative h-80">
+                    <div class="absolute h-full w-full inset-0 z-10">
+                        <iframe src="{{ $link }}" width="100%" height="100%" style="border:0;"
+                                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <div class="relative block pt-8 md:pb-20 lg:pt-16 bg-primary-200" id="contact">
 
             <div class="flex flex-wrap justify-center gap-16">
                 <div class="w-full lg:w-6/12 md:px-4">
@@ -134,44 +146,72 @@
             </div>
     </section>
 
+    @if ($hasArticles)
+        <section class="relative bg-gray-200 block pb-20 lg:pt-12" id="articles">
+            <div class="container mx-auto py-12 px-4">
+                <div class="flex flex-wrap justify-center text-center">
+                    <div class="w-full max-w-7xl px-4">
+                        <h2 class="text-4xl font-semibold text-primary-500">Articles</h2>
+                        <p class="text-lg md:text-center text-justify leading-relaxed mt-4 mb-4 text-gray-500">
+                            Explorez les toutes dernières publications dédiées à la somatopathie.
+                            Plongez au cœur de cette thérapie douce, découvrez des conseils précieux pour améliorer
+                            votre
+                            bien-être physique et émotionnel.
+                        </p>
+                        <p class="text-xl font-semibold leading-relaxed mt-4 mb-4 text-gray-500">Bienvenue dans
+                            l'univers de
+                            la somatopathie !</p>
+                    </div>
+                </div>
 
-    <section class="relative bg-gray-200 block pb-20 lg:pt-12" id="articles">
-        <div class="container mx-auto py-12 px-4">
-            <div class="flex flex-wrap justify-center text-center">
-                <div class="w-full max-w-7xl px-4">
-                    <h2 class="text-4xl font-semibold text-primary-500">Articles</h2>
-                    <p class="text-lg md:text-center text-justify leading-relaxed mt-4 mb-4 text-gray-500">
-                        Explorez les toutes dernières publications dédiées à la somatopathie.
-                        Plongez au cœur de cette thérapie douce, découvrez des conseils précieux pour améliorer votre
-                        bien-être physique et émotionnel.
-                    </p>
-                    <p class="text-xl font-semibold leading-relaxed mt-4 mb-4 text-gray-500">Bienvenue dans l'univers de
-                        la somatopathie !</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-stretch gap-8 py-8">
+                    @foreach (App\Models\Article::published()->orderBy('published_at')->limit(4)->get() as $article)
+                        <livewire:components.article-preview :article="$article"></livewire:components.article-preview>
+                    @endforeach
+                </div>
+
+                <div class="text-center mt-8">
+                    <a href="{{ route('articles') }}"
+                       class="bg-primary-900 text-white hover:bg-primary-500 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300">
+                        Découvrez tous les Articles
+                    </a>
                 </div>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-stretch gap-8 py-8">
-                @foreach (App\Models\Article::published()->orderBy('published_at')->limit(4)->get() as $article)
-                    <livewire:components.article-preview :article="$article"></livewire:components.article-preview>
-                @endforeach
-            </div>
-
-            <div class="text-center mt-8">
-                <a href="{{ route('articles') }}"
-                   class="bg-primary-900 text-white hover:bg-primary-500 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300">
-                    Découvrez tous les Articles
-                </a>
-            </div>
-        </div>
-    </section>
-
+        </section>
+    @endif
     <div class="relative">
         <div class="bottom-auto top-1 left-0 right-0 w-full absolute z-50 pointer-events-none overflow-hidden -mt-20"
              style="height: 80px;">
-            <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
-                 version="1.1" viewBox="0 0 2560 100" x="0" y="0">
+            <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg"
+                 preserveAspectRatio="none" version="1.1" viewBox="0 0 2560 100" x="0" y="0">
                 <polygon class="text-primary-900 fill-current" points="2560 0 2560 100 0 100"></polygon>
             </svg>
         </div>
     </div>
 </div>
+
+@script
+    <script>
+        window.axeptioSettings = {
+            clientId: "65d98de24de9dba969c6ae44",
+            cookiesVersion: "bonzi somato-fr-EU",
+            googleConsentMode: {
+                default: {
+                    analytics_storage: "denied",
+                    ad_storage: "denied",
+                    ad_user_data: "denied",
+                    ad_personalization: "denied",
+                    wait_for_update: 500
+                }
+            }
+        };
+
+        (function(d, s) {
+            var t = d.getElementsByTagName(s)[0],
+                e = d.createElement(s);
+            e.async = true;
+            e.src = "//static.axept.io/sdk.js";
+            t.parentNode.insertBefore(e, t);
+        })(document, "script");
+    </script>
+@endscript

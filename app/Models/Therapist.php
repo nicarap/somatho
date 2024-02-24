@@ -27,6 +27,7 @@ class Therapist extends Authenticatable implements Auditable, FilamentUser
         'email',
         'password',
         'tel',
+        'siren',
         "address_id"
     ];
 

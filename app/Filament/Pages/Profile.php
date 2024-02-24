@@ -2,14 +2,15 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Address;
-use App\Models\Therapist;
 use Filament\Forms;
+use App\Models\Address;
 use Filament\Infolists;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
+use App\Models\Therapist;
 use Filament\Infolists\Infolist;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\Support\Htmlable;
 use Filament\Infolists\Contracts\HasInfolists;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -25,10 +26,6 @@ class Profile extends Page implements HasForms, HasInfolists
     {
         return false;
     }
-
-    protected $listeners = [
-        'refreshComponent' => '$refresh'
-    ];
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
@@ -81,10 +78,23 @@ class Profile extends Page implements HasForms, HasInfolists
             ]);
     }
 
+    public function submit()
+    {
+        Therapist::find(filament()->auth()->user()->id)->update($this->form->getState());
+
+        Notification::make()
+            ->title('Sauvegarde réussi')
+            ->success()
+            ->send();
+    }
+
     public function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\TextInput::make("name")
-        ])->model($this->therapist);
+            Forms\Components\TextInput::make("name"),
+            Forms\Components\TextInput::make("tel"),
+            Forms\Components\TextInput::make("siren")
+        ])->model(filament()->auth()->user())
+            ->statePath('data');
     }
 }

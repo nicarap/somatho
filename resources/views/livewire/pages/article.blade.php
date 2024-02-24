@@ -28,19 +28,38 @@
                         </p>
                         <p>
                             Êtes-vous prêt à embarquer dans ce voyage transformateur à mes côtés ? Je suis
-                            <a href="{{ route('about') }}" class="font-bold hover:underline text-secondary-500">Amélie
-                                Bonzi</a>,
+                            <span class="font-bold hover:underline text-secondary-500">Amélie Bonzi</span>,
                             somatothérapeute engagée à rétablir votre équilibre physique et mental.
                         </p>
                     </div>
                 </div>
             </div>
-
-            {{-- <div class="mt-4 p-4 border bg-gray-100">
-                <span>Laisser un commentaire :</span>
-                <livewire:components.article.comment :article="$article"></livewire:components.article.comment>
-                Commentaire
-            </div> --}}
         </div>
     </section>
 </div>
+
+@script
+    <script>
+        window.axeptioSettings = {
+            clientId: "65d98de24de9dba969c6ae44",
+            cookiesVersion: "bonzi somato-fr-EU",
+            googleConsentMode: {
+                default: {
+                    analytics_storage: "denied",
+                    ad_storage: "denied",
+                    ad_user_data: "denied",
+                    ad_personalization: "denied",
+                    wait_for_update: 500
+                }
+            }
+        };
+
+        (function(d, s) {
+            var t = d.getElementsByTagName(s)[0],
+                e = d.createElement(s);
+            e.async = true;
+            e.src = "//static.axept.io/sdk.js";
+            t.parentNode.insertBefore(e, t);
+        })(document, "script");
+    </script>
+@endscript

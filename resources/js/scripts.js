@@ -115,12 +115,17 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 		gsap.set(elem, { autoAlpha: 0 });
 	}
 
-	$("#toggleNavbar").on("click", function () {
-		let open = $("#collapse-navbar").attr("aria-expanded")
-
-		if (open == "false") $("#collapse-navbar").attr("aria-expanded", "true")
-		else $("#collapse-navbar").attr("aria-expanded", "false")
+	$("#openNavbar").on("click", function () {
+		$("#collapse-navbar").attr("aria-expanded", "true")
+		$("#openNavbar").addClass("hidden")
+		$("#closeNavbar").removeClass("hidden")
 	});
+	
+	$("#closeNavbar").on("click", function () {
+		$("#collapse-navbar").attr("aria-expanded", "false")
+		$("#closeNavbar").addClass("hidden")
+		$("#openNavbar").removeClass("hidden")
+	})
 
 	document.addEventListener("DOMContentLoaded", function () {
 		gsap.registerPlugin(ScrollTrigger);
@@ -128,14 +133,16 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 		ScrollTrigger.config({ limitCallbacks: true });
 
 		gsap.utils.toArray(".gs_reveal").forEach(function (elem) {
-			hide(elem); // assure that the element is hidden when scrolled into view
+			if(elem.getBoundingClientRect()?.top > 0){
+				hide(elem); // assure that the element is hidden when scrolled into view
 
-			ScrollTrigger.create({
-				trigger: elem,
-				once: true,
-				start: "top 80%",
-				onEnter: function () { animateFrom(elem) },
-			});
+				ScrollTrigger.create({
+					trigger: elem,
+					once: true,
+					start: "top 80%",
+					onEnter: function () { animateFrom(elem) },
+				});
+			}
 		});
 
 	});
