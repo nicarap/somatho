@@ -4,7 +4,7 @@
             <div style="background-color: {{ $tag->color }}25"
                  class="fi-badge flex items-center justify-center gap-x-1 whitespace-nowrap rounded-md  text-xs font-medium px-2 py-1">
                 <span style="color: {{ $tag->color }}">
-                    {{ $tag->name }}
+                    {{ mb_strtoupper($tag->name) }}
                 </span>
             </div>
         </div>

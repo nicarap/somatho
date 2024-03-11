@@ -120,7 +120,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 		$("#openNavbar").addClass("hidden")
 		$("#closeNavbar").removeClass("hidden")
 	});
-	
+
 	$("#closeNavbar").on("click", function () {
 		$("#collapse-navbar").attr("aria-expanded", "false")
 		$("#closeNavbar").addClass("hidden")
@@ -133,7 +133,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 		ScrollTrigger.config({ limitCallbacks: true });
 
 		gsap.utils.toArray(".gs_reveal").forEach(function (elem) {
-			if(elem.getBoundingClientRect()?.top > 0){
+			if (elem.getBoundingClientRect()?.top > 0) {
 				hide(elem); // assure that the element is hidden when scrolled into view
 
 				ScrollTrigger.create({

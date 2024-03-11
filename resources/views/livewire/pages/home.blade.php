@@ -15,7 +15,7 @@
         </div>
         <div class="container relative 2xl:h-16 mx-auto px-4">
             <div class="flex 2xl:absolute -top-64 flex-wrap">
-                <div class="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center">
+                <div class="lg:pt-12 pt-6 w-full 6/12 md:w-4/12 px-4 text-center">
                     <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
                         <div class="px-4 py-5 flex-auto">
                             <div
