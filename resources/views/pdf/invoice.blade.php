@@ -135,8 +135,8 @@
                         <tr>
                             <td style="width:100%"><span>{{ $therapist->name }}</span></td>
                             <td rowspan="5"><span class="subtitle text-primary-200">
-                                    <div class="fill-primary-200 aspect-auto w-12" style="width: 4rem;">
-                                        @include('logo.b')
+                                    <div class="text-primary-200 fill-primary-200" style="height: 8rem;">
+                                        <img src="images/test.png" />
                                     </div>
                                 </span></td>
                         </tr>
@@ -147,12 +147,16 @@
                             <td><span>Email: {{ $therapist->email }}</span></td>
                         </tr>
                         <tr>
-                            <td><span>{{ $therapist_address->city }}</span>,
+                            <td>
+                                <span>{{ $therapist_address->city }}</span>,
                                 <span>{{ $therapist_address->context }}</span>
                             </td>
                         </tr>
                         <tr>
-                            <td><span>{{ $therapist_address->postcode }}</span>, {{ $therapist_address->street }}</td>
+                            <td>
+
+                                <span>{{ $therapist_address->postcode }}</span>, {{ $therapist_address->street }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -187,7 +191,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <span>{{ $invoice->patient_label }}</span>
+                            <span>{{ $invoice->patient_street }}</span>
                         </td>
                     </tr>
                     <tr>
@@ -197,11 +201,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <span>{{ $invoice->patient_postcode }}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
+                            <span>{{ $invoice->patient_postcode }}</span>,
                             <span>{{ $invoice->patient_city }}</span>
                         </td>
                     </tr>

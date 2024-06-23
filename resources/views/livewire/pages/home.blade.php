@@ -1,11 +1,13 @@
 <div>
     <x-slot:main-title>
-        <div class="fill-secondary-500 aspect-auto w-[18rem] xl:w-[28rem]">@include('logo.name')</div>
-        <div class="fill-secondary-500 my-4 w-[18rem] xl:w-[28rem]">@include('logo.slogan')</div>
+        <div class="z-10 absolute fill-primary-50 opacity-20 aspect-auto w-[50%] top-[10%]">
+            @include('logo.masse')
+        </div>
+        <div class="z-20 fill-primary-500 aspect-auto w-[50%]">@include('logo.complete')</div>
     </x-slot:main-title>
 
 
-    <section class="hidden md:block 2xl:pb-20 relative bg-primary-200">
+    <section class="hidden z-30 md:block 2xl:pb-20 relative bg-primary-200">
         <div class="bottom-auto -top-[69px] left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
              style="height: 70px;">
             <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
@@ -19,19 +21,19 @@
                     <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
                         <div class="px-4 py-5 flex-auto">
                             <div
-                                 class="p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full border border-secondary-900 text-secondary-900 bg-secondary-50">
+                                 class="p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full border-2 border-primary-500 text-primary-500">
                                 @svg('heroicon-m-squares-2x2')
                             </div>
                             <h6 class="text-xl font-semibold">Libérez votre bien-être avec la Somatopathie</h6>
                             <p class="mt-2 mb-8 text-gray-600">
                                 Explorez les bienfaits de la Somatopathie,
-                                une approche holistique qui harmonise le corps et les émotions pour restaurer votre
-                                équilibre naturel
+                                une approche qui harmonise le corps et les émotions pour restaurer votre
+                                équilibre.
                             </p>
-                            <a href="{{ route('somatopathy') }}"
-                               class="bg-primary-900 text-white hover:bg-primary-500 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300">
-                                Décourvrir la méthode poyet
-                            </a>
+
+                            <x-button url="{{ route('somatopathy') }}">
+                                <x-slot name="label">Découvrir la méthode Poyet</x-slot>
+                            </x-button>
                         </div>
                     </div>
                 </div>
@@ -39,18 +41,17 @@
                     <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
                         <div class="px-4 py-5 flex-auto">
                             <div
-                                 class="p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full border border-secondary-900 text-secondary-900 bg-secondary-50">
+                                 class="p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full border-2 border-primary-500 text-primary-500">
                                 @svg('heroicon-s-chat-bubble-left-ellipsis')
                             </div>
-                            <h6 class="text-xl font-semibold">Personnalisation du soin, Inspirée par l'Ostéopathie</h6>
+                            <h6 class="text-xl font-semibold">Personnalisation du soin</h6>
                             <p class="mt-2 mb-8 text-gray-600">
-                                Profitez d'une approche de soin personnalisée qui s'appuie sur les principes de
-                                l'ostéopathie tout en intégrant des techniques novatrices de Somatopathie.
+                                Profitez d'une approche de soin personnalisée issue de l'ostéopathie
+                                tout en intégrant des techniques novatrices.
                             </p>
-                            <a href="#contact"
-                               class="bg-primary-900 text-white hover:bg-primary-500 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300">
-                                Prendre rendez-vous
-                            </a>
+                            <x-button url="{{ route('home') }}/#contact">
+                                <x-slot name="label">Prendre rendez-vous</x-slot>
+                            </x-button>
                         </div>
                     </div>
                 </div>
@@ -58,18 +59,20 @@
                     <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
                         <div class="px-4 py-5 flex-auto">
                             <div
-                                 class="p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full border border-secondary-900 text-secondary-900 bg-secondary-50">
+                                 class="p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full border-2 border-primary-500 text-primary-500">
                                 @svg('heroicon-s-shield-check')
                             </div>
-                            <h6 class="text-xl font-semibold">Découvrez l'Expertise d'une Practicienne Passionnéee</h6>
+                            <h6 class="text-xl font-semibold">Découvrez l'Expertise d'une thérapeute Diplômée et
+                                Passionnéee</h6>
                             <p class="mt-2 mb-8 text-gray-600">
-                                Je suis Amelie Bonzi et je met à votre disposition une passion dédiée à l'amélioration
-                                de votre bien-être grâce à la Somatopathie.
+                                Je m'engage à l'amélioration de votre bien-être à travers
+                                l'application de la méthode Poyet et de la
+                                Somatopathie.
                             </p>
-                            <a href="#about"
-                               class="bg-primary-900 text-white hover:bg-primary-500 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300">
-                                Plus d'information
-                            </a>
+
+                            <x-button url="{{ route('home') }}/#about">
+                                <x-slot name="label">Plus d'information</x-slot>
+                            </x-button>
                         </div>
                     </div>
                 </div>
@@ -104,7 +107,7 @@
     </section>
 
     @if ($hasReviews)
-        <section class="pt-20 pb-48">
+        <section class="pt-4 pb-48">
             <livewire:reviews></livewire:reviews>
         </section>
     @endif
@@ -120,15 +123,15 @@
         <x-traitment></x-traitment>
 
         <div class="mx-auto my-8 sm:my-0 flex justify-center">
-            <a href="{{ route('traitment') }}"
-               class="bg-primary-900 text-gray-100 hover:bg-primary-500 active:bg-primary-500 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300">
-                En savoir plus sur la consultation
-            </a>
+            <x-button url="{{ route('traitment') }}">
+                <x-slot name="label">En savoir plus sur la consultation</x-slot>
+            </x-button>
         </div>
 
         @if ($link = env('GOOGLE_MAP_LINK'))
             <div class="overflow-hidden py-8">
                 <div class="relative h-80">
+                    <div class="absolute inset-0 bg-primary-900/20 z-20 pointer-events-none"></div>
                     <div class="absolute h-full w-full inset-0 z-10">
                         <iframe src="{{ $link }}" width="100%" height="100%" style="border:0;"
                                 allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>

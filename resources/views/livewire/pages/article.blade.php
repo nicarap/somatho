@@ -1,6 +1,6 @@
 <div>
     <x-slot:main-title>
-        <h1 class="text-3xl px-4 md:text-5xl font-serif font-light leading-relaxed mt-4 mb-4 text-secondary-500">
+        <h1 class="text-3xl px-4 md:text-5xl font-serif font-light leading-relaxed mt-4 mb-4 text-primary-500">
             {{ $article->title }}
         </h1>
     </x-slot:main-title>
@@ -28,7 +28,7 @@
                         </p>
                         <p>
                             Êtes-vous prêt à embarquer dans ce voyage transformateur à mes côtés ? Je suis
-                            <span class="font-bold hover:underline text-secondary-500">Amélie Bonzi</span>,
+                            <span class="font-bold hover:underline text-primary-500">Amélie Bonzi</span>,
                             somatothérapeute engagée à rétablir votre équilibre physique et mental.
                         </p>
                     </div>

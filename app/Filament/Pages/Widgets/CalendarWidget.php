@@ -50,7 +50,7 @@ class CalendarWidget extends FullCalendarWidget
             Actions\EditAction::make()
                 ->disabled(fn ($record) => $record->isRealized())
                 ->mutateFormDataUsing(function (array $data): array {
-                    if ($data['realized_at'] === 1) {
+                    if (intval($data['realized_at'])) {
                         $data['realized_at'] = Carbon::now();
                     } else {
                         $data['realized_at'] = null;
@@ -134,7 +134,12 @@ class CalendarWidget extends FullCalendarWidget
                     ->label(__("filament.attributes.realized_at"))
                     ->label("Le soin à été réalisé")
                     ->options([true => "Oui", false => "Non"])
-                    ->formatStateUsing(fn ($record): bool => $record->isCanceled() ? false : ($record->isRealized() ? true : null))
+                    ->formatStateUsing(function ($record): bool|null {
+                        if ($record) {
+                            return $record->isCanceled() ? false : ($record->isRealized() ? true : null);
+                        }
+                        return null;
+                    })
                     ->disabled(fn ($record) => $record->isRealized() ||  $record->isCanceled())
                     ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
             ])

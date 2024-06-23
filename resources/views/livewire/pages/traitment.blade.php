@@ -1,8 +1,8 @@
 <div>
     <x-slot:main-title>
         <h1
-            class="text-3xl px-4 md:text-5xl text-center font-serif font-light leading-relaxed mt-4 mb-4 text-secondary-500">
-            La Consultation en Somatopathie : <p>Un Voyage vers l'Équilibre</p>
+            class="text-5xl px-4 md:text-7xl text-center font-antiqua font-light leading-relaxed mt-4 mb-4 text-primary-500">
+            La Consultation en Somatopathie : <p class="py-4">Un Voyage vers l'Équilibre</p>
         </h1>
     </x-slot:main-title>
 
@@ -38,13 +38,13 @@
         </div>
         <div class="bg-gray-100">
             <div class="container mx-auto px-4 pb-32 pt-20">
-                <h2 class="z-20 text-4xl font-semibold text-center relative text-primary-900 pb-32">
+                <h2 class="z-20 text-7xl font-antiqua font-semibold text-center relative text-primary-900 pb-32">
                     Déroulement d'une séance
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-16 relative z-20">
                     <div class="">
                         <div
-                             class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                             class="h-12 w-12 bg-primary-500 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
                             <span class="text-white font-serif text-3xl">1</span>
                         </div>
                         <h3 class="font-semibold mb-4 text-center text-xl">Accueil et Écoute Bienveillante</h3>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="">
                         <div
-                             class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                             class="h-12 w-12 bg-primary-500 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
                             <span class="text-white font-serif text-3xl">2</span>
                         </div>
                         <h3 class="font-semibold mb-4 text-center text-xl">Exploration des Émotions et du Vécu</h3>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="">
                         <div
-                             class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                             class="h-12 w-12 bg-primary-500 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
                             <span class="text-white font-serif text-3xl">3</span>
                         </div>
                         <h3 class="font-semibold mb-4 text-center text-xl">Techniques Douces et Personnalisées</h3>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="">
                         <div
-                             class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                             class="h-12 w-12 bg-primary-500 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
                             <span class="text-white font-serif text-3xl">4</span>
                         </div>
                         <h3 class="font-semibold mb-4 text-center text-xl">Dialogue et Feedback</h3>
@@ -98,7 +98,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-16 justify-center relative z-20">
                         <div class="">
                             <div
-                                 class="h-12 w-12 bg-secondary-500 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                                 class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
                                 <span class="text-white font-serif text-3xl">5</span>
                             </div>
                             <h3 class="text-gray-200 font-semibold mb-4 text-center text-xl">
@@ -112,7 +112,7 @@
                         </div>
                         <div class="">
                             <div
-                                 class="h-12 w-12 bg-secondary-500 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                                 class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
                                 <span class="text-white font-serif text-3xl">6</span>
                             </div>
                             <h3 class="text-gray-200 font-semibold mb-4 text-center text-xl">
@@ -127,7 +127,7 @@
                         </div>
                         <div class="">
                             <div
-                                 class="h-12 w-12 bg-secondary-500 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
+                                 class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
                                 <span class="text-white font-serif text-3xl">7</span>
                             </div>
                             <h3 class="text-gray-200 font-semibold mb-4 text-center text-xl">Suivi et Plan Personnalisé
@@ -158,11 +158,10 @@
                         </div>
 
                         <div class="lg:flex justify-center mt-4">
-                            <a href="{{ route('home') }}/#contact"
-                               class="bg-secondary-500 text-gray-600 active:bg-primary-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300"
-                               type="submit" style="transition: all 0.15s ease 0s;">
-                                Je prend rendez-vous !
-                            </a>
+
+                            <x-button url="{{ route('home') }}/#contact">
+                                <x-slot name="label">Je prend rendez-vous !</x-slot>
+                            </x-button>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 <div class="container mx-auto pt-20">
     <div class="px-4 sm:hidden">
         <div
-             class="fill-secondary-900 p-3 border-2 border-secondary-900/50 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-secondary-50">
+             class="fill-primary-900 p-3 border-2 border-primary-900 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-primary-50">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-2/3" viewBox="0 0 576 512">
                 <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                 <path
@@ -9,7 +9,7 @@
             </svg>
 
         </div>
-        <h3 class="text-3xl mb-2 font-semibold leading-normal text-primary-900">
+        <h3 class="text-5xl font-antiqua mb-2 font-semibold leading-normal text-primary-900">
             A propos de moi
         </h3>
     </div>
@@ -18,32 +18,15 @@
 
         <div class="w-8/12 xl:w-4/12 2xl:w-3/12 mr-auto ml-auto mt-8 md:mt-0 gs_reveal gs_reveal_fromLeft">
             <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg md:rounded-lg bg-primary-400">
-                <img alt="Soin de somatopathie réalisé sur une douleur au genou"
-                     src="{{ asset('images/soin_sur_genou_amelie_bonzi.jpg') }}"
+                <img alt="Photo de Amelie Bonzi" src="{{ asset('images/amelie.jpg') }}"
                      class="w-full align-middle md:rounded-lg" />
-                {{-- <blockquote class="relative p-8 mb-4">
-                    <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95"
-                        class="absolute left-0 w-full block" style="height: 95px; top: -94px;">
-                        <polygon points="-30,95 583,95 583,65" class="text-primary-400 fill-current"></polygon>
-                    </svg>
-                    <h4 class="text-xl font-bold text-white">
-                        Séance de somatopathie !
-                    </h4>
-                    <p class="text-md font-light mt-2 text-white">
-                        La séance débute par un échange approfondi avec le patient afin de comprendre ses attentes et
-                        besoins.
-                        Ensuite, le traitement commence par l'identification des problèmes,
-                        suivi de l'application de techniques manuelles douces visant à libérer les tensions et à
-                        rétablir l'équilibre.
-                    </p>
-                </blockquote> --}}
             </div>
         </div>
 
         <div class="w-full xl:w-6/12 2xl:w-5/12 px-4 mr-auto ml-auto gs_reveal gs_reveal_fromRight">
             <div class="hidden sm:block">
                 <div
-                     class="fill-secondary-900 p-3 border-2 border-secondary-900/50 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-secondary-50">
+                     class="fill-primary-900 p-3 border-2 border-primary-900 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-primary-50">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-2/3" viewBox="0 0 576 512">
                         <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                         <path
@@ -51,28 +34,35 @@
                     </svg>
 
                 </div>
-                <h3 class="text-3xl mb-2 font-semibold leading-normal text-primary-900">
+                <h3 class="text-5xl mb-2 font-antiqua font-semibold leading-normal text-primary-900">
                     A propos de moi
                 </h3>
             </div>
             <div
                  class="[&>p]:text-lg [&>p]:font-light [&>p]:leading-relaxed [&>p]:text-justify [&>p]:mb-4 [&>p]:text-gray-700">
                 <p class="mt-4">
-                    Je suis <a href="https://www.instagram.com/abonzisomato/"
-                       class="font-bold text-primary-900 hover:underline mt-8">Amelie Bonzi</a>, thérapeute en
-                    somatopathie.
+                    Je me présente <a href="https://www.instagram.com/abonzisomato/" target="_blank" rel="noopener"
+                       class="font-bold text-primary-900 hover:underline mt-8">Amelie Bonzi</a>, thérapeute diplômée en
+                    somatopathie de l'école <a href="https://www.somatopathie.com/"
+                       class="font-bold text-primary-900 hover:underline mt-8" target="_blank">Pierre Camille Vernet</a>
+                    en Métropole.
+                </p>
+                <p class="mt-0">Passionnée par la découverte de nouvelles cultures et de techniques thérapeutiques
+                    innovantes à travers le monde, j'ai exercé dans le sud de la France et sur l'île de La Réunion avant
+                    de poursuivre mon travail sur l'île de Tahiti.</p>
+                <p class="mt-0">
                     Je m'engage à rétablir l'harmonie entre votre corps et votre esprit, en utilisant une approche
                     somatopathique alliant tradition et innovation.
-                <p class="mt-0">
-                    Je vous accueille au sein du Centre de Santé <a href="https://www.secondeviereunion.com/"
-                       class="font-bold text-primary-900 hover:underline mt-8">Seconde Vie</a> à Saint Pierre de La
-                    Réunion,
-                    jusqu'à mars 2024, où
-                    j'applique une approche manuelle douce visant à traiter tant les douleurs physiques que les troubles
+
+                    Je pratique une thérapie manuelle douce visant à traiter tant les douleurs physiques que les
+                    troubles
                     émotionnels
                 </p>
                 <p class="mt-0">
-                    Je vous ferez découvrir la méthode Poyet qui, en combinant des techniques précises et une
+                    Je vous ferez découvrir <a href="{{ route('somatopathy') }}"
+                       class="font-bold text-primary-900 hover:underline mt-8">La Méthode Poyet</a> qui, en combinant
+                    des techniques
+                    précises et une
                     compréhension
                     profonde du corps, offre une voie unique vers le bien-être global
                 </p>

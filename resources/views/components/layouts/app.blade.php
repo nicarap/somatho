@@ -41,6 +41,9 @@
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}" />
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Glass+Antiqua&display=swap" rel="stylesheet">
+
 
     <meta name="author" content="Amélie Bonzi" />
     <meta name="description" content="{{ $description }}">
@@ -76,12 +79,13 @@
                 style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <nav
-         class="navbar-fixed h-20 group top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 aria-[fixed=false]:bg-primary-900 fill-primary-500 aria-[fixed=false]:fill-secondary-900 transition-all duration-300">
+         class="navbar-fixed h-20 group top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 aria-[fixed=false]:bg-primary-900 fill-primary-500 aria-[fixed=false]:fill-primary-900 transition-all duration-300">
         <div class="container px-4 mx-auto flex flex-wrap items-center justify-between gap-16">
             <div class="w-full relative flex justify-between xl:w-auto xl:static xl:block xl:justify-start">
-                <div class="fill-secondary-500 aspect-auto w-12">@include('logo.b')</div>
+                <div class="group-aria-[fixed=false]:fill-gray-100 fill-primary-500 aspect-auto w-12">
+                    @include('logo.b')</div>
 
-                <button class="cursor-pointer text-xl fill-secondary-500 leading-none px-3 py-1 w-14 border border-solid border-transparent rounded bg-transparent block xl:hidden outline-none focus:outline-none"
+                <button class="cursor-pointer text-xl fill-primary-500 leading-none px-3 py-1 w-14 border border-solid border-transparent rounded bg-transparent block xl:hidden outline-none focus:outline-none"
                         type="button" id="openNavbar">
                     <svg class="h-full w-full" viewBox="-2.5 0 19 19" xmlns="http://www.w3.org/2000/svg"
                          class="cf-icon-svg">
@@ -90,7 +94,7 @@
                     </svg>
                 </button>
 
-                <button class="hidden cursor-pointer text-xl fill-secondary-500 leading-none px-3 py-1 w-12 border border-solid border-transparent rounded bg-transparent block xl:hidden outline-none focus:outline-none"
+                <button class="hidden cursor-pointer text-xl fill-primary-500 leading-none px-3 py-1 w-12 border border-solid border-transparent rounded bg-transparent xl:hidden outline-none focus:outline-none"
                         type="button" id="closeNavbar">
                     <svg xmlns="http://www.w3.org/2000/svg"
                          viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -104,7 +108,7 @@
             </div>
             <div class="xl:flex items-center flex-col justify-end bg-white xl:bg-transparent xl:shadow-none hidden">
                 <a href="{{ Route::currentRouteName() === 'home' ? '#contact' : route('home') . '/#contact' }}"
-                   class="bg-secondary-500 text-gray-600 active:bg-secondary-900 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300"
+                   class="group-aria-[fixed=false]:bg-primary-500 bg-primary-900 text-gray-200 active:bg-primary-900 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300"
                    type="submit" style="transition: all 0.15s ease 0s;">
                     Prendre rendez-vous
                 </a>
@@ -112,7 +116,7 @@
         </div>
     </nav>
     <header class="relative py-16 flex flex-col items-center justify-center" style="min-height: 90vh;" id="home">
-        <div class="absolute top-0 w-full h-full bg-cover bg-center bg-fixed"
+        <div class="absolute top-0 w-full h-full bg-cover bg-center bg-fixed -scale-x-100 "
              style="background-image: url(@if (isset($image)) {{ asset('storage/' . $image) }} @else {{ asset('images/DSC_0593.jpg') }} @endif)">
             <span id=" blackOverlay"
                   class="w-full h-full absolute opacity-50 bg-gradient-to-b backdrop-blur-sm to-primary-900 from-black"></span>
@@ -134,7 +138,7 @@
 
             <div class="flex md:hidden items-center justify-end bg-transparent shadow-none ">
                 <a href="{{ route('home') }}/#contact"
-                   class="bg-secondary-500 text-gray-600 active:bg-primary-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300"
+                   class="bg-primary-900 text-gray-200 active:bg-primary-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300"
                    type="submit" style="transition: all 0.15s ease 0s;">
                     Prendre rendez-vous
                 </a>

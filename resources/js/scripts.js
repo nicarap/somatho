@@ -29,7 +29,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 	})
 
 	var amountScrolled = 700;
-	$(window).scroll(function () {
+	$(window).on("scroll", function () {
 		if ($(window).scrollTop() > amountScrolled) {
 			$('.back-to-top').fadeIn('500');
 		} else {
@@ -64,7 +64,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 	changeActive();
 
 	/* Change active link on scroll */
-	$(document).scroll(function () {
+	$(document).on("scroll", function () {
 		changeActive();
 	});
 
@@ -127,25 +127,25 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 		$("#openNavbar").removeClass("hidden")
 	})
 
-	document.addEventListener("DOMContentLoaded", function () {
-		gsap.registerPlugin(ScrollTrigger);
+	// document.addEventListener("DOMContentLoaded", function () {
+	// 	gsap.registerPlugin(ScrollTrigger);
 
-		ScrollTrigger.config({ limitCallbacks: true });
+	// 	ScrollTrigger.config({ limitCallbacks: true });
 
-		gsap.utils.toArray(".gs_reveal").forEach(function (elem) {
-			if (elem.getBoundingClientRect()?.top > 0) {
-				hide(elem); // assure that the element is hidden when scrolled into view
+	// 	gsap.utils.toArray(".gs_reveal").forEach(function (elem) {
+	// 		if (elem.getBoundingClientRect()?.top > 0) {
+	// 			hide(elem); // assure that the element is hidden when scrolled into view
 
-				ScrollTrigger.create({
-					trigger: elem,
-					once: true,
-					start: "top 80%",
-					onEnter: function () { animateFrom(elem) },
-				});
-			}
-		});
+	// 			ScrollTrigger.create({
+	// 				trigger: elem,
+	// 				once: true,
+	// 				start: "top 80%",
+	// 				onEnter: function () { animateFrom(elem) },
+	// 			});
+	// 		}
+	// 	});
 
-	});
+	// });
 
 })(jQuery);
 

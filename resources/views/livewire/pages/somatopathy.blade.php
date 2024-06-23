@@ -1,8 +1,8 @@
 <div>
     <x-slot:main-title>
         <h1
-            class="text-3xl px-4 md:text-5xl text-center font-serif font-light leading-relaxed mt-4 mb-4 text-secondary-500">
-            Bienvenue dans l'univers de la Somatopathie !
+            class="text-5xl px-4 md:text-7xl text-center font-antiqua font-light leading-relaxed mt-4 mb-4 text-primary-500">
+            Bienvenue dans l'univers de la <p class="py-4">Somatopathie !</p>
         </h1>
     </x-slot:main-title>
 
@@ -15,9 +15,11 @@
             </svg>
         </div>
         <div class="pb-20 relative bg-primary-200">
-            <div class="container mx-auto text-center px-4 pt-20 ">
-                <p class="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700">
+            <div class="container mx-auto text-center px-4 pt-20 max-w-7xl">
+                <p class="text-3xl font-light font-antiqua leading-relaxed mt-4 mb-4 text-gray-700">
                     La Somatopathie explore les liens profonds entre les émotions, les pensées et la santé physique.
+                </p>
+                <p class="text-3xl font-light font-antiqua leading-relaxed mt-4 mb-4 text-gray-700">
                     C'est une méthode qui considère l'individu dans sa totalité, cherchant à comprendre
                     comment les tensions émotionnelles peuvent se manifester dans le corps.
                 </p>
@@ -42,12 +44,13 @@
                 </svg>
             </div>
         </div>
-        <div class="bg-gray-100 pt-20">
+        <div class="bg-gray-100pt-24">
             <div class="container mx-auto px-4">
                 <div class="flex flex-wrap items-center">
-                    <div class="w-full lg:w-5/12 px-4 mr-auto ml-auto gs_reveal gs_reveal_fromLeft">
+                    <div
+                         class="w-full xl:w-6/12 2xl:w-5/12  px-4 mr-auto ml-auto gs_reveal gs_reveal_fromLeft  relative z-10 ">
                         <div
-                             class="fill-primary-500 p-3 border-2 border-primary-500 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-primary-200">
+                             class="fill-primary-900 p-3 border-2 border-primary-900 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-primary-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-2/3" viewBox="0 0 576 512">
                                 <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                                 <path
@@ -59,12 +62,10 @@
                             Méthode Poyet
                         </h3>
                         <p class="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700">
-                            La Méthode Poyet, développée par l'ostéopathe reconnu,
+                            La Méthode Poyet, a été développée par le kinésithérapeute et ostéopathe reconnu,
                             <a href="http://www.fiemp.org/wp/biographie-de-maurice-raymond-poyet/"
-                               class="font-bold hover:underline text-gray-800 mt-8">Maurice Raymond Poyet</a>, est une
-                            forme
-                            spécifique de Somatopathie qui se distingue
-                            par son approche douce et globale. Elle repose sur des gestes manuels délicats visant à
+                               class="font-bold hover:underline text-gray-800 mt-8">Maurice Raymond Poyet</a>.
+                            Elle repose sur des gestes manuels délicats visant à
                             réharmoniser le
                             corps en
                             libérant les blocages articulaires et en favorisant la libre circulation de l'énergie.
@@ -87,27 +88,24 @@
                             , pionner de l'ostéopathie.
                         </p>
                     </div>
-                    <div
-                         class="w-full md:w-8/12 lg:w-6/12 xl:w-4/12 px-4 mr-auto ml-auto  gs_reveal gs_reveal_fromRight">
+                    <div class="w-8/12 xl:w-3/12 2xl:w-4/12 mr-auto ml-auto mt-8 md:mt-0 gs_reveal gs_reveal_fromRight">
                         <div
-                             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-primary-500">
-                            <img alt="MRP" src="{{ asset('images/somato.jpg') }}"
-                                 class="w-full align-middle rounded-t-lg" style="height: 500px;" />
+                             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-primary-200">
+                            <img alt="MRP" src="{{ asset('images/mrp.jpg') }}"
+                                 class="w-full align-middle rounded-t-lg" />
                             <blockquote class="relative p-8 mb-4">
                                 <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95"
                                      class="absolute left-0 w-full block" style="height: 95px; top: -94px;">
-                                    <polygon points="-30,95 583,95 583,65" class="text-primary-500 fill-current">
+                                    <polygon points="-30,95 583,95 583,65" class="text-primary-200 fill-current">
                                     </polygon>
                                 </svg>
-                                <h4 class="text-xl font-bold text-white">
+                                <h4 class="text-xl font-bold text-gray-800 text-center">
                                     Le Mouvement Respiration Primaire (MRP) !
                                 </h4>
-                                <p class="text-md font-light mt-2 text-white">
-                                    Le MRP est un mouvement involontaire et rythmique, indispensable au bon
-                                    fonctionnement
-                                    de l'organisme.
-                                    Seules les mains entraînées du thérapeute peuvent le percevoir dans l'ensemble du
-                                    corps.
+                                <p class="text-md font-light mt-2 text-gray-800">
+                                    Cette approche précise vise à rétablir l'alignement structurel en travaillant en
+                                    harmonie avec le mouvement respiratoire naturel du corps, indispensable au bon
+                                    fonctionnement de l'organisme.
                                 </p>
                             </blockquote>
                         </div>
@@ -116,8 +114,8 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-center gap-12 pt-32">
                     <div class="w-full px-4 mr-auto ml-auto gs_reveal">
-                        <div class="fill-secondary-900 gap-4 inline-flex items-center justify-center ">
-                            <div class="w- h- p-4 rounded-full bg-secondary-500 fill-secondary-900 ">
+                        <div class="fill-primary-900 gap-4 inline-flex items-center justify-center ">
+                            <div class="w- h- p-4 rounded-full bg-primary-500 fill-primary-900 ">
                                 <div class="w-full"></div>
                             </div>
                             <h3
@@ -126,11 +124,11 @@
                             </h3>
                         </div>
                         <p class="mt-4 text-lg leading-relaxed text-gray-600">
-                            La <span class="font-bold underline text-secondary-900">Somatopathie</span> permet de
+                            La <span class="font-bold underline text-primary-900">Somatopathie</span> permet de
                             couvrir un large panel de problématiques corporelles,
                             biologiques ou encore comportementales.
                         </p>
-                        <ul class="pl-8 mt-4 list-disc marker:w-2 marker:text-secondary-900">
+                        <ul class="pl-8 mt-4 list-disc marker:w-2 marker:text-primary-900">
                             <li class="py-2 text-lg leading-relaxed text-gray-600">
                                 Gestion du stress et de l'anxiété
                             </li>
@@ -150,8 +148,8 @@
                     </div>
 
                     <div class="w-full px-4 mr-auto ml-auto gs_reveal">
-                        <div class="fill-secondary-900 gap-4 inline-flex items-center justify-center ">
-                            <div class="w- h- p-4 rounded-full bg-secondary-500 fill-secondary-900 ">
+                        <div class="fill-primary-900 gap-4 inline-flex items-center justify-center ">
+                            <div class="w- h- p-4 rounded-full bg-primary-500 fill-primary-900 ">
                                 <div class="w-full"></div>
                             </div>
                             <h3
@@ -160,13 +158,13 @@
                             </h3>
                         </div>
                         <p class="mt-4 text-lg leading-relaxed text-gray-600">
-                            Il est possible de consulter à <span class="font-bold underline text-secondary-900">nimporte
+                            Il est possible de consulter à <span class="font-bold underline text-primary-900">nimporte
                                 quelle
                                 moment de notre vie</span> et quelque soit notre age.
                             Que ce soit de manière préventive ou pour traiter un problème en particuler, comme par
                             exemple :
                         </p>
-                        <ul class="pl-8 mt-4 list-disc marker:w-2 marker:text-secondary-500">
+                        <ul class="pl-8 mt-4 list-disc marker:w-2 marker:text-primary-500">
                             <li class="py-2 text-lg leading-relaxed text-gray-600">
                                 Symptômes physiques inexpliqués
                             </li>
@@ -180,8 +178,8 @@
                     </div>
 
                     <div class="w-full px-4 mr-auto ml-auto gs_reveal">
-                        <div class="fill-secondary-900 gap-4 inline-flex items-center justify-center ">
-                            <div class="w- h- p-4 rounded-full bg-secondary-500 fill-secondary-900 ">
+                        <div class="fill-primary-900 gap-4 inline-flex items-center justify-center ">
+                            <div class="w- h- p-4 rounded-full bg-primary-500 fill-primary-900 ">
                                 <div class="w-full"></div>
                             </div>
                             <h3
@@ -191,7 +189,7 @@
                         </div>
                         <p class="mt-4 text-lg leading-relaxed text-gray-600">
                             Quelque soit la difficulté que vous rencontrez, <span
-                                  class="font-bold underline text-secondary-900">la
+                                  class="font-bold underline text-primary-900">la
                                 somatopathie s'adresse à toute
                                 personne</span>
                             cherchant une approche mêlant la santé mentale et la santé physique.
@@ -201,7 +199,7 @@
                             aux grands sportifs ou tout autres personnes...
                         </p>
                         <p class="mt-4 text-lg leading-relaxed text-gray-600">
-                            La <span class="font-bold underline text-secondary-900">somatopathie</span> convient
+                            La <span class="font-bold underline text-primary-900">somatopathie</span> convient
                             particulièrement à ceux cherchant des solutions complémentaires aux approches
                             traditionnelles.
                         </p>
@@ -233,16 +231,14 @@
                             </div>
 
                             <div class="lg:flex justify-center mt-4">
-                                <a href="{{ route('home') }}/#contact"
-                                   class="bg-secondary-500 text-gray-600 active:bg-primary-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300"
-                                   type="submit" style="transition: all 0.15s ease 0s;">
-                                    Prendre contact
-                                </a>
+                                <x-button url="{{ route('home') }}/#contact">
+                                    <x-slot name="label">Prendre contact</x-slot>
+                                </x-button>
                             </div>
                         </div>
                     </div>
                 </div>
-                @php($image = asset('images/soin_sur_genou_amelie_bonzi.jpg'))
+                @php($image = asset('images/genou.jpg'))
                 <div class="absolute z-10 inset-0 lg:inset-y-0 lg:right-0 bg-cover lg:w-1/2 lg:left-1/2 lg:bg-auto bg-no-repeat bg-fixed bg-right"
                      style="background-image: url({{ $image }})">
                 </div>

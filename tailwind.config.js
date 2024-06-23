@@ -14,19 +14,17 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                antiqua: ['Glass Antiqua']
             },
             colors: {
                 primary: {
-                    '50': '#dcebeb', // text-gray-700
-                    '200': '#8ebaba', // text-gray-700
-                    '500': '#4b7c7f', // text-wite
-                    '900': '#325053', // text-wite
+                    '200': '#EBD5C4', 
+                    '500': '#D8AD3E', 
+                    '900': '#CA7D04',
                 },
                 secondary: {
-                    '50': '#cacbac',
-                    '500': '#d8ad3e',
-                    '900': '#ca7d04',
-                },
+                    '500': '#4b7c7f',
+                }
             }
         },
     },

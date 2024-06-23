@@ -2,13 +2,13 @@
     <div class="container mx-auto px-4 snap-always snap-mandatory">
         <div class="flex flex-wrap">
             <div class="w-full lg:w-6/12 px-4">
-                <h4 class="text-3xl font-semibold text-secondary-500">Restons en contact !</h4>
+                <h4 class="text-3xl font-semibold text-primary-500">Restons en contact !</h4>
                 <h5 class="text-lg mt-0 mb-2 text-gray-200">
                     Suivez-moi sur les différentes plateformes.
                 </h5>
                 <div class="mt-2 flex gap-2 items-center">
                     <a title="facebook" href="{{ config('app.social_medias.facebook') }}" target="_blank"
-                       class="flex fill-secondary-900 bg-gray-100 hover:bg-secondary-500 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
+                       class="flex fill-primary-900 bg-gray-100 hover:bg-primary-500 hover:fill-gray-200 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
                        type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 320 512">
                             <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -17,7 +17,7 @@
                         </svg>
                     </a>
                     <a title="abonzisomato" href="{{ config('app.social_medias.instagram') }}" target="_blank"
-                       class="flex fill-secondary-900 bg-gray-100 hover:bg-secondary-500 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
+                       class="flex fill-primary-900 bg-gray-100 hover:bg-primary-500 hover:fill-gray-200 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
                        type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 448 512">
                             <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -26,7 +26,7 @@
                         </svg>
                     </a>
                     <a title="+33 617 80 50 24" href="{{ config('app.social_medias.whatapps') }}" target="_blank"
-                       class="flex fill-secondary-900 bg-gray-100 hover:bg-secondary-500 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
+                       class="flex fill-primary-900 bg-gray-100 hover:bg-primary-500 hover:fill-gray-200 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
                        type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512">
                             <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -38,35 +38,29 @@
             </div>
             <div class="w-full lg:w-6/12 mt-6 mb-6">
                 <div class="w-full px-4 ml-auto">
-                    <span class="block uppercase text-secondary-500 text-sm font-semibold mb-2">Liens utiles</span>
-                    <ul class="list-unstyled grid md:grid-cols-3">
-                        <li>
-                            <a class="@if (Route::currentRouteName() === 'home') text-secondary-50 @else hover:text-secondary-50 text-gray-200 @endif font-semibold block pb-2 text-sm"
-                               href="{{ route('home') }}">Accueil</a>
-                        </li>
-                        <li>
-                            <a class="@if (Route::currentRouteName() === 'somatopathy') text-secondary-50 @else hover:text-secondary-50 text-gray-200 @endif font-semibold block pb-2 text-sm"
-                               href="{{ route('somatopathy') }}">La somatopathie</a>
-                        </li>
-                        <li>
-                            <a class="@if (Route::currentRouteName() === 'traitment') text-secondary-50 @else hover:text-secondary-50 text-gray-200 @endif font-semibold block pb-2 text-sm"
-                               href="{{ route('traitment') }}">Consultation</a>
-                        </li>
-                        <li>
-                            <a class="hover:text-secondary-50 text-gray-200 font-semibold block pb-2 text-sm"
-                               href="{{ route('home') }}/#contact">Contact</a>
-                        </li>
-                        @if (App\Models\Article::count() > 0)
-                            <li>
-                                <a class="text-gray-200 hover:text-secondary-50 font-semibold block pb-2 text-sm"
-                                   href="{{ route('articles') }}">Articles</a>
+                    <span class="block uppercase text-primary-500 text-sm font-semibold mb-2">Liens utiles</span>
+                    <div class="grid grid-cols-2">
+                        <ul class="list-unstyled">
+                            <li class="py-2">
+                                <a class="@if (Route::currentRouteName() === 'home') border-l-2 pl-2 border-secondary-500 text-primary-500 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
+                                   href="{{ route('home') }}">Accueil</a>
                             </li>
-                        @endif
-                        <li>
-                            <a class="hover:text-secondary-50 text-gray-200 font-semibold block pb-2 text-sm"
-                               href="https://www.secondeviereunion.com/">Centre Seconde Vie</a>
-                        </li>
-                    </ul>
+                            <li class="py-2">
+                                <a class="@if (Route::currentRouteName() === 'somatopathy') border-l-2 pl-2 border-secondary-500 text-primary-500 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
+                                   href="{{ route('somatopathy') }}">La somatopathie</a>
+                            </li>
+                            <li class="py-2">
+                                <a class="@if (Route::currentRouteName() === 'traitment') border-l-2 pl-2 border-secondary-500 text-primary-500 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
+                                   href="{{ route('traitment') }}">Consultation</a>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li class="py-2">
+                                <a class="hover:text-primary-500 text-gray-200 font-semibold block pb-2 text-sm"
+                                   target="_blank" href="https://www.apiora.pf/">Centre Api'Ora</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,7 +69,8 @@
             <div class="w-full px-4 mx-auto text-center">
                 <div class="text-xs text-gray-200 font-semibold py-1">
                     Copyright © {{ Carbon\Carbon::now()->format('Y') }} Propulsed by
-                    <a href="#" class="text-gray-200 hover:text-secondary-50">Raphaël LEBON, développeur Web</a>.
+                    <a href="https://nicarap.github.io/raphael-lebon.github.io/" target="_blank"
+                       class="text-gray-200 hover:text-primary-50">Raphaël LEBON, développeur Web</a>.
                 </div>
             </div>
         </div>
