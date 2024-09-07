@@ -2,9 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Jobs\SendContactNotification;
 use Exception;
 use Livewire\Component;
 use App\Models\Therapist;
+use App\Models\Contact as ContactModel;
 use Illuminate\Support\Facades\Http;
 use App\Notifications\ContactNotification;
 
@@ -36,13 +38,15 @@ class Contact extends Component
     {
         $this->message_captcha_error = false;
         try {
-            $therapist = Therapist::first();
-
-            $therapist->notify(new ContactNotification([
+            $contact = new ContactModel([
                 "name" => $this->name,
                 "email" => $this->email,
+                "tel" => $this->tel,
                 "message" => $this->message,
-            ]));
+            ]);
+            $contact->save();
+
+            SendContactNotification::dispatch($contact);
 
             $this->message_sended_successfull = true;
         } catch (Exception $e) {

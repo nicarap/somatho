@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Contact;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -15,7 +16,7 @@ class ContactNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(public array $attributes)
+    public function __construct(public Contact $contact)
     {
     }
 
@@ -37,9 +38,9 @@ class ContactNotification extends Notification
         return (new MailMessage)
             ->line('Vous avez recu une demande de contact.')
             ->action('Notification Action', url('/'))
-            ->line("De : " . Arr::get($this->attributes, 'name'))
-            ->line("Email : " . Arr::get($this->attributes, 'email'))
-            ->line("Message : " . Arr::get($this->attributes, 'message'));
+            ->line("De : " . $this->contact->name)
+            ->line("Email : " . $this->contact->email)
+            ->line("Message : " . $this->contact->message);
     }
 
     /**

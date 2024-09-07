@@ -44,6 +44,12 @@ return [
                 "plural" => "Factures",
             ]
         ],
+        "contact" => [
+            "label" => [
+                "single" => "Contact",
+                "plural" => "Contacts",
+            ]
+        ],
         "review" => [
             "label" => [
                 "single" => "Avis",
@@ -99,5 +105,9 @@ return [
         "invoice_number" => "Numéro de facture",
         "traitment" => "Soin",
         "paid_at" => "Payé le",
+        "created_at" => "Crée le",
+        "read_at" => "Lu le",
+        "read" => "Lu",
+        "not_read" => "Non lu",
     ]
 ];
