@@ -116,11 +116,19 @@ class TraitmentResource extends Resource
                     ->label(__("filament.attributes.realized_at"))
                     ->label("Le soin à été réalisé")
                     ->options([true => "Oui", false => "Non"])
-                    ->formatStateUsing(fn ($record): bool => $record->isCanceled() ? false : ($record->isRealized() ? true : null))
+                    ->formatStateUsing(fn ($record): bool => TraitmentResource::isRealized($record))
                     ->disabled(fn ($record) => $record->isRealized() ||  $record->isCanceled())
                     ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
             ])
         ]);
+    }
+
+    private static function isRealized($record)
+    {
+        if ($record) {
+            return $record->isCanceled() ? false : ($record->isRealized() ? true : false);
+        }
+        return false;
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -196,8 +204,8 @@ class TraitmentResource extends Resource
                 \Filament\Tables\Filters\TrashedFilter::make()
                     ->label(__("filament.attributes.programmed"))
                     ->placeholder('Soin programmé')
-                    ->trueLabel('Soin annulé')
-                    ->falseLabel('Tous les soins'),
+                    ->trueLabel('Tous les soins')
+                    ->falseLabel('Soin supprimé'),
                 \Filament\Tables\Filters\Filter::make("users")
                     ->form([
                         \Filament\Forms\Components\Select::make("users")

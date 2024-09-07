@@ -36,8 +36,8 @@ class TagResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make("name")->label("filament.attributes.name"),
-                ColorColumn::make("color")->label("filament.attributes.color"),
+                TextColumn::make("name")->label(__("filament.attributes.name")),
+                ColorColumn::make("color")->label(__("filament.attributes.color")),
             ])
             ->filters([
                 //

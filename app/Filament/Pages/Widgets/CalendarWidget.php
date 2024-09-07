@@ -50,7 +50,7 @@ class CalendarWidget extends FullCalendarWidget
             Actions\EditAction::make()
                 ->disabled(fn ($record) => $record->isRealized())
                 ->mutateFormDataUsing(function (array $data): array {
-                    if (intval($data['realized_at'])) {
+                    if (intVal(Arr::get($data, 'realized_at',))) {
                         $data['realized_at'] = Carbon::now();
                     } else {
                         $data['realized_at'] = null;

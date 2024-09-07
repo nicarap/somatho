@@ -80,6 +80,7 @@ return [
         "gtp" => "Demander à chatGTP",
         "pinned" => "Epinglé",
         "tags" => "Tags",
+        "color" => "Couleur",
         "manual_adress" => "Saisir l'adresse manuellement",
         "invoice_sended" => "Facture envoyée",
         "addresses" => [

@@ -18,9 +18,8 @@
                     </h5>
 
 
-                    <p>Amélie est incroyable, elle a traité des maux datant de plusieurs années et qu'aucune autre
-                        préfession
-                        n'aurait su explier ou soigner. Il faut surtout pas hésiter à la consulter!!!
+                    <p>
+                        {{ $review->content }}
                     </p>
 
                     <div class="flex gap-1 pt-4 justify-center fill-yellow-400">

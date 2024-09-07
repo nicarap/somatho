@@ -59,7 +59,19 @@ class ArticleResource extends Resource
                     Forms\Components\RichEditor::make("content")
                         ->label(__("filament.attributes.content"))
                         ->required(),
-                    Forms\Components\FileUpload::make('image')->required(),
+                    Forms\Components\FileUpload::make('image')
+                        ->required()
+                        ->image()
+                        ->directory('blog-articles/' . Carbon::now()->format('FY'))
+                        ->previewable(false),
+
+                    Forms\Components\FileUpload::make('image_thumbnail_url')
+                        ->image()
+                        ->directory('blog-articles/' . Carbon::now()->format('FY'))
+                        ->imageResizeTargetWidth('300')
+                        ->imageResizeTargetHeight('200')
+                        ->imagePreviewHeight('100'),
+
                     Forms\Components\Grid::make(3)->schema([
                         Forms\Components\Select::make("tags")
                             ->relationship("tags", "name")->preload()->searchable()->multiple()

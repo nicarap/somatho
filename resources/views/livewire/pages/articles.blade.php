@@ -2,7 +2,7 @@
     <x-slot:main-title>
         <h1
             class="text-3xl px-4 md:text-5xl text-center font-serif font-light leading-relaxed mt-4 mb-4 text-primary-500">
-            Articles sur la Somatopathie et le Bien-Être
+            Consulter mes articles concernant la Somatopathie et le Bien-Être
         </h1>
     </x-slot:main-title>
 

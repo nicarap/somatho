@@ -18,7 +18,7 @@
             <div class="text-sm mt-4 bg-primary-500 p-4 w-7/12">
 
                 <div class="flex w-full gap-4 items-stretch">
-                    <img class="w-32" src="{{ asset('images/me.jpg') }}" alt="Photo de Amelie Bonzi" />
+                    <img class="w-32" src="{{ asset('images/amelie.jpg') }}" alt="Photo de Amelie Bonzi" />
                     <div class="text-gray-100  text-justify flex flex-col justify-between">
                         <p class="text-xl italic">A propos de l'auteur : </p>
                         <p>
@@ -28,7 +28,7 @@
                         </p>
                         <p>
                             Êtes-vous prêt à embarquer dans ce voyage transformateur à mes côtés ? Je suis
-                            <span class="font-bold hover:underline text-primary-500">Amélie Bonzi</span>,
+                            <span class="font-bold hover:underline text-primary-900">Amélie Bonzi</span>,
                             somatothérapeute engagée à rétablir votre équilibre physique et mental.
                         </p>
                     </div>
