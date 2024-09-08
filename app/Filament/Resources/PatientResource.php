@@ -47,9 +47,11 @@ class PatientResource extends Resource
                 Section::make("Informations générales")->schema([
                     Forms\Components\Grid::make(3)->schema([
                         Forms\Components\TextInput::make("name")
+                            ->default(request('name'))
                             ->label(__("filament.attributes.name"))
                             ->required(),
                         Forms\Components\TextInput::make("tel")
+                            ->default(request('tel'))
                             ->label(__("filament.attributes.tel"))
                             ->telRegex('/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/'),
                         Forms\Components\DatePicker::make("birthdate")
@@ -57,6 +59,7 @@ class PatientResource extends Resource
                             ->required(),
                     ]),
                     Forms\Components\TextInput::make("email")
+                        ->default(request('email'))
                         ->label(__("filament.attributes.email"))
                         ->email(),
                     Forms\Components\Toggle::make("manual_address")
@@ -110,13 +113,13 @@ class PatientResource extends Resource
                             Forms\Components\TextInput::make("address_context")
                                 ->formatStateUsing(fn ($record) => $record && $record->address()->exists() ? $record->address->context : "")
                                 ->label(__("filament.attributes.addresses.context"))
-                                ->required()
                         ]),
                         Forms\Components\Grid::make()->schema([
                             Forms\Components\TextInput::make("address_postcode")
                                 ->formatStateUsing(fn ($record) => $record && $record->address()->exists() ? $record->address->postcode : "")
                                 ->label(__("filament.attributes.addresses.postcode"))
-                                ->required(),
+                                ->required()
+                                ->length(5),
                             Forms\Components\TextInput::make("address_city")
                                 ->formatStateUsing(fn ($record) => $record && $record->address()->exists() ? $record->address->city : "")
                                 ->label(__("filament.attributes.addresses.city"))
@@ -124,6 +127,7 @@ class PatientResource extends Resource
                         ]),
                     ])->visible(fn (Get $get) => $get("manual_address")),
                     Forms\Components\RichEditor::make("note")
+                        ->default(request('note'))
                         ->label(__("filament.attributes.note")),
                 ])
             ]);

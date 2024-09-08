@@ -92,7 +92,7 @@ return [
         "addresses" => [
             "name" => "Nom de l'adresse",
             "street" => "Rue",
-            "context" => "Contexte",
+            "context" => "Complément",
             "postcode" => "Code Postal",
             "city" => "Ville",
             "default" => "Adresse par défaut"

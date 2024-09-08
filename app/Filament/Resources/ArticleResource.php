@@ -18,6 +18,7 @@ use Filament\Forms\Components\Actions\Action;
 use App\Filament\Resources\ArticleResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ArticleResource\RelationManagers;
+use App\Models\Tag;
 
 class ArticleResource extends Resource
 {
@@ -30,29 +31,6 @@ class ArticleResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make()->schema([
-                    Forms\Components\TextInput::make("gtp")
-                        ->label(__("filament.attributes.gtp"))
-                        ->autocomplete()
-                        ->suffixAction(
-                            Action::make('generateGPT')
-                                ->icon('heroicon-m-clipboard')
-                                ->action(function (Set $set, $state) {
-                                    $client = new Client();
-
-                                    $response = $client->post(config('api.chatgpt.endpoint'), [
-                                        'headers' => [
-                                            'Authorization' => 'Bearer ' . config('api.chatgpt.api_key'),
-                                            'Content-Type' => 'application/json',
-                                        ],
-                                        'json' => [
-                                            "messages" => [["role" => "user", "content" => $state]],
-                                            "model" => config('api.chatgpt.model'),
-                                        ],
-                                    ]);
-
-                                    $set("content", Arr::get(json_decode($response->getBody(), true), "choices.0.message.content"));
-                                })
-                        ),
                     Forms\Components\TextInput::make("title")
                         ->label(__("filament.attributes.title"))
                         ->required(),
@@ -101,7 +79,8 @@ class ArticleResource extends Resource
                     ->label(__("filament.attributes.title")),
                 Tables\Columns\TextColumn::make("content")->html()->limit(50)
                     ->label(__("filament.attributes.content")),
-                Tables\Columns\ViewColumn::make("tags")->view('tables.columns.tags')
+                Tables\Columns\ViewColumn::make("tags")
+                    ->view('tables.columns.tags')
                     ->label(__("filament.attributes.tags")),
                 Tables\Columns\ToggleColumn::make("is_pinned")
                     ->label(__("filament.attributes.pinned")),
