@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Model implements Auditable
 {
@@ -61,6 +62,12 @@ class User extends Model implements Auditable
     public function traitments(): hasMany
     {
         return $this->hasMany(Traitment::class, 'patient_id');
+    }
+
+
+    public function invoices(): hasMany
+    {
+        return $this->hasMany(Invoice::class, 'patient_id');
     }
 
     /**

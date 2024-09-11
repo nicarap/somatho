@@ -26,6 +26,7 @@ class Traitment extends Model
         'patient_validated_at',
         "realized_at",
         "canceled_at",
+        "paid_at",
         "info_realized",
         'price',
         'travel_cost',
@@ -33,19 +34,21 @@ class Traitment extends Model
         "note",
         "therapist_id",
         "patient_id",
-        "address_id"
+        "address_id",
+        "invoice_id"
     ];
 
     protected $cast = [
         'canceled_at' => 'datetime',
         'realized_at' => 'datetime',
+        'paid_at' => 'datetime',
         'programmed_start_at' => 'datetime',
         'programmed_end_at' => 'datetime',
     ];
 
-    public function invoice(): HasOne
+    public function invoice(): BelongsTo
     {
-        return $this->hasOne(Invoice::class);
+        return $this->belongsTo(Invoice::class);
     }
 
     public function therapist(): BelongsTo
@@ -114,6 +117,11 @@ class Traitment extends Model
     public function scopeForPatient(Builder $query, User $patient): Builder
     {
         return $query->where('patient_id', $patient->id);
+    }
+
+    public function scopeNotBilledYet(Builder $query): Builder
+    {
+        return $query->doesntHave('invoice');
     }
 
     public function scopeStartAt(Builder $query, $date): Builder

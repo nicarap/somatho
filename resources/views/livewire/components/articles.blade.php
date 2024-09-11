@@ -70,7 +70,7 @@
 
             let targetElement = document.getElementById('scrollLoadingArticles');
             let bounding = targetElement.getBoundingClientRect();
-            // Vérifiez si l'élément est entièrement visible
+
             if (bounding.top >= 0 && bounding.bottom <= window.innerHeight) {
                 @this.call("getNextArticles")
             }

@@ -49,11 +49,11 @@ class TraitmentResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $disabled = fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_start_at);
+        $disabled = fn($record) => $record && Carbon::now() > Carbon::parse($record->programmed_start_at);
 
         return $form->schema([
             Forms\Components\Section::make()->schema([
-                Forms\Components\Grid::make(1)->schema([
+                Forms\Components\Grid::make(2)->schema([
                     Forms\Components\Select::make('patient_id')
                         ->label(__("filament.attributes.patient"))
                         ->relationship("patient", "name")
@@ -62,28 +62,42 @@ class TraitmentResource extends Resource
                         ->required()
                         ->suffixAction(
                             Action::make('goToUser')
-                                ->disabled(fn ($state) => is_null($state))
-                                ->label("Voir l'utilisateur")
+                                ->disabled(fn($state) => is_null($state))
+                                ->label("Voir le patient")
                                 ->icon('heroicon-o-eye')
                                 ->url(function ($state) {
                                     return $state ? route('filament.admin.resources.patients.edit', $state) : "#";
                                 })
+                        ),
+                    Forms\Components\TextInput::make('invoice_id')
+                        ->label(__("filament.attributes.patient"))
+                        ->formatStateUsing(fn($record) => $record->invoice?->number)
+                        ->disabled()
+                        ->hidden(fn($record) => !$record->invoice()->exists())
+                        ->required()
+                        ->suffixAction(
+                            Action::make('goToInvoice')
+                                ->disabled(fn($state) => is_null($state))
+                                ->label("Voir la facture")
+                                ->icon('heroicon-o-document')
+                                ->url(fn($record) => route("invoice", ["invoice" => $record->invoice]))
+                                ->openUrlInNewTab(),
                         ),
                 ]),
                 Forms\Components\Grid::make()
                     ->schema([
                         Forms\Components\DateTimePicker::make('programmed_start_at')
                             ->label(__("filament.attributes.programmed_start_at"))
-                            ->minDate(fn () => !$disabled ? now()->format("Y-m-d H:i") : null)
-                            ->default(fn () => now()->format("Y-m-d H:i"))
+                            ->minDate(fn() => !$disabled ? now()->format("Y-m-d H:i") : null)
+                            ->default(fn() => now()->format("Y-m-d H:i"))
                             ->seconds(false)
                             ->live()
                             ->disabled($disabled)
                             ->required(),
                         Forms\Components\DateTimePicker::make('programmed_end_at')
                             ->label(__("filament.attributes.programmed_end_at"))
-                            ->minDate(fn (Get $get) => $get("programmed_start_at") ? $get("programmed_start_at") : null)
-                            ->maxDate(fn (Get $get) => Carbon::parse($get("programmed_start_at"))->endOfDay())
+                            ->minDate(fn(Get $get) => $get("programmed_start_at") ? $get("programmed_start_at") : null)
+                            ->maxDate(fn(Get $get) => Carbon::parse($get("programmed_start_at"))->endOfDay())
                             ->seconds(false)
                             ->live()
                             ->disabled($disabled)
@@ -116,9 +130,9 @@ class TraitmentResource extends Resource
                     ->label(__("filament.attributes.realized_at"))
                     ->label("Le soin à été réalisé")
                     ->options([true => "Oui", false => "Non"])
-                    ->formatStateUsing(fn ($record): bool => TraitmentResource::isRealized($record))
-                    ->disabled(fn ($record) => $record->isRealized() ||  $record->isCanceled())
-                    ->visible(fn ($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
+                    ->formatStateUsing(fn($record): bool => TraitmentResource::isRealized($record))
+                    ->disabled(fn($record) => $record->isRealized() ||  $record->isCanceled())
+                    ->visible(fn($record) => $record && Carbon::now() > Carbon::parse($record->programmed_end_at)),
             ])
         ]);
     }
@@ -134,7 +148,7 @@ class TraitmentResource extends Resource
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist->schema([
-            InfoLists\Components\Section::make(fn ($record) => $record->patient->name)
+            InfoLists\Components\Section::make(fn($record) => $record->patient->name)
                 ->schema([
                     InfoLists\Components\Grid::make()->schema([
                         InfoLists\Components\TextEntry::make("patient.name"),
@@ -152,10 +166,10 @@ class TraitmentResource extends Resource
                     ->hiddenOn(TraitmentsRelationManager::class),
                 TextColumn::make("programmed_start_at")
                     ->label(__("filament.attributes.programmed_start_at"))
-                    ->formatStateUsing(fn ($state) => Carbon::parse($state)->format("d/m/Y H:i")),
+                    ->formatStateUsing(fn($state) => Carbon::parse($state)->format("d/m/Y H:i")),
                 TextColumn::make("programmed_end_at")
                     ->label(__("filament.attributes.programmed_end_at"))
-                    ->formatStateUsing(fn ($state) => Carbon::parse($state)->format("d/m/Y H:i")),
+                    ->formatStateUsing(fn($state) => Carbon::parse($state)->format("d/m/Y H:i")),
                 TextColumn::make("address.name")
                     ->label(__("filament.attributes.address")),
                 TextColumn::make("price")
@@ -218,7 +232,7 @@ class TraitmentResource extends Resource
                         return $query
                             ->when(
                                 $data['users'],
-                                fn (Builder $query, $patient): Builder => $query->whereRelation('patient', "id", $patient),
+                                fn(Builder $query, $patient): Builder => $query->whereRelation('patient', "id", $patient),
                             );
                     })
                     ->indicateUsing(function (array $data): ?string {
@@ -237,7 +251,7 @@ class TraitmentResource extends Resource
                         return $query
                             ->when(
                                 $data['programmed_start_at'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('programmed_start_at', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('programmed_start_at', '>=', $date),
                             );
                     })
                     ->indicateUsing(function (array $data): ?string {
@@ -251,7 +265,7 @@ class TraitmentResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
-                    ->visible(fn ($record) => $record->programmed_start_at > Carbon::now()),
+                    ->visible(fn($record) => $record->programmed_start_at > Carbon::now()),
             ])
             ->bulkActions([
                 //

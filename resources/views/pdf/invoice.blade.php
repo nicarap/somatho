@@ -128,12 +128,10 @@
             <div style="padding-top: 80px; 
                 padding-left: 20px;
                 padding-right: 20px;">
-                @php($therapist = $invoice->traitment->therapist)
-                @php($therapist_address = $invoice->traitment->therapist->address)
                 <table style="width: 100%;">
                     <tbody>
                         <tr>
-                            <td style="width:100%"><span>{{ $therapist->name }}</span></td>
+                            <td style="width:100%"><span>{{ $invoice->therapist->name }}</span></td>
                             <td rowspan="5"><span class="subtitle text-primary-200">
                                     <div class="text-primary-200 fill-primary-200" style="height: 8rem;">
                                         <img src="images/test.png" />
@@ -141,21 +139,21 @@
                                 </span></td>
                         </tr>
                         <tr>
-                            <td><span>Tel : {{ $therapist->tel }}</span></td>
+                            <td><span>Tel : {{ $invoice->therapist->tel }}</span></td>
                         </tr>
                         <tr>
-                            <td><span>Email: {{ $therapist->email }}</span></td>
+                            <td><span>Email: {{ $invoice->therapist->email }}</span></td>
                         </tr>
                         <tr>
                             <td>
-                                <span>{{ $therapist_address->city }}</span>,
-                                <span>{{ $therapist_address->context }}</span>
+                                <span>{{ $invoice->therapist->address->city }}</span>,
+                                <span>{{ $invoice->therapist->context }}</span>
                             </td>
                         </tr>
                         <tr>
                             <td>
 
-                                <span>{{ $therapist_address->postcode }}</span>, {{ $therapist_address->street }}
+                                <span>{{ collect([$invoice->therapist->postcode, $invoice->therapist->street])->join(', ') }}</span>
                             </td>
                         </tr>
                     </tbody>
@@ -186,7 +184,7 @@
                 <table>
                     <tr>
                         <td>
-                            <strong class="text-primary-500">{{ $invoice->traitment->patient->name }}</strong>
+                            <strong class="text-primary-500">{{ $invoice->patient->name }}</strong>
                         </td>
                     </tr>
                     <tr>
@@ -211,21 +209,36 @@
                 <table class="invoice-table" style="margin-top: 20px;">
                     <thead>
                         <tr>
-                            <th class="subtitle">Prestation du
-                                {{ \Carbon\Carbon::parse($invoice->realized_at)->format('d/m/Y') }}</th>
-                            <th class="subtitle">Tarif</th>
+                            <th class="subtitle">Date</th>
+                            <th></th>
+                            <th class="subtitle">Total</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td style="width: 100%; font-size:normal"> Soin somatopathie </td>
-                            <td style="text-align: right;">{{ $invoice->traitment->price }}€</td>
-                        </tr>
+                        @php
+                            $traitments = $invoice->traitments;
+                        @endphp
+                        @for ($i = 0; $i < $traitments->count(); $i++)
+                            <tr>
+                                <td style="width: 100%; font-size:normal">
+                                    {{ \Carbon\Carbon::parse($traitments[$i]->programmed_start_at)->format('d/m/Y HH:mm') }}
+                                    -
+                                    {{ \Carbon\Carbon::parse($traitments[$i]->programmed_end_at)->format('d/m/Y HH:mm') }}
+                                </td>
+                                <td style="width: 100%; font-size:normal">
+                                    @if ($traitments[$i]->paid_at)
+                                        Payé le {{ \Carbon\Carbon::parse($traitments[$i]->paid_at)->format('d/m/Y') }}
+                                    @endif
+                                </td>
+                                <td style="text-align: right;">{{ $traitments[$i]->price }}€</td>
+                            </tr>
+                        @endfor
                         <tr>
                             <td style="padding:0.2rem;border:0"></td>
                             <td style="padding:0.2rem;border:0"></td>
                         </tr>
                         <tr style="border:0; padding:0">
+                            <td style="border:0"></td>
                             <td style="border:0"></td>
                             <td class="bg-gray total-price" style="padding:0; font-size: 16px;">
                                 <table style="width: 100%; border:0">
@@ -233,7 +246,9 @@
                                         <td style="border:0; white-space: nowrap;"><span class="subtitle">Total :</span>
                                         </td>
                                         <td style="border:0; text-align: right;" class="text-primary-500">
-                                            <strong>{{ $invoice->traitment->price }}€</strong>
+                                            <strong>{{ $invoice->traitments->filter(function ($item) {
+                                                    return !$item->paid_at;
+                                                })->sum('price') }}€</strong>
                                         </td>
                                     </tr>
                                 </table>
@@ -255,7 +270,7 @@
                             {{ \Carbon\Carbon::parse($invoice->created_at)->format('H:i') }}</td>
                     </tr>
                     <tr style="font-size:10px">
-                        <td>N° SIRET : {{ $invoice->traitment->therapist->siren }}</td>
+                        <td>N° SIRET : {{ $invoice->therapist->siren }}</td>
                     </tr>
                     <tr style="font-size:10px">
                         <td>TVA non applicable en vertu de l'article 261 du Code Général des impôts.</td>

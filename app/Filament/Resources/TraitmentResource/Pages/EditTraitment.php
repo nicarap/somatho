@@ -15,11 +15,6 @@ class EditTraitment extends EditRecord
 {
     protected static string $resource = TraitmentResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return $this->record->isRealized() ? [SendInvoiceAction::make()] : [];
-    }
-
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         if (Arr::get($data, "realized_at") !== null) {

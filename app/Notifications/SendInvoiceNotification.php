@@ -38,8 +38,7 @@ class SendInvoiceNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $filepath = Storage::path(config("app.invoice_folder") . DIRECTORY_SEPARATOR . Str::slug($this->invoice->traitment->patient->name));
-        $date = Carbon::parse($this->invoice->traitment->realized_at)->format("d/m/Y à H:i");
+        $filepath = Storage::path(config("app.invoice_folder") . DIRECTORY_SEPARATOR . Str::slug($this->invoice->patient->name));
 
         return (new MailMessage)
             ->view("mail.send_invoice", ["invoice" => $this->invoice])

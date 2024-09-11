@@ -2,9 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Models\Therapist;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Traitment;
+use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
@@ -18,7 +20,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\SendInvoiceNotification;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class GenerateInvoiceJob implements ShouldQueue
 {
@@ -27,10 +29,7 @@ class GenerateInvoiceJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Traitment $traitment)
-    {
-        //
-    }
+    public function __construct(public Therapist $therapist, public User $patient, public Carbon $date, public bool $send_patient = true) {}
 
     /**
      * Execute the job.
@@ -39,34 +38,20 @@ class GenerateInvoiceJob implements ShouldQueue
     {
         DB::beginTransaction();
 
-        $therapist_address = $this->traitment->therapist->address;
         try {
-            $invoice = $invoiceService->create([
-                "programmed_start_at" => $this->traitment->programmed_start_at,
-                "paid_at" => $this->traitment->programmed_start_at,
-                "traitment_id" => $this->traitment->id,
-                "therapist_street" => $therapist_address->street,
-                "therapist_context" => $therapist_address->context,
-                "therapist_postcode" => $therapist_address->postcode,
-                "therapist_city" => $therapist_address->city,
-                "patient_street" => $this->traitment->patient->address->street,
-                "patient_context" => $this->traitment->patient->address->context,
-                "patient_postcode" => $this->traitment->patient->address->postcode,
-                "patient_city" => $this->traitment->patient->address->city,
-            ]);
+            $invoice = $invoiceService->create($this->therapist, $this->patient, $this->date);
 
             $pdf = Pdf::loadView('pdf.invoice', ["invoice" => $invoice]);
             $output = $pdf->output();
-            $filepath = config("app.invoice_folder") . DIRECTORY_SEPARATOR . Str::slug($this->traitment->patient->name);
-            $filename = "Invoice_{$invoice->number}_" . Carbon::parse($this->traitment->programmed_start_at)->format("Ymd_Hi") . ".pdf";
+            $filepath = config("app.invoice_folder") . DIRECTORY_SEPARATOR . Str::slug($this->patient->name);
+            $filename = "Invoice_{$invoice->number}_" . $this->date->format("Ym") . ".pdf";
             $file = $filepath . DIRECTORY_SEPARATOR . $filename;
 
             $invoice->update(["filename" => $filename]);
-            $invoice->traitment()->associate($this->traitment)->save();
 
             Storage::put($file, $output);
 
-            $destinataires = array_merge($this->traitment->patient->hasEmail() ? [$this->traitment->patient] : [], [$this->traitment->therapist]);
+            $destinataires = array_merge($this->patient->hasEmail() && $this->send_patient ? [$this->patient] : [], [$this->therapist]);
 
             Notification::send($destinataires, new SendInvoiceNotification($invoice));
 

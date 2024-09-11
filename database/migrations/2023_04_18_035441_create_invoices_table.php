@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('number')->unique();
             $table->uuid('traitment_id');
 
-            $table->dateTime('paid_at');
+            $table->dateTime('paid_at')->nullable();
             $table->string("filename")->nullable();
 
             $table->string('therapist_street');
@@ -24,10 +24,10 @@ return new class extends Migration
             $table->string('therapist_postcode');
             $table->string('therapist_city');
 
-            $table->string('patient_street');
+            $table->string('patient_street')->nullable();
             $table->string('patient_context')->nullable();
-            $table->string('patient_postcode');
-            $table->string('patient_city');
+            $table->string('patient_postcode')->nullable();
+            $table->string('patient_city')->nullable();
 
             $table->timestamps();
 

@@ -8,6 +8,12 @@ use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Resources\Pages\EditRecord;
 use App\Filament\Resources\PatientResource;
+use App\Jobs\GenerateInvoiceJob;
+use App\Models\Therapist;
+use App\Models\User;
+use Carbon\Carbon;
+use Filament\Actions\Action;
+use Filament\Forms\Components\DatePicker;
 
 class EditPatient extends EditRecord
 {
@@ -17,6 +23,14 @@ class EditPatient extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
+            Action::make('action')
+                ->label("Générer une facture")
+                ->action(function (User $record, array $data) {
+                    GenerateInvoiceJob::dispatch(Therapist::first(), $record, Carbon::parse($data['date']))->onQueue("invoice");
+                })
+                ->form([
+                    DatePicker::make('date'),
+                ])
         ];
     }
 
@@ -36,7 +50,7 @@ class EditPatient extends EditRecord
             } else {
                 $addresses = collect(session("addresses", []));
                 if (count($addresses) > 0 && $data["address"] !== null) {
-                    $attributes = $addresses->firstOrFail(fn ($value, $index) => intval($index) === intval($data["address"]));
+                    $attributes = $addresses->firstOrFail(fn($value, $index) => intval($index) === intval($data["address"]));
 
                     $address = Address::create(array_merge($attributes, [
                         "longitude" => Arr::get($attributes, "x"),
@@ -50,7 +64,6 @@ class EditPatient extends EditRecord
 
             $record->update($data);
         } catch (\Exception $e) {
-            dd($e);
             logger()->error($e->getMessage());
         }
 
