@@ -37,21 +37,25 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#52b8e3" />
-
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}" />
+
+    @if (isset($image)) <link rel="preload" type="image/png" href='{{ asset("storage/$image") }}' sizes as="image"/>
+    @else <link rel="preload" type="image/png" href="{{ asset('images/DSC_0593.jpg') }}" as="image"/> @endif
+    
+    @stack('images')
+    
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Glass+Antiqua&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Glass+Antiqua&display=swap" rel="stylesheet"/>
 
     <meta name="author" content="Amélie Bonzi" />
     <meta name="description" content="{{ $description }}">
 
     <!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
-    <meta property="og:site_name" content="{{ $title }}" /> <!-- website name -->
-    <meta property="og:locale" content="fr_FR"> <!-- website locale -->
-    <meta property="og:title" content="{{ $title }}" /> <!-- title shown in the actual shared post -->
+    <meta property="og:site_name" content="{{ $title }}" /> 
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:title" content="{{ $title }}" />
     <meta property="og:description" content="{{ $description }}">
     <meta property="og:image" content="{{ asset('favicon.png') }}">
     <meta property="og:image:width" content="2000">

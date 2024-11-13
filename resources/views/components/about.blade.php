@@ -45,11 +45,11 @@
                        class="font-bold text-primary-900 hover:underline mt-8">Amelie Bonzi</a>, thérapeute diplômée en
                     somatopathie de l'école <a href="https://www.somatopathie.com/"
                        class="font-bold text-primary-900 hover:underline mt-8" target="_blank">Pierre Camille Vernet</a>
-                    en Métropole.
+                    en Métropole
                 </p>
                 <p class="mt-0">Passionnée par la découverte de nouvelles cultures et de techniques thérapeutiques
                     innovantes à travers le monde, j'ai exercé dans le sud de la France et sur l'île de La Réunion avant
-                    de poursuivre mon travail sur l'île de Tahiti.</p>
+                    de poursuivre mon travail sur l'île de Tahiti</p>
                 <p class="mt-0">
                     Je m'engage à rétablir l'harmonie entre votre corps et votre esprit, en utilisant une approche
                     somatopathique alliant tradition et innovation.
@@ -70,3 +70,7 @@
         </div>
     </div>
 </div>
+
+@push('images')
+<link rel="preload" type="image/png" href="{{ asset('images/amelie.jpg') }}" as="image"/>
+@endpush

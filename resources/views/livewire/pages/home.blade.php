@@ -128,13 +128,18 @@
             </x-button>
         </div>
 
-        @if ($link = env('GOOGLE_MAP_LINK'))
-            <div class="overflow-hidden py-8">
+        @if ($stringLinks = env('GOOGLE_MAP_LINK'))
+            @php
+                $links = Str::of($stringLinks)->explode(',');
+            @endphp
+            <div class="hidden xl:block overflow-hidden py-8">
                 <div class="relative h-80">
                     <div class="absolute inset-0 bg-primary-900/20 z-20 pointer-events-none"></div>
-                    <div class="absolute h-full w-full inset-0 z-10">
+                    <div class="absolute h-full w-full inset-0 z-10 flex">
+                        @foreach($links as $link)
                         <iframe src="{{ $link }}" width="100%" height="100%" style="border:0;"
                                 allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -161,13 +166,13 @@
                             votre
                             bien-être physique et émotionnel.
                         </p>
-                        <p class="text-xl font-semibold leading-relaxed mt-4 mb-4 text-gray-500">Bienvenue dans
+                        <p class="hidden md:block text-xl font-semibold leading-relaxed mt-4 mb-4 text-gray-500">Bienvenue dans
                             l'univers de
                             la somatopathie !</p>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-stretch gap-8 py-8">
+                <div class="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-stretch gap-8 py-8">
                     @foreach (App\Models\Article::published()->orderBy('published_at')->limit(4)->get() as $article)
                         <livewire:components.article-preview :article="$article"></livewire:components.article-preview>
                     @endforeach

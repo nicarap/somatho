@@ -3,7 +3,7 @@
         <div class="w-full lg:w-6/12 px-4">
             <h2 class="text-5xl font-antiqua font-semibold text-primary-500">Avis des patients</h2>
             <p class="text-lg font-light leading-relaxed text-justify md:text-center mt-4 mb-4 text-gray-700">
-                Découvrez les témoignages inspirants à travers les retours authentiques des personnes qui m'ont fait
+                Découvres les témoignages inspirants à travers les retours authentiques des personnes qui m'ont fait
                 confiance pour un soin en somatopathie.
             </p>
         </div>

@@ -107,7 +107,7 @@
             </div>
             <div class="mt-2">
                 <p class="leading-relaxed mt-1 mb-4 text-gray-100">
-                    Ou contactez moi directement
+                    Ou contactes moi directement
                 </p>
                 <div class="mt-2 w-full flex gap-2 items-center">
                     <a title="BonziSomato" href="{{ config('app.social_medias.facebook') }}" target="_blank"

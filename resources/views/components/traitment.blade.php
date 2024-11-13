@@ -1,12 +1,14 @@
 <div class="container mx-auto pt-20">
     <div class="flex flex-wrap text-center justify-center">
-        <div class="w-full lg:w-6/12 px-4">
-            <h2 class="text-7xl font-semibold font-antiqua text-primary-900">Consultation</h2>
-            <p class="text-lg leading-relaxed text-justify md:text-center mt-4 mb-4 text-gray-800">
-                La séance peut se dérouler au Centre de bien être <a href="https://www.apiora.pf/" target="_blank"
-                   class="hover:underline text-primary-900">Api'Ora</a> à Papeete ou à
-                domicile.
-            </p>
+        <div class="w-full lg:w-7/12 px-4">
+            <h2 class="text-7xl font-semibold font-antiqua text-primary-900 mb-8">Consultation</h2>
+            <span class="text-lg leading-relaxed text-justify md:text-center mt-4 mb-4 text-gray-800">
+                La séance peut se dérouler au Centre de bien être <x-link url="https://www.apiora.pf/"><x-slot
+                            name="label">Api'Ora</x-slot></x-link> à Papeete ou
+                à <x-link url="https://www.facebook.com/tahiti.natural.care/?_rdr/"><x-slot name="label">Tahiti Natural
+                        Care</x-slot></x-link>
+                au centre commercial Tamanu à Puna'auia.
+            </span>
         </div>
     </div>
     <div class="flex flex-wrap mt-12 justify-center">
@@ -42,8 +44,9 @@
                 Tarifs
             </h6>
             <div class="text-gray-800">
-                <div class="font-semibold">Adultes : 10,000 Fr</div>
-                <div class="font-semibold">Nourrissons : 7,000 FR</div>
+                @php($formatter = new \NumberFormatter('fr_FR', \NumberFormatter::CURRENCY))
+                <div class="font-semibold">Adultes : {{ $formatter->formatCurrency(env('ADULT_PRICE', 10000), 'XPF') }}</div>
+                <div class="font-semibold">Nourrissons : {{ $formatter->formatCurrency(env('CHILD_PRICE', 7000), 'XPF') }}</div>
 
                 <p class="leading-relaxed mt-4 mb-4 text-gray-800">
                     Règlements par chèque ou espèces
@@ -65,7 +68,7 @@
             <p class="leading-relaxed mt-4 mb-4 text-gray-800 text-justify md:text-center">
                 La séance n'est pas prise en charge par la CPS.
                 Néanmoins de plus en plus de mutuelles prennent en charge la totalité ou une partie de la consultation.
-                Renseignez-vous auprès de votre mutuelle.
+                Renseignes-toi auprès de ta mutuelle.
             </p>
         </div>
     </div>

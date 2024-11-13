@@ -10,7 +10,7 @@
             <li class="flex items-center">
                 <a class="hover:text-gray-200 {{ Route::currentRouteName() === 'somatopathy' ? 'text-gray-200' : 'text-primary-500' }} duration-100 transition-all px-3 py-4 lg:py-2 flex items-center text-md uppercase font-bold"
                    href="{{ route('somatopathy') }}">
-                    <span class="inline-block ml-2">Somatopathie</span>
+                    <span class="inline-block ml-2">Somatopathie & Méthode Poyet</span>
                 </a>
             </li>
             <li class="flex items-center">

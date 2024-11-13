@@ -18,25 +18,21 @@
                 <p class="mt-0">
                     La somatopathie, souvent méconnue, offre une approche unique pour comprendre et harmoniser les liens
                     entre nos émotions,
-                    notre corps et notre bien-être global. Que vous soyez novice en la matière ou que vous ayez déjà
-                    entamé
-                    ce voyage fascinant,
-                    notre site est conçu pour vous guider à chaque étape.
+                    notre corps et notre bien-être global. Que tu sois novice en la matière ou que tu ais déjà
+                    consulté(e),
+                    ce site est conçu pour te guider à chaque étape.
                 </p>
                 <p class="mt-4">
-                    Imaginez un moyen de renforcer la connexion entre votre corps et votre esprit,
-                    de libérer des tensions accumulées, et d'atteindre un équilibre profond et durable.
-                    La somatopathie offre précisément cela, en utilisant des techniques qui intègrent
-                    le mouvement, la respiration, et la conscience corporelle.
+                    Imagine un moyen de renforcer la connexion entre ton corps et ton esprit,
+                    de libérer des tensions cumulées, les traumatismes et d'atteindre un équilibre profond et durable.
+                    La somatopathie offre précisément cela, en utilisant des techniques manuelle douce qui intègrent 
+                    mouvements, rééquilibrage, psychologie et conscience corporelle.
                 </p>
                 <p class="mt-4">
-                    Prêt à plonger dans l'univers captivant de la somatopathie ?
-                    Cliquez sur le bouton ci-dessous pour en apprendre davantage et commencez votre voyage vers une vie
-                    plus
-                    épanouissante, équilibrée et consciente.
+                    Prêt(e) à plonger dans l'univers captivant de la somatopathie ?
+                    Je t'invite à cliquer sur le bouton ci-dessous pour en apprendre davantage.
                 </p>
             </div>
-
             <div class="mt-8">
                 <x-button url="{{ route('somatopathy') }}">
                     <x-slot name="label">En savoir plus</x-slot>
@@ -50,3 +46,7 @@
         </div>
     </div>
 </div>
+
+@push('images')
+<link rel="preload" type="image/png" href="{{ asset('images/somato.jpg') }}" as="image"/>
+@endpush

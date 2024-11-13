@@ -15,21 +15,21 @@
                 <livewire:components.tags :tags="$article->tags"></livewire:components.tags>
             </div>
 
-            <div class="text-sm mt-4 bg-primary-500 p-4 w-7/12">
+            <div class="text-sm mt-4 w-7/12">
 
-                <div class="flex w-full gap-4 items-stretch">
-                    <img class="w-32" src="{{ asset('images/amelie.jpg') }}" alt="Photo de Amelie Bonzi" />
-                    <div class="text-gray-100  text-justify flex flex-col justify-between">
-                        <p class="text-xl italic">A propos de l'auteur : </p>
-                        <p>
+                <div class="flex w-full items-center">
+                    <img class="w-32 rounded-md" src="{{ asset('images/amelie.jpg') }}" alt="Photo de Amelie Bonzi" />
+                    <div class="text-gray-100 bg-primary-500 text-justify flex flex-col justify-between p-4 rounded-r-md">
+                        <p class="pb-2 text-xl italic">A propos de l'auteur : </p>
+                        <p class="pb-2">
                             Ensemble, cultivons l'harmonie du corps et de l'esprit.
                             Forte de ma passion et de mon expertise en somatopathie, je vous guide à travers mes
                             soins, vous offrant une perspective unique sur le bien-être
                         </p>
                         <p>
                             Êtes-vous prêt à embarquer dans ce voyage transformateur à mes côtés ? Je suis
-                            <span class="font-bold hover:underline text-primary-900">Amélie Bonzi</span>,
-                            somatothérapeute engagée à rétablir votre équilibre physique et mental.
+                            <span class="font-bold hover:underline text-md text-gray-800">Amélie Bonzi</span>,
+                            somatopathe investie à rétablir votre équilibre physique et émotionnel.
                         </p>
                     </div>
                 </div>

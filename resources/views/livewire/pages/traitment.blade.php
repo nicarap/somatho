@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="bg-gray-100">
-            <div class="container mx-auto px-4 pb-32 pt-20">
+            <div class="container mx-auto px-4 pb-20 pt-20">
                 <h2 class="z-20 text-7xl font-antiqua font-semibold text-center relative text-primary-900 pb-32">
                     Déroulement d'une séance
                 </h2>
@@ -52,7 +52,7 @@
                         <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-700">
                             À votre arrivée, vous serez chaleureusement accueilli(e) pour discuter de vos préoccupations
                             et
-                            objectifs.
+                            objectifs
                         </p>
                     </div>
                     <div class="">
@@ -60,11 +60,12 @@
                              class="h-12 w-12 bg-primary-500 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
                             <span class="text-white font-serif text-3xl">2</span>
                         </div>
-                        <h3 class="font-semibold mb-4 text-center text-xl">Exploration des Émotions et du Vécu</h3>
+                        <h3 class="font-semibold mb-4 text-center text-xl">Techniques Douces et Personnalisées</h3>
 
                         <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-700">
-                            Nous explorons ensemble vos expériences émotionnelles passées et actuelles pour identifier
-                            d'éventuelles tensions.
+                            La séance inclut des gestes doux adaptés à vos besoins basés sur la Méthode Poyet pour
+                            libérer
+                            les tensions articulaires
                         </p>
                     </div>
                     <div class="">
@@ -72,12 +73,10 @@
                              class="h-12 w-12 bg-primary-500 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
                             <span class="text-white font-serif text-3xl">3</span>
                         </div>
-                        <h3 class="font-semibold mb-4 text-center text-xl">Techniques Douces et Personnalisées</h3>
+                        <h3 class="font-semibold mb-4 text-center text-xl">Exploration des Émotions et du Vécu si nécessaire</h3>
 
                         <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-700">
-                            La séance inclut des gestes doux adaptés à vos besoins basés sur la Méthode Poyet pour
-                            libérer
-                            les tensions articulaires.
+                            Nous explorons ensemble vos traumatismes passés et actuelles pour corriger les blocages physiques et émotionnels
                         </p>
                     </div>
                     <div class="">
@@ -85,15 +84,15 @@
                              class="h-12 w-12 bg-primary-500 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
                             <span class="text-white font-serif text-3xl">4</span>
                         </div>
-                        <h3 class="font-semibold mb-4 text-center text-xl">Dialogue et Feedback</h3>
+                        <h3 class="font-semibold mb-4 text-center text-xl">Verbalisation</h3>
 
                         <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-700">
-                            Au cours de la séance, vous serez encouragé(e) à partager vos sensations et votre ressenti.
+                            Au cours de la séance, vous pourrez mettre des mots sur les maux
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="bg-primary-500 py-32">
+            <div class="bg-primary-500 py-24">
                 <div class="container mx-auto px-4 ">
                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-16 justify-center relative z-20">
                         <div class="">
@@ -101,13 +100,13 @@
                                  class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
                                 <span class="text-white font-serif text-3xl">5</span>
                             </div>
-                            <h3 class="text-gray-200 font-semibold mb-4 text-center text-xl">
+                            <h3 class="text-gray-800 font-semibold mb-4 text-center text-xl">
                                 Intégration des Dimensions Physiques et Émotionnelles
                             </h3>
 
-                            <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-200">
+                            <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-800">
                                 La Somatopathie considère le corps et l'esprit comme indissociables.
-                                Je travaillerai à intégrer ces deux dimensions pour favoriser un équilibre global.
+                                Je travaillerai à intégrer ces deux dimensions pour favoriser un équilibre global
                             </p>
                         </div>
                         <div class="">
@@ -115,14 +114,12 @@
                                  class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
                                 <span class="text-white font-serif text-3xl">6</span>
                             </div>
-                            <h3 class="text-gray-200 font-semibold mb-4 text-center text-xl">
+                            <h3 class="text-gray-800 font-semibold mb-4 text-center text-xl">
                                 Conseils et Pratiques d'Auto-Soin
                             </h3>
 
-                            <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-200">
-                                À la fin de la consultation, des conseils personnalisés et des pratiques d'auto-soin
-                                peuvent
-                                vous être proposés.
+                            <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-800">
+                                À la fin de la consultation, je peux vous proposer des conseils personnalisés et des pratiques d'auto-soin
                             </p>
                         </div>
                         <div class="">
@@ -130,13 +127,13 @@
                                  class="h-12 w-12 bg-primary-900 p-8 flex items-center justify-center mx-auto mb-8 rounded-full shadow">
                                 <span class="text-white font-serif text-3xl">7</span>
                             </div>
-                            <h3 class="text-gray-200 font-semibold mb-4 text-center text-xl">Suivi et Plan Personnalisé
+                            <h3 class="text-gray-800 font-semibold mb-4 text-center text-xl">Suivi et Plan Personnalisé
                             </h3>
 
-                            <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-200">
+                            <p class="text-center font-light leading-relaxed mt-0 mb-4 text-gray-800">
                                 En fonction de vos besoins, un plan de suivi peut être établi pour optimiser les
                                 résultats
-                                de votre démarche vers le bien-être.
+                                de votre démarche vers le bien-être
                             </p>
                         </div>
                     </div>

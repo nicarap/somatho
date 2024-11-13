@@ -42,15 +42,15 @@
                     <div class="grid grid-cols-2">
                         <ul class="list-unstyled">
                             <li class="py-2">
-                                <a class="@if (Route::currentRouteName() === 'home') border-l-2 pl-2 border-secondary-500 text-primary-500 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
+                                <a class="@if (Route::currentRouteName() === 'home') border-l-4 pl-2 border-primary-500 text-primary-500 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
                                    href="{{ route('home') }}">Accueil</a>
                             </li>
                             <li class="py-2">
-                                <a class="@if (Route::currentRouteName() === 'somatopathy') border-l-2 pl-2 border-secondary-500 text-primary-500 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
-                                   href="{{ route('somatopathy') }}">La somatopathie</a>
+                                <a class="@if (Route::currentRouteName() === 'somatopathy') border-l-4 pl-2 border-primary-500 text-primary-500 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
+                                   href="{{ route('somatopathy') }}">Somatopathie & Méthode Poyet</a>
                             </li>
                             <li class="py-2">
-                                <a class="@if (Route::currentRouteName() === 'traitment') border-l-2 pl-2 border-secondary-500 text-primary-500 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
+                                <a class="@if (Route::currentRouteName() === 'traitment') border-l-4 pl-2 border-primary-500 text-primary-500 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
                                    href="{{ route('traitment') }}">Consultation</a>
                             </li>
                         </ul>
@@ -58,6 +58,10 @@
                             <li class="py-2">
                                 <a class="hover:text-primary-500 text-gray-200 font-semibold block pb-2 text-sm"
                                    target="_blank" href="https://www.apiora.pf/">Centre Api'Ora</a>
+                            </li>
+                            <li class="py-2">
+                                <a class="hover:text-primary-500 text-gray-200 font-semibold block pb-2 text-sm"
+                                   target="_blank" href="https://www.facebook.com/tahiti.natural.care/?_rdr/">Tahiti Natural Care</a>
                             </li>
                         </ul>
                     </div>

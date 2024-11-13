@@ -17,11 +17,11 @@
         <div class="pb-20 relative bg-primary-200">
             <div class="container mx-auto text-center px-4 pt-20 max-w-7xl">
                 <p class="text-3xl font-light font-antiqua leading-relaxed mt-4 mb-4 text-gray-700">
-                    La Somatopathie explore les liens profonds entre les émotions, les pensées et la santé physique.
+                    La Somatopathie explore et remet en lien le corps physique et les émotions.
                 </p>
                 <p class="text-3xl font-light font-antiqua leading-relaxed mt-4 mb-4 text-gray-700">
-                    C'est une méthode qui considère l'individu dans sa totalité, cherchant à comprendre
-                    comment les tensions émotionnelles peuvent se manifester dans le corps.
+                    Cherchant à rétablir l'harmonie entre les blocages physiques et émotionnels,
+                    cette méthode considère l'individu dans sa globalité.
                 </p>
             </div>
             <div class="custom-shape-divider-top-1703755415"
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="bg-gray-100pt-24">
-            <div class="container mx-auto px-4">
+            <div class="container mx-auto px-4 py-4">
                 <div class="flex flex-wrap items-center">
                     <div
                          class="w-full xl:w-6/12 2xl:w-5/12  px-4 mr-auto ml-auto gs_reveal gs_reveal_fromLeft  relative z-10 ">
@@ -102,10 +102,10 @@
                                 <h4 class="text-xl font-bold text-gray-800 text-center">
                                     Le Mouvement Respiration Primaire (MRP) !
                                 </h4>
-                                <p class="text-md font-light mt-2 text-gray-800">
-                                    Cette approche précise vise à rétablir l'alignement structurel en travaillant en
-                                    harmonie avec le mouvement respiratoire naturel du corps, indispensable au bon
-                                    fonctionnement de l'organisme.
+                                <p class="text-md font-light mt-2 text-gray-800 text-justify">
+                                    Cette approche précise vise à rétablir le mouvement respiratoire naturel du corps,
+                                    indispensable au bon
+                                    fonctionnement de l'ensemble de l'organisme.
                                 </p>
                             </blockquote>
                         </div>
@@ -123,12 +123,15 @@
                                 Les domaines d'applications
                             </h3>
                         </div>
-                        <p class="mt-4 text-lg leading-relaxed text-gray-600">
+                        <p class="mt-4 text-lg leading-relaxed text-gray-600 text-justify">
                             La <span class="font-bold underline text-primary-900">Somatopathie</span> permet de
                             couvrir un large panel de problématiques corporelles,
-                            biologiques ou encore comportementales.
+                            biologiques ou encore comportementales. Par exemple :
                         </p>
                         <ul class="pl-8 mt-4 list-disc marker:w-2 marker:text-primary-900">
+                            <li class="py-2 text-lg leading-relaxed text-gray-600">
+                                Blocages musculaires, articulaires, viscéraux
+                            </li>
                             <li class="py-2 text-lg leading-relaxed text-gray-600">
                                 Gestion du stress et de l'anxiété
                             </li>
@@ -136,7 +139,7 @@
                                 Traitement des troubles émotionnels
                             </li>
                             <li class="py-2 text-lg leading-relaxed text-gray-600">
-                                Douleur chronique
+                                Douleurs chroniques
                             </li>
                             <li class="py-2 text-lg leading-relaxed text-gray-600">
                                 Traumatismes psychosomatiques
@@ -144,37 +147,46 @@
                             <li class="py-2 text-lg leading-relaxed text-gray-600">
                                 Développement personnel
                             </li>
-                        </ul>
-                    </div>
-
-                    <div class="w-full px-4 mr-auto ml-auto gs_reveal">
-                        <div class="fill-primary-900 gap-4 inline-flex items-center justify-center ">
-                            <div class="w- h- p-4 rounded-full bg-primary-500 fill-primary-900 ">
-                                <div class="w-full"></div>
-                            </div>
-                            <h3
-                                class="text-xl sm:text-3xl sm:whitespace-nowrap font-semibold transition-all duration-300">
-                                Quand consulter
-                            </h3>
-                        </div>
-                        <p class="mt-4 text-lg leading-relaxed text-gray-600">
-                            Il est possible de consulter à <span class="font-bold underline text-primary-900">nimporte
-                                quelle
-                                moment de notre vie</span> et quelque soit notre age.
-                            Que ce soit de manière préventive ou pour traiter un problème en particuler, comme par
-                            exemple :
-                        </p>
-                        <ul class="pl-8 mt-4 list-disc marker:w-2 marker:text-primary-500">
                             <li class="py-2 text-lg leading-relaxed text-gray-600">
                                 Symptômes physiques inexpliqués
                             </li>
-                            <li class="py-2 text-lg leading-relaxed text-gray-600">
-                                Émotions récurrentes non résolues
-                            </li>
-                            <li class="py-2 text-lg leading-relaxed text-gray-600">
-                                Historique de traumatismes
-                            </li>
                         </ul>
+                    </div>
+
+                    <div class="w-full px-4 mr-auto ml-auto gs_reveal flex flex-col justify-between">
+                        <div>
+                            <div class="fill-primary-900 gap-4 inline-flex items-center justify-center ">
+                                <div class="w- h- p-4 rounded-full bg-primary-500 fill-primary-900 ">
+                                    <div class="w-full"></div>
+                                </div>
+                                <h3
+                                    class="text-xl sm:text-3xl sm:whitespace-nowrap font-semibold transition-all duration-300">
+                                    Quand consulter
+                                </h3>
+                            </div>
+                            <p class="mt-4 text-lg leading-relaxed text-gray-600 text-justify">
+                                Il est possible de consulter à <span
+                                      class="font-bold underline text-primary-900">nimporte
+                                    quelle
+                                    moment de notre vie</span> et quelque soit notre age.
+                            </p>
+                            <ul class="pl-8 mt-4 list-disc marker:w-2 marker:text-primary-500">
+                                <li class="py-2 text-lg leading-relaxed text-gray-600">
+                                    Dès l'apparition des symptômes
+                                </li>
+                                <li class="py-2 text-lg leading-relaxed text-gray-600">
+                                    Pour traiter un problème en particuler
+                                </li>
+                                <li class="py-2 text-lg leading-relaxed text-gray-600">
+                                    De manière préventive
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="text-justify text-sm">*: Il est recommandé de consulter un médecin pour
+                            discuter de
+                            tout problème de santé. La somatopathie peut être complémentaire,
+                            mais ne
+                            remplace pas certains soins médicaux.</p>
                     </div>
 
                     <div class="w-full px-4 mr-auto ml-auto gs_reveal">
@@ -187,35 +199,31 @@
                                 Pour qui ?
                             </h3>
                         </div>
-                        <p class="mt-4 text-lg leading-relaxed text-gray-600">
-                            Quelque soit la difficulté que vous rencontrez, <span
+                        <p class="mt-4 text-lg leading-relaxed text-gray-600 text-justify">
+                            Quelque soit la difficultée que vous rencontrez, <span
                                   class="font-bold underline text-primary-900">la
                                 somatopathie s'adresse à toute
                                 personne</span>
                             cherchant une approche mêlant la santé mentale et la santé physique.
                         </p>
-                        <p class="mt-4 text-lg leading-relaxed text-gray-600">
-                            La somatopathie est accessible aux nouveaux nés, aux personnes âgées, aux femmes enceintes
-                            aux grands sportifs ou tout autres personnes...
+                        <p class="mt-4 text-lg leading-relaxed text-gray-600 text-justify">
+                            Elle peut également convenir à ceux qui cherchent simplement à retrouver leur mobilité
+                            physique
+                            et à libérer les blocages corporels, sans aborder les aspects psychosomatiques.
                         </p>
-                        <p class="mt-4 text-lg leading-relaxed text-gray-600">
-                            La <span class="font-bold underline text-primary-900">somatopathie</span> convient
-                            particulièrement à ceux cherchant des solutions complémentaires aux approches
-                            traditionnelles.
+                        <p class="mt-4 text-lg leading-relaxed text-gray-600 text-justify">
+                            Accessible aux nouveau-nés, aux personnes âgées, aux femmes enceintes, aux grands sportifs,
+                            ainsi qu'à toute autre personne, la
+                            <span class="font-bold underline text-primary-900">somatopathie</span> s'adresse à ceux qui
+                            recherchent des
+                            solutions complémentaires aux approches traditionnelles.
                         </p>
                     </div>
-                </div>
-
-                <div class="py-6 mx-auto">
-                    <small>*: Il est toujours recommandé de consulter un professionnel de la santé qualifié pour
-                        discuter de
-                        toute condition médicale ou problème de santé. La somatopathie peut être complémentaire, mais ne
-                        remplace pas les soins médicaux traditionnels.</small>
                 </div>
             </div>
 
 
-            <div class="relative bg-primary-500 overflow-hidden">
+            <div class="relative bg-primary-500 overflow-hidden mt-8">
                 <div class="relative z-30 max-w-7xl mx-auto">
                     <div class="pb-8 bg-transparant  sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
                         <div class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
@@ -245,8 +253,6 @@
                 <div
                      class="absolute z-20 inset-0 lg:inset-y-0 lg:right-0 bg-primary-500/50 lg:bg-gradient-to-r from-50% 2xl:from-55% from-primary-500 to-transparent">
                 </div>
-                {{-- <div class="absolute z-20 inset-0 lg:inset-y-0 lg:right-0 bg-red-500 w-2/3 -translate-x-8 -skew-x-6">
-                </div> --}}
             </div>
     </main>
 </div>
