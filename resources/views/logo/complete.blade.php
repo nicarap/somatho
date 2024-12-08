@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <svg viewBox="26.5902 67.3374 323.3297 103.0132" xmlns="http://www.w3.org/2000/svg">
     <text style="font-family: Pacifico; font-size: 36px; white-space: pre;" x="220.571" y="267.125"
           transform="matrix(0.9523079991340638, 0, 0, 1, -106.66432189941406, -164.96743774414062)">Maita'i <tspan

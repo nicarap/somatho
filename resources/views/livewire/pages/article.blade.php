@@ -1,6 +1,7 @@
 <div>
     <x-slot:main-title>
-        <h1 class="text-3xl px-4 md:text-5xl font-serif font-light leading-relaxed mt-4 mb-4 text-primary-500">
+        <h1 
+        class="text-5xl px-4 md:text-7xl text-center font-antiqua font-light leading-relaxed mt-4 mb-4 text-primary-500">
             {{ $article->title }}
         </h1>
     </x-slot:main-title>

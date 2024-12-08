@@ -107,7 +107,7 @@
     </section>
 
     @if ($hasReviews)
-        <section class="pt-4 pb-48">
+        <section class="pt-4 md:pb-24">
             <livewire:reviews></livewire:reviews>
         </section>
     @endif

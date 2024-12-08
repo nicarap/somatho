@@ -8,87 +8,96 @@
             </p>
         </div>
     </div>
-    <div class="flex gap-6 text-center justify-center lg:gap-12">
-        @foreach ($reviews as $review)
-            <div class="mx-auto max-w-xl flex items-center justify-evenly">
-                <div class="p-8 translate-x-10 bg-primary-900 max-w-xs text-gray-200 rounded-xl z-40">
+    <div class="flex gap-1 items-center justify-center">
 
-                    <h5 class="mb-4 text-xl font-semibold">
-                        {{ $review->name }}
-                    </h5>
+        <button {{ $hasPrev ? '' : 'disabled' }} wire:click="prev" title="Précédent" aria-label="Précédent"
+                class="hidden md:block w-8 h-8 {{ $hasPrev ? 'text-primary-900 hover:bg-primary-200 rounded-full hover:shadow-sm' : 'text-primary-200' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>
+
+        </button>
+        @php
+            $grid = $reviews->count() === 1 ? 'grid-cols-1' : ($reviews->count() === 2 ? 'grid-cols-2' : 'grid-cols-3');
+        @endphp
+        <div class="grid md:{{ $grid }} gap-6 text-center justify-center lg:gap-12">
+            @foreach ($reviews as $review)
+                <div class="mx-auto max-w-xl flex items-center justify-evenly w-full">
+                    <div class="p-8 h-full bg-primary-900 max-w-xs text-gray-200 rounded-xl z-40 w-full">
+                        <div class="flex h-full flex-col justify-between">
+
+                            <h5 class="mb-4 text-xl font-semibold">
+                                {{ $review->name }}
+                            </h5>
 
 
-                    <p>
-                        {{ $review->content }}
-                    </p>
+                            <p>
+                                <span class="fill-primary-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-7 w-7 pr-2"
+                                         viewBox="0 0 24 24">
+                                        <path
+                                              d="M13 14.725c0-5.141 3.892-10.519 10-11.725l.984 2.126c-2.215.835-4.163 3.742-4.38 5.746 2.491.392 4.396 2.547 4.396 5.149 0 3.182-2.584 4.979-5.199 4.979-3.015 0-5.801-2.305-5.801-6.275zm-13 0c0-5.141 3.892-10.519 10-11.725l.984 2.126c-2.215.835-4.163 3.742-4.38 5.746 2.491.392 4.396 2.547 4.396 5.149 0 3.182-2.584 4.979-5.199 4.979-3.015 0-5.801-2.305-5.801-6.275z" />
+                                    </svg>
+                                </span>
+                                {{ $review->content }}
+                            </p>
 
-                    <div class="flex gap-1 pt-4 justify-center fill-yellow-400">
-                        @for ($i = 1; $i <= $review->value; $i++)
-                            <x-icones.fullStar></x-icones.fullStar>
-                        @endfor
+                            <div class="flex gap-1 pt-4 justify-center fill-yellow-400 ">
+                                @for ($i = 1; $i <= $review->value; $i++)
+                                    @if ($i < 5)
+                                        <x-icones.fullStar></x-icones.fullStar>
+                                    @endif
+                                @endfor
 
-                        @if (strpos($review->value, '.'))
-                            <x-icones.halfStar></x-icones.halfStar>
-                            @php $i++; @endphp
-                        @endif
+                                @if (strpos($review->value, '.'))
+                                    <x-icones.halfStar></x-icones.halfStar>
+                                    @php $i++; @endphp
+                                @endif
 
-                        @for ($j = $i; $j <= 5; $j++)
-                            <x-icones.emptyStar>
-                            </x-icones.emptyStar>
-                        @endfor
+                                @for ($j = $i; $j <= 5; $j++)
+                                    <x-icones.emptyStar>
+                                    </x-icones.emptyStar>
+                                @endfor
+                            </div>
+                        </div>
                     </div>
-
                 </div>
-                {{-- <div class="w-[16rem] mx-auto relative">
-                    <div class="absolute inset-0 p-6">
-                        <img src="{{ asset('images/amelie.jpg') }}" class="min-h-full min-w-full z-10" />
-                    </div>
-                    <div class="absolute inset-0 m-6 bg-primary-500 opacity-20">
+            @endforeach
+        </div>
+        <button {{ $hasNext ? '' : 'disabled' }} wire:click="next" title="Suivant" aria-label="Suivant"
+                class="hidden md:block w-8 h-8 {{ $hasNext ? 'text-primary-900 hover:bg-primary-200 rounded-full hover:shadow-sm' : 'text-primary-200' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                 stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+        </button>
+    </div>
+    <div class="w-full flex gap-4 justify-center md:hidden py-4">
+        <button {{ $hasPrev ? '' : 'disabled' }} wire:click="prev" title="Précédent" aria-label="Précédent"
+                class=" w-8 h-8 {{ $hasPrev ? 'text-primary-900 hover:bg-primary-200 rounded-full hover:shadow-sm' : 'text-primary-200' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>
+        </button>
 
-                    </div>
-                    <img sizes="(max-width: 479px) 100vw, 400px" class="relative z-20" loading="lazy"
-                         src="{{ asset('images/device.png') }}" />
-                </div> --}}
-            </div>
-
-            {{-- <div
-                 class="@if ($loop->even) -translate-y-6 @endif w-full max-w-sm md:mb-0 border p-4 rounded-md shadow-md gs_reveal">
-                <div class="mb-6 flex justify-center">
-                    <div
-                         class="bg-gradient-to-b from-primary-500 text-white to-primary-900 flex justify-center items-center text-5xl w-32 h-32 rounded-full shadow-lg dark:shadow-black/30">
-                        {{ strtoupper(substr($review->name, 0, 1)) }}{{ strtoupper(substr($review->name, strrpos($review->name, ' ') + 1, 1)) }}
-                    </div>
-                </div>
-                <h5 class="mb-4 text-xl font-semibold">
-                    {{ $review->name }}
-                </h5>
-                <p class="mb-4">
-                    <span class="fill-primary-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-7 w-7 pr-2" viewBox="0 0 24 24">
-                            <path
-                                  d="M13 14.725c0-5.141 3.892-10.519 10-11.725l.984 2.126c-2.215.835-4.163 3.742-4.38 5.746 2.491.392 4.396 2.547 4.396 5.149 0 3.182-2.584 4.979-5.199 4.979-3.015 0-5.801-2.305-5.801-6.275zm-13 0c0-5.141 3.892-10.519 10-11.725l.984 2.126c-2.215.835-4.163 3.742-4.38 5.746 2.491.392 4.396 2.547 4.396 5.149 0 3.182-2.584 4.979-5.199 4.979-3.015 0-5.801-2.305-5.801-6.275z" />
-                        </svg>
-                    </span>
-                    {{ $review->content }}
-                </p>
-
-                <div class="flex gap-1 justify-center fill-yellow-400">
-                    @for ($i = 1; $i <= $review->value; $i++)
-                        <x-icones.fullStar></x-icones.fullStar>
-                    @endfor
-
-                    @if (strpos($review->value, '.'))
-                        <x-icones.halfStar></x-icones.halfStar>
-                        @php $i++; @endphp
-                    @endif
-
-                    @for ($j = $i; $j <= 5; $j++)
-                        <x-icones.emptyStar>
-                        </x-icones.emptyStar>
-                    @endfor
-                </div>
-            </div> --}}
-        @endforeach
-
+        <button {{ $hasNext ? '' : 'disabled' }} wire:click="next" title="Suivant" aria-label="Suivant"
+                class="w-8 h-8 {{ $hasNext ? 'text-primary-900 hover:bg-primary-200 rounded-full hover:shadow-sm' : 'text-primary-200' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                 stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+        </button>
+    </div>
+    <div class="flex flex-wrap justify-center text-center mb-8">
+        <div class="w-full lg:w-6/12 px-4">
+            <p class="text-lg font-light leading-relaxed text-justify md:text-center mt-4 mb-4 text-gray-700">
+                N'hésitez pas à venir me donner votre avis sur ma page
+                <x-link
+                        url="https://www.google.fr/maps/place/Maita'i+Somatopathie/@-17.5308437,-149.5309131,12.75z/data=!4m6!3m5!1s0x837b174e2674069:0xfe41cf6d871fbd54!8m2!3d-17.557143!4d-149.5554012!16s%2Fg%2F11st_y8vr2?entry=ttu&g_ep=EgoyMDI0MTIwNC4wIKXMDSoASAFQAw%3D%3D"><x-slot
+                            name="label">Google !</x-slot></x-link>
+            </p>
+        </div>
     </div>
 </div>
