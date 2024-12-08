@@ -18,6 +18,7 @@ class RolesPermissionsSeeder extends Seeder
             'service' => [],
             'administrator' => [
                 'view any users',
+                'create traitment'
             ],
             'therapist' => [
                 'create traitment'

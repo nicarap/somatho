@@ -94,9 +94,9 @@
         <div class="w-full lg:w-6/12 px-4">
             <p class="text-lg font-light leading-relaxed text-justify md:text-center mt-4 mb-4 text-gray-700">
                 N'hésitez pas à venir me donner votre avis sur ma page
-                <x-link
-                        url="https://www.google.fr/maps/place/Maita'i+Somatopathie/@-17.5308437,-149.5309131,12.75z/data=!4m6!3m5!1s0x837b174e2674069:0xfe41cf6d871fbd54!8m2!3d-17.557143!4d-149.5554012!16s%2Fg%2F11st_y8vr2?entry=ttu&g_ep=EgoyMDI0MTIwNC4wIKXMDSoASAFQAw%3D%3D"><x-slot
-                            name="label">Google !</x-slot></x-link>
+                @if ($reviewLinks = env('GOOGLE_REVIEW_LINK'))
+                    <x-link :url="$reviewLinks"><x-slot name="label">Google !</x-slot></x-link>
+                @endif
             </p>
         </div>
     </div>

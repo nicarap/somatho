@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  # Service Laravel (backend)
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: maitai-somato-app
+    volumes:
+      - .:/var/www
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - mailpit
+      - frontend
+    networks:
+      - app-network
+
+  # Service de la base de données (PostgreSQL)
+  db:
+    image: postgres:13
+    container_name: postgres-db
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  # Service Frontend (Vite / Vue 3)
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    container_name: maitai-somato-frontend
+    ports:
+      - "3000:3000"  # On mappe le port 3000 de Vite à l'hôte
+    volumes:
+      - ./resources:/var/www/resources
+    networks:
+      - app-network
+    working_dir: /var/www
+    command: npm run dev --host 0.0.0.0
+
+  # Service Mailpit pour le développement
+  mailpit:
+    image: axllent/mailpit
+    container_name: maitai-somato-mailpit
+    env_file:
+      - .env
+    ports:
+      - "1025:1025"   # Port SMTP
+      - "8025:8025"   # Interface web de Mailpit
+    networks:
+      - app-network
+
+
+# Service Nginx
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.nginx
+    container_name: maitai-somato-nginx
+    volumes:
+      - .:/var/www
+    ports:
+      - "80:80"  # Mappe le port 8000 de l'hôte sur le port 80 du conteneur
+    depends_on:
+      - app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    driver: local

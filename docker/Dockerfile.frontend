@@ -1,0 +1,19 @@
+# Étape 1 : Construire les assets avec Node.js
+FROM node:18 AS vite-builder
+WORKDIR /var/www
+
+# Copier seulement les fichiers nécessaires pour les dépendances
+COPY ../package.json ../package-lock.json /var/www/
+
+# Installer les dépendances frontend
+RUN npm install
+
+# Copier le code source du frontend
+COPY ./resources /var/www/resources
+
+# Exposer le port 3000 pour Vite
+EXPOSE 3000
+
+# Démarrer le serveur de développement Vite
+CMD ["npm", "run", "dev"]
+
