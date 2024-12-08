@@ -16,4 +16,3 @@ EXPOSE 3000
 
 # Démarrer le serveur de développement Vite
 CMD ["npm", "run", "dev"]
-

@@ -24,7 +24,7 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 # Exposer le port pour PHP
-EXPOSE 9000
+EXPOSE 8000
 
-# Démarrer PHP-FPM
-CMD ["php-fpm"]
+# Commande pour démarrer Laravel
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

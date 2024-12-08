@@ -9,6 +9,8 @@ services:
     container_name: maitai-somato-app
     volumes:
       - .:/var/www
+    ports:
+      - "8000:8000"
     env_file:
       - .env
     depends_on:
@@ -61,20 +63,20 @@ services:
       - app-network
 
 
-# Service Nginx
-  nginx:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.nginx
-    container_name: maitai-somato-nginx
-    volumes:
-      - .:/var/www
-    ports:
-      - "80:80"  # Mappe le port 8000 de l'hôte sur le port 80 du conteneur
-    depends_on:
-      - app
-    networks:
-      - app-network
+# # Service Nginx
+#   nginx:
+#     build:
+#       context: .
+#       dockerfile: docker/Dockerfile.nginx
+#     container_name: maitai-somato-nginx
+#     volumes:
+#       - .:/var/www
+#     ports:
+#       - "80:80"  # Mappe le port 8000 de l'hôte sur le port 80 du conteneur
+#     depends_on:
+#       - app
+#     networks:
+#       - app-network
 
 networks:
   app-network:
