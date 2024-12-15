@@ -39,21 +39,18 @@
     <meta name="theme-color" content="#52b8e3" />
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}" />
 
-    @if (isset($image)) <link rel="preload" type="image/png" href='{{ asset("storage/$image") }}' sizes as="image"/>
-    @else <link rel="preload" type="image/png" href="{{ asset('images/DSC_0593.jpg') }}" as="image"/> @endif
-    
     @stack('images')
-    
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Glass+Antiqua&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Glass+Antiqua&display=swap" rel="stylesheet" />
 
     <meta name="author" content="Amélie Bonzi" />
     <meta name="description" content="{{ $description }}">
 
     <!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
-    <meta property="og:site_name" content="{{ $title }}" /> 
+    <meta property="og:site_name" content="{{ $title }}" />
     <meta property="og:locale" content="fr_FR">
     <meta property="og:title" content="{{ $title }}" />
     <meta property="og:description" content="{{ $description }}">
@@ -120,8 +117,8 @@
         </div>
     </nav>
     <header class="relative py-16 flex flex-col items-center justify-center" style="min-height: 90vh;" id="home">
-        <div class="absolute top-0 w-full h-full bg-cover bg-center bg-fixed -scale-x-100 "
-             style="background-image: url(@if (isset($image)) {{ asset('storage/' . $image) }} @else {{ asset('images/DSC_0593.jpg') }} @endif)">
+        <div class="absolute top-0 w-full h-full bg-cover bg-center bg-fixed -scale-x-100"
+             style="background-image: url(@if (isset($image)) {{ asset('storage/' . $image) }} @else {{ asset('images/soin_sur_table.webp') }} @endif)">
             <span id=" blackOverlay"
                   class="w-full h-full absolute opacity-50 bg-gradient-to-b backdrop-blur-sm to-primary-900 from-black"></span>
         </div>

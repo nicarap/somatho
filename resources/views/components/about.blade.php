@@ -18,8 +18,10 @@
 
         <div class="w-8/12 xl:w-4/12 2xl:w-3/12 mr-auto ml-auto mt-8 md:mt-0 gs_reveal gs_reveal_fromLeft">
             <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg md:rounded-lg bg-primary-400">
-                <img alt="Photo de Amelie Bonzi" src="{{ asset('images/amelie.jpg') }}"
-                     class="w-full align-middle md:rounded-lg" />
+                <img src="{{ asset('images/amelie-1200.webp') }}"
+                     srcset="{{ asset('images/amelie-400.webp') }} 400w, {{ asset('images/amelie-800.webp') }} 800w, {{ asset('images/amelie-1200.webp') }} 1200w"
+                     sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, (max-width: 1600px) 1200px"
+                     alt="Photo de Amelie Bonzi" class="w-full align-middle md:rounded-lg" />
             </div>
         </div>
 
@@ -70,7 +72,3 @@
         </div>
     </div>
 </div>
-
-@push('images')
-<link rel="preload" type="image/png" href="{{ asset('images/amelie.jpg') }}" as="image"/>
-@endpush

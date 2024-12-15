@@ -41,12 +41,11 @@
         </div>
         <div class="w-8/12 xl:w-4/12 2xl:w-3/12 mr-auto ml-auto mt-8 md:mt-0 gs_reveal gs_reveal_fromRight">
             <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-primary-200">
-                <img alt="MRP" src="{{ asset('images/somato.jpg') }}" class="w-full align-middle rounded" />
+                <img src="{{ asset('images/somato-1200.webp') }}"
+                     srcset="{{ asset('images/somato-400.webp') }} 400w, {{ asset('images/somato-800.webp') }} 800w"
+                     sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, (max-width: 1600px) 1200px"
+                     alt="Photo de Amelie Bonzi" class="w-full align-middle rounded" />
             </div>
         </div>
     </div>
 </div>
-
-@push('images')
-<link rel="preload" type="image/png" href="{{ asset('images/somato.jpg') }}" as="image"/>
-@endpush
