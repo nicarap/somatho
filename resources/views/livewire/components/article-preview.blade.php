@@ -1,7 +1,8 @@
 <div
      class="relative bg-white cursor-default flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg gs_reveal">
-    <img src="{{ url('storage/' . $article->image_thumbnail_url) }}"
-         class="w-full h-52 object-cover align-middle rounded-t-lg" />
+    
+     <img src="{{ url('storage/' . $article->image_thumbnail_url) }}"
+         class="w-auto h-44 object-cover align-middle rounded-t-lg" />
 
     <div class="h-full flex flex-col p-2">
         <div class="flex-1">

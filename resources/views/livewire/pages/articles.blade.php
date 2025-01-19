@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="bg-gray-200">
-            <div class="container mx-auto py-12 px-4  relative z-20">
+            <div class="container mx-auto py-12 px-4 max-w-7xl relative z-20">
                 <livewire:components.articles></livewire:components.articles>
             </div>
         </div>
