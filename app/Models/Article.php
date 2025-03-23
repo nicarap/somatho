@@ -3,11 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Article extends Model
 {
@@ -18,6 +17,7 @@ class Article extends Model
         "content",
         "slug",
         "published_at",
+        "image_thumbnail_url",
         "is_pinned",
         "image"
     ];
@@ -37,5 +37,10 @@ class Article extends Model
     public function scopePublished(Builder $query)
     {
         return $query->whereDate("published_at", "<=", Carbon::now());
+    }
+
+    public function scopeIsPinned(Builder $query)
+    {
+        return $query->where("is_pinned", true);
     }
 }

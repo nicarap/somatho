@@ -39,42 +39,86 @@
     <meta name="theme-color" content="#52b8e3" />
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}" />
 
-    @if (isset($image)) <link rel="preload" type="image/png" href='{{ asset("storage/$image") }}' sizes as="image"/>
-    @else <link rel="preload" type="image/png" href="{{ asset('images/DSC_0593.jpg') }}" as="image"/> @endif
-    
     @stack('images')
-    
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Glass+Antiqua&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Glass+Antiqua&display=swap" rel="stylesheet" />
 
     <meta name="author" content="Amélie Bonzi" />
-    <meta name="description" content="{{ $description }}">
+    <meta name="description" content="@yield('meta_description', 'Thérapie manuelle douce à Tahiti - Somatopathie pratiquée par Amelie Bonzi. Traitements pour douleurs physiques et troubles émotionnels avec la Méthode Poyet.')">
 
     <!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
-    <meta property="og:site_name" content="{{ $title }}" /> 
+    <meta property="og:site_name" content="{{ $title }}" />
     <meta property="og:locale" content="fr_FR">
-    <meta property="og:title" content="{{ $title }}" />
-    <meta property="og:description" content="{{ $description }}">
-    <meta property="og:image" content="{{ asset('favicon.png') }}">
+    <meta property="og:title" content="@yield('title', config('app.name', 'Somatopathie Amelie Bonzi')) | Thérapie manuelle à Tahiti">
+    <meta property="og:description" content="@yield('meta_description', 'Thérapie manuelle douce à Tahiti - Somatopathie pratiquée par Amelie Bonzi. Traitements pour douleurs physiques et troubles émotionnels avec la Méthode Poyet.')">
+    <meta property="og:image" content="@yield('og_image', asset('images/amelie-1200.webp'))">
     <meta property="og:image:width" content="2000">
     <meta property="og:image:height" content="1333">
     <meta property="og:image:type" content="image/png">
 
-    <meta property="og:type" content="article">
+    <meta property="og:type" content="website">
     <meta property="article:publisher" content="https://www.instagram.com/abonzisomato/">
 
-    <meta property="og:url" content="{{ env('APP_URL') }}" /> <!-- where do you want your post to link to -->
+    <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary_large_image" /> <!-- to have large image post format in Twitter -->
 
-    <title>{{ $title }}</title>
+    <meta property="twitter:url" content="{{ url()->current() }}">
+    <meta property="twitter:title" content="@yield('title', config('app.name', 'Somatopathie Amelie Bonzi')) | Thérapie manuelle à Tahiti">
+    <meta property="twitter:description" content="@yield('meta_description', 'Thérapie manuelle douce à Tahiti - Somatopathie pratiquée par Amelie Bonzi. Traitements pour douleurs physiques et troubles émotionnels avec la Méthode Poyet.')">
+    <meta property="twitter:image" content="@yield('og_image', asset('images/amelie-1200.webp'))">
+
+    <meta name="keywords" content="@yield('meta_keywords', 'somatopathie, thérapie manuelle, méthode poyet, bien-être, douleurs chroniques, troubles émotionnels, Tahiti, soins naturels, Amelie Bonzi')">
+
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <title>@yield('title', config('app.name', 'Somatopathie Amelie Bonzi')) | Thérapie manuelle à Tahiti</title>
 
     @vite('resources/css/app.css')
     @vite('resources/js/public.js')
 
     @livewireScripts
     @livewireStyles
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Somatopathie Amelie Bonzi",
+      "image": "{{ asset('images/amelie-1200.webp') }}",
+      "url": "{{ url('/') }}",
+      "telephone": "{{ env('PHONE_NUMBER') }}",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Tahiti",
+        "addressRegion": "Polynésie française"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -17.5516,
+        "longitude": -149.5584
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "08:00",
+        "closes": "18:00"
+      },
+      "sameAs": [
+        "{{ config('app.social_medias.facebook') }}",
+        "{{ config('app.social_medias.instagram') }}"
+      ]
+    }
+    </script>
 </head>
 
 <body class="text-gray-800 antialiased scroll-smooth">
@@ -120,8 +164,8 @@
         </div>
     </nav>
     <header class="relative py-16 flex flex-col items-center justify-center" style="min-height: 90vh;" id="home">
-        <div class="absolute top-0 w-full h-full bg-cover bg-center bg-fixed -scale-x-100 "
-             style="background-image: url(@if (isset($image)) {{ asset('storage/' . $image) }} @else {{ asset('images/DSC_0593.jpg') }} @endif)">
+        <div class="absolute top-0 w-full h-full bg-cover bg-center bg-fixed -scale-x-100"
+             style="background-image: url(@if (isset($image)) {{ asset('storage/' . $image) }} @else {{ asset('images/soin_sur_table.webp') }} @endif)">
             <span id=" blackOverlay"
                   class="w-full h-full absolute opacity-50 bg-gradient-to-b backdrop-blur-sm to-primary-900 from-black"></span>
         </div>
@@ -155,6 +199,9 @@
     </main>
 
     <x-footer></x-footer>
+
+    <!-- Contact Popup Component -->
+    <x-contact-popup />
 </body>
 
 </html>

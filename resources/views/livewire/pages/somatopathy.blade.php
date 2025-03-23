@@ -91,8 +91,10 @@
                     <div class="w-8/12 xl:w-3/12 2xl:w-4/12 mr-auto ml-auto mt-8 md:mt-0 gs_reveal gs_reveal_fromRight">
                         <div
                              class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-primary-200">
-                            <img alt="MRP" src="{{ asset('images/mrp.jpg') }}"
-                                 class="w-full align-middle rounded-t-lg" />
+                            <img src="{{ asset('images/mrp-800.webp') }}"
+                                 srcset="{{ asset('images/mrp-400.webp') }} 400w, {{ asset('images/mrp-800.webp') }} 800w"
+                                 sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, (max-width: 1600px) 1200px"
+                                 alt="Photo représentant le MRP" class="w-full align-middle rounded-t-lg" />
                             <blockquote class="relative p-8 mb-4">
                                 <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95"
                                      class="absolute left-0 w-full block" style="height: 95px; top: -94px;">
@@ -246,7 +248,7 @@
                         </div>
                     </div>
                 </div>
-                @php($image = asset('images/genou.jpg'))
+                @php($image = asset('images/genou-800.webp'))
                 <div class="absolute z-10 inset-0 lg:inset-y-0 lg:right-0 bg-cover lg:w-1/2 lg:left-1/2 lg:bg-auto bg-no-repeat bg-fixed bg-right"
                      style="background-image: url({{ $image }})">
                 </div>

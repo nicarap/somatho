@@ -11,26 +11,26 @@
 
             </div>
             <h3 class="text-5xl font-antiqua mb-2 font-semibold leading-normal text-primary-900">
-                La Somatopathie
+                La Somatopathie - Thérapie Manuelle Douce
             </h3>
             <div
                  class="[&>p]:text-lg [&>p]:font-light [&>p]:leading-relaxed [&>p]:text-justify [&>p]:mb-4 [&>p]:text-gray-700">
                 <p class="mt-0">
-                    La somatopathie, souvent méconnue, offre une approche unique pour comprendre et harmoniser les liens
-                    entre nos émotions,
-                    notre corps et notre bien-être global. Que tu sois novice en la matière ou que tu ais déjà
-                    consulté(e),
-                    ce site est conçu pour te guider à chaque étape.
+                    <strong class="font-bold">La somatopathie</strong>, thérapie manuelle encore souvent méconnue à <strong class="font-bold">Tahiti</strong>, offre une approche unique pour comprendre et harmoniser les liens
+                    entre nos <strong class="font-bold">émotions</strong>,
+                    notre <strong class="font-bold">corps</strong> et notre <strong class="font-bold">bien-être global</strong>. Que vous souffriez de <strong class="font-bold">douleurs chroniques</strong>, de <strong class="font-bold">troubles du sommeil</strong> ou de <strong class="font-bold">stress</strong>, cette méthode peut vous aider à retrouver équilibre et vitalité.
                 </p>
                 <p class="mt-4">
-                    Imagine un moyen de renforcer la connexion entre ton corps et ton esprit,
-                    de libérer des tensions cumulées, les traumatismes et d'atteindre un équilibre profond et durable.
-                    La somatopathie offre précisément cela, en utilisant des techniques manuelle douce qui intègrent 
-                    mouvements, rééquilibrage, psychologie et conscience corporelle.
+                    Imaginez un <strong class="font-bold">traitement naturel</strong> capable de renforcer la connexion entre votre corps et votre esprit,
+                    de libérer les <strong class="font-bold">tensions accumulées</strong>, les <strong class="font-bold">traumatismes émotionnels</strong> et d'atteindre un équilibre profond et durable.
+                    La somatopathie offre précisément cela, en utilisant des techniques manuelles douces qui intègrent 
+                    mouvements, <strong class="font-bold">rééquilibrage énergétique</strong>, psychologie et <strong class="font-bold">conscience corporelle</strong>.
                 </p>
                 <p class="mt-4">
-                    Prêt(e) à plonger dans l'univers captivant de la somatopathie ?
-                    Je t'invite à cliquer sur le bouton ci-dessous pour en apprendre davantage.
+                    <strong class="font-bold">À Tahiti</strong>, je propose des <strong class="font-bold">consultations personnalisées</strong> adaptées à vos besoins spécifiques.
+                    La <strong class="font-bold">Méthode Poyet</strong> que j'utilise s'adresse aussi bien aux <strong class="font-bold">adultes</strong> qu'aux <strong class="font-bold">enfants</strong> et peut soulager de nombreux maux comme les <strong class="font-bold">douleurs de dos</strong>, les <strong class="font-bold">migraines</strong>, ou les <strong class="font-bold">troubles digestifs</strong>.
+                    Prêt(e) à découvrir cette approche thérapeutique et à retrouver votre équilibre naturel ?
+                    Je vous invite à cliquer sur le bouton ci-dessous pour en apprendre davantage.
                 </p>
             </div>
             <div class="mt-8">
@@ -41,12 +41,11 @@
         </div>
         <div class="w-8/12 xl:w-4/12 2xl:w-3/12 mr-auto ml-auto mt-8 md:mt-0 gs_reveal gs_reveal_fromRight">
             <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-primary-200">
-                <img alt="MRP" src="{{ asset('images/somato.jpg') }}" class="w-full align-middle rounded" />
+                <img src="{{ asset('images/somato-1200.webp') }}"
+                     srcset="{{ asset('images/somato-400.webp') }} 400w, {{ asset('images/somato-800.webp') }} 800w"
+                     sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, (max-width: 1600px) 1200px"
+                     alt="Photo de Amelie Bonzi" class="w-full align-middle rounded" />
             </div>
         </div>
     </div>
 </div>
-
-@push('images')
-<link rel="preload" type="image/png" href="{{ asset('images/somato.jpg') }}" as="image"/>
-@endpush

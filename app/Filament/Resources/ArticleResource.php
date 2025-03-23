@@ -40,11 +40,11 @@ class ArticleResource extends Resource
                     Forms\Components\FileUpload::make('image')
                         ->required()
                         ->image()
-                        ->directory('blog-articles/' . Carbon::now()->format('FY'))
-                        ->previewable(false),
+                        ->directory('blog-articles/' . Carbon::now()->format('FY')),
 
                     Forms\Components\FileUpload::make('image_thumbnail_url')
                         ->image()
+                        ->required()
                         ->directory('blog-articles/' . Carbon::now()->format('FY'))
                         ->imageResizeTargetWidth('300')
                         ->imageResizeTargetHeight('200')

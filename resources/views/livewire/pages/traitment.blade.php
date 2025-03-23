@@ -163,7 +163,7 @@
                     </div>
                 </div>
             </div>
-            @php($image = asset('images/carte_visite.jpg'))
+            @php($image = asset('images/carte_visite-800.webp'))
             <div class="absolute z-10 inset-0 lg:inset-y-0 lg:right-0 bg-cover w-full lg:bg-auto bg-no-repeat bg-fixed bg-right"
                  style="background-image: url({{ $image }})">
             </div>

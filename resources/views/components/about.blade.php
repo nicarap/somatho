@@ -10,7 +10,7 @@
 
         </div>
         <h3 class="text-5xl font-antiqua mb-2 font-semibold leading-normal text-primary-900">
-            A propos de moi
+            À propos de moi
         </h3>
     </div>
 
@@ -18,8 +18,10 @@
 
         <div class="w-8/12 xl:w-4/12 2xl:w-3/12 mr-auto ml-auto mt-8 md:mt-0 gs_reveal gs_reveal_fromLeft">
             <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg md:rounded-lg bg-primary-400">
-                <img alt="Photo de Amelie Bonzi" src="{{ asset('images/amelie.jpg') }}"
-                     class="w-full align-middle md:rounded-lg" />
+                <img src="{{ asset('images/amelie-1200.webp') }}"
+                     srcset="{{ asset('images/amelie-400.webp') }} 400w, {{ asset('images/amelie-800.webp') }} 800w, {{ asset('images/amelie-1200.webp') }} 1200w"
+                     sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, (max-width: 1600px) 1200px"
+                     alt="Photo de Amelie Bonzi" class="w-full align-middle md:rounded-lg" />
             </div>
         </div>
 
@@ -35,7 +37,7 @@
 
                 </div>
                 <h3 class="text-5xl mb-2 font-antiqua font-semibold leading-normal text-primary-900">
-                    A propos de moi
+                    À propos de moi
                 </h3>
             </div>
             <div
@@ -43,34 +45,27 @@
                 <p class="mt-4">
                     Je me présente <a href="https://www.instagram.com/abonzisomato/" target="_blank" rel="noopener"
                        class="font-bold text-primary-900 hover:underline mt-8">Amelie Bonzi</a>, thérapeute diplômée en
-                    somatopathie de l'école <a href="https://www.somatopathie.com/"
-                       class="font-bold text-primary-900 hover:underline mt-8" target="_blank">Pierre Camille Vernet</a>
-                    en Métropole
+                    <strong class="font-bold">somatopathie</strong> de l'école <a href="https://www.somatopathie.com/"
+                       class="font-bold text-primary-900 hover:underline mt-8" target="_blank" rel="noopener noreferrer">Pierre Camille Vernet</a>
+                    en Métropole. Spécialiste en <strong class="font-bold">thérapie manuelle douce</strong>, je propose des soins adaptés pour soulager vos douleurs chroniques et aigües.
                 </p>
-                <p class="mt-0">Passionnée par la découverte de nouvelles cultures et de techniques thérapeutiques
-                    innovantes à travers le monde, j'ai exercé dans le sud de la France et sur l'île de La Réunion avant
-                    de poursuivre mon travail sur l'île de Tahiti</p>
+                <p class="mt-0">Passionnée par la découverte de nouvelles cultures et de <strong class="font-bold">techniques thérapeutiques
+                    innovantes</strong> à travers le monde, j'ai exercé dans le sud de la France et sur l'île de La Réunion avant
+                    de m'établir sur l'île de Tahiti. Cette richesse d'expériences multiculturellesm'a permis de développer une approche unique de la <strong class="font-bold">somatopathie</strong>.</p>
                 <p class="mt-0">
                     Je m'engage à rétablir l'harmonie entre votre corps et votre esprit, en utilisant une approche
-                    somatopathique alliant tradition et innovation.
-
-                    Je pratique une thérapie manuelle douce visant à traiter tant les douleurs physiques que les
-                    troubles
-                    émotionnels
+                    <strong class="font-bold">somatopathique</strong> alliant tradition et innovation.
+                    Ma <strong class="font-bold">thérapie manuelle douce</strong> vise à traiter tant les <strong class="font-bold">douleurs physiques</strong> (dos, nuque, articulations) que les
+                    <strong class="font-bold">troubles émotionnels</strong> (stress, anxiété, traumatismes), permettant un retour à l'équilibre global.
                 </p>
                 <p class="mt-0">
-                    Je vous ferez découvrir <a href="{{ route('somatopathy') }}"
-                       class="font-bold text-primary-900 hover:underline mt-8">La Méthode Poyet</a> qui, en combinant
-                    des techniques
-                    précises et une
+                    Je vous ferai découvrir <a href="{{ route('somatopathy') }}"
+                       class="font-bold text-primary-900 hover:underline mt-8">la Méthode Poyet</a>, une approche qui, en combinant
+                    des <strong class="font-bold">techniques précises</strong> et une
                     compréhension
-                    profonde du corps, offre une voie unique vers le bien-être global
+                    profonde du corps, offre une voie unique vers le <strong class="font-bold">bien-être global</strong>. Consultez-moi à <strong class="font-bold">Tahiti</strong> pour des soins personnalisés et efficaces adaptés à vos besoins spécifiques.
                 </p>
             </div>
         </div>
     </div>
 </div>
-
-@push('images')
-<link rel="preload" type="image/png" href="{{ asset('images/amelie.jpg') }}" as="image"/>
-@endpush

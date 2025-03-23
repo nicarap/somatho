@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use Carbon\Carbon;
 use Filament\Tables;
 use Filament\Forms;
-use App\models\Invoice;
+use App\Models\Invoice;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use App\Filament\Resources\InvoiceResource\Pages;

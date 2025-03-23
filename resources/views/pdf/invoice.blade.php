@@ -134,7 +134,7 @@
                             <td style="width:100%"><span>{{ $invoice->therapist->name }}</span></td>
                             <td rowspan="5"><span class="subtitle text-primary-200">
                                     <div class="text-primary-200 fill-primary-200" style="height: 8rem;">
-                                        <img src="images/test.png" />
+                                        <img src="images/test.webp" />
                                     </div>
                                 </span></td>
                         </tr>

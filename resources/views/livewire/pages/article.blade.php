@@ -1,7 +1,7 @@
 <div>
     <x-slot:main-title>
-        <h1 
-        class="text-5xl px-4 md:text-7xl text-center font-antiqua font-light leading-relaxed mt-4 mb-4 text-primary-500">
+        <h1
+            class="text-5xl px-4 md:text-7xl text-center font-antiqua font-light leading-relaxed mt-4 mb-4 text-primary-500">
             {{ $article->title }}
         </h1>
     </x-slot:main-title>
@@ -19,8 +19,12 @@
             <div class="text-sm mt-4 w-7/12">
 
                 <div class="flex w-full items-center">
-                    <img class="w-32 rounded-md" src="{{ asset('images/amelie.jpg') }}" alt="Photo de Amelie Bonzi" />
-                    <div class="text-gray-100 bg-primary-500 text-justify flex flex-col justify-between p-4 rounded-r-md">
+                    <img src="{{ asset('images/amelie-1200.webp') }}"
+                         srcset="{{ asset('images/amelie-400.webp') }} 400w, {{ asset('images/amelie-800.webp') }} 800w, {{ asset('images/amelie-1200.webp') }} 1200w"
+                         sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, (max-width: 1600px) 1200px"
+                         alt="Photo de Amelie Bonzi" class="w-32 rounded-md" />
+                    <div
+                         class="text-gray-100 bg-primary-500 text-justify flex flex-col justify-between p-4 rounded-r-md">
                         <p class="pb-2 text-xl italic">A propos de l'auteur : </p>
                         <p class="pb-2">
                             Ensemble, cultivons l'harmonie du corps et de l'esprit.

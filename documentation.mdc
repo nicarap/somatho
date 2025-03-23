@@ -1,0 +1,184 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Documentation du Projet Somatho
+
+## Introduction
+Somatho est une application web moderne développée avec Laravel et Vue.js, combinant les forces du backend Laravel et du frontend Vue.js pour créer une expérience utilisateur fluide et réactive. L'application semble être orientée vers la gestion de traitements et d'articles liés à la somatopathie.
+
+## Structure du Projet
+
+### Architecture Globale
+Le projet suit une architecture MVC (Model-View-Controller) avec des composants modernes :
+
+- **Backend (Laravel)**
+  - `app/` : Contient la logique métier
+  - `routes/` : Définition des routes
+  - `database/` : Migrations et seeders
+  - `config/` : Configuration de l'application
+  - `storage/` : Stockage des fichiers
+  - `tests/` : Tests unitaires et d'intégration
+
+- **Frontend (Vue.js + Inertia)**
+  - `resources/` : Assets frontend
+  - `public/` : Fichiers publics
+  - `resources/js/` : Composants Vue.js
+  - `resources/css/` : Styles CSS
+
+### Dossiers Principaux
+- `app/Filament/` : Administration avec Filament
+- `app/Livewire/` : Composants Livewire
+- `app/Models/` : Modèles Eloquent
+- `app/Services/` : Services métier
+- `app/Repositories/` : Pattern Repository
+- `app/Http/` : Contrôleurs et Middleware
+
+## Installation et Configuration
+
+### Prérequis
+- PHP 8.1 ou supérieur
+- Node.js et npm/yarn
+- Composer
+- Base de données MySQL/PostgreSQL
+
+### Étapes d'Installation
+1. Cloner le repository
+2. Copier `.env.example` vers `.env`
+3. Installer les dépendances PHP :
+   ```bash
+   composer install
+   ```
+4. Installer les dépendances JavaScript :
+   ```bash
+   npm install
+   ```
+5. Générer la clé d'application :
+   ```bash
+   php artisan key:generate
+   ```
+6. Configurer la base de données dans `.env`
+7. Exécuter les migrations :
+   ```bash
+   php artisan migrate
+   ```
+8. Compiler les assets :
+   ```bash
+   npm run build
+   ```
+
+## Fonctionnalités Principales
+
+### Pages Publiques
+- Page d'accueil (`/`)
+- Somatopathie (`/somatopathy`)
+- Traitements (`/traitments`)
+- Articles (`/articles`)
+- Article individuel (`/articles/{slug}`)
+
+### Administration
+- Interface d'administration avec Filament
+- Gestion des factures
+- Gestion des articles
+- Gestion des traitements
+
+## Architecture Technique
+
+### Backend
+- Framework : Laravel 10
+- Authentification : Laravel Sanctum
+- Administration : Filament 3.2
+- ORM : Eloquent
+- API : RESTful avec Inertia.js
+
+### Frontend
+- Framework : Vue.js 3
+- CSS : Tailwind CSS
+- Animations : GSAP
+- Icons : Font Awesome
+- Build Tool : Vite
+
+### Patterns et Pratiques
+- Repository Pattern
+- Service Layer
+- Livewire Components
+- Inertia.js pour le SSR
+- Filament pour l'administration
+
+## API et Endpoints
+
+### Routes API
+Les routes API sont définies dans `routes/api.php` et protégées par Sanctum.
+
+### Routes Web
+Les routes principales incluent :
+- Routes publiques pour le contenu
+- Routes protégées pour l'administration
+- Routes d'authentification
+
+## Bonnes Pratiques et Recommandations
+
+### Développement
+1. Suivre les conventions PSR-4
+2. Utiliser les types stricts en PHP
+3. Documenter les méthodes complexes
+4. Écrire des tests unitaires
+5. Utiliser les composants Livewire pour la réactivité
+
+### Maintenance
+1. Mettre à jour régulièrement les dépendances
+2. Surveiller les logs d'erreurs
+3. Maintenir les tests à jour
+4. Optimiser les performances
+
+### Sécurité
+1. Valider toutes les entrées utilisateur
+2. Utiliser les middlewares d'authentification
+3. Protéger les routes sensibles
+4. Maintenir les dépendances à jour
+
+## Références et Crédits
+
+### Technologies Utilisées
+- Laravel 10
+- Vue.js 3
+- Filament 3.2
+- Tailwind CSS
+- Inertia.js
+- Livewire
+- GSAP
+- Font Awesome
+
+### Documentation Utile
+- [Documentation Laravel](mdc:https:/laravel.com/docs)
+- [Documentation Vue.js](mdc:https:/vuejs.org/guide)
+- [Documentation Filament](mdc:https:/filamentphp.com/docs)
+- [Documentation Inertia.js](mdc:https:/inertiajs.com)
+
+## Points d'Amélioration Potentiels
+
+1. **Performance**
+   - Implémenter le cache pour les articles et traitements
+   - Optimiser les requêtes de base de données
+   - Mettre en place le lazy loading des images
+
+2. **Sécurité**
+   - Ajouter la validation CSRF sur toutes les routes
+   - Implémenter la limitation de taux (rate limiting)
+   - Renforcer la validation des entrées
+
+3. **UX/UI**
+   - Ajouter des animations de transition
+   - Améliorer la réactivité mobile
+   - Implémenter le mode sombre
+
+4. **Maintenance**
+   - Ajouter plus de tests automatisés
+   - Mettre en place un système de monitoring
+   - Améliorer la documentation du code
+
+5. **Fonctionnalités**
+   - Ajouter un système de recherche avancé
+   - Implémenter un système de notifications
+   - Ajouter un système de commentaires 
