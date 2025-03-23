@@ -106,6 +106,7 @@
         </div>
     </section>
 
+    <x-testimonials></x-testimonials> 
     @if ($hasReviews)
         <section class="pt-4 md:pb-24">
             <livewire:reviews></livewire:reviews>
@@ -187,6 +188,9 @@
             </div>
         </section>
     @endif
+
+    <x-faq />
+
     <div class="relative">
         <div class="bottom-auto top-1 left-0 right-0 w-full absolute z-50 pointer-events-none overflow-hidden -mt-20"
              style="height: 80px;">
