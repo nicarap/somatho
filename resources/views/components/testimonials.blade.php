@@ -133,7 +133,7 @@
         </div>
 
         <div class="mt-12 text-center">
-            <a href="tel:{{ env('PHONE_NUMBER') }}" class="inline-block px-6 py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors">
+            <a href="{{ route('home') }}/#contact" class="inline-block px-6 py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors">
                 Prenez rendez-vous pour votre consultation
             </a>
         </div>
