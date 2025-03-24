@@ -106,8 +106,8 @@
                 </div>
             @endif
             
-            <div class="mt-2">
-                <p class="leading-relaxed mt-1 mb-4 text-gray-100">
+            <div class="mt-4">
+                <p class="leading-relaxed mt-1 mb-4 text-gray-100 text-xl">
                     Ou contactes moi directement
                 </p>
                 <div class="mt-2 w-full flex gap-2 items-center">
@@ -148,7 +148,7 @@
     </div>
 </form>
 
-<script src="https://www.google.com/recaptcha/api.js?render={{ env('CAPTCHA_SITE_KEY') }}"></script>
+<!-- <script src="https://www.google.com/recaptcha/api.js?render={{ env('CAPTCHA_SITE_KEY') }}"></script>
 <script>
     function handle(e) {
         grecaptcha.ready(function() {
@@ -160,4 +160,4 @@
                 });
         })
     }
-</script>
+</script> -->

@@ -117,7 +117,6 @@ function setupContactPopup() {
             sessionStorage.removeItem('popupShown');
         }
     }
-    console.log("shouldShowPopup", shouldShowPopup)
     // Si le popup ne doit pas être affiché, on s'arrête là
     if (!shouldShowPopup) return;
     

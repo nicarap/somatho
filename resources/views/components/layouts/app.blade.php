@@ -127,12 +127,11 @@
                 style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <nav
-         class="navbar-fixed h-20 group top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 aria-[fixed=false]:bg-primary-900 fill-primary-500 aria-[fixed=false]:fill-primary-900 transition-all duration-300">
+         class="navbar-fixed h-20 group top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 bg-primary-900 fill-primary-900 transition-all duration-300">
         <div class="container px-4 mx-auto flex flex-wrap items-center justify-between gap-16">
             <div class="w-full relative flex justify-between xl:w-auto xl:static xl:block xl:justify-start">
                 <div class="group-aria-[fixed=false]:fill-gray-100 fill-primary-500 aspect-auto w-12">
                     @include('logo.b')</div>
-
                 <button class="cursor-pointer text-xl fill-primary-500 leading-none px-3 py-1 w-14 border border-solid border-transparent rounded bg-transparent block xl:hidden outline-none focus:outline-none"
                         type="button" id="openNavbar">
                     <svg class="h-full w-full" viewBox="-2.5 0 19 19" xmlns="http://www.w3.org/2000/svg"
@@ -155,20 +154,22 @@
                 <x-navigation />
             </div>
             <div class="xl:flex items-center flex-col justify-end bg-white xl:bg-transparent xl:shadow-none hidden">
-                <a href="{{ Route::currentRouteName() === 'home' ? '#contact' : route('home') . '/#contact' }}"
-                   class="group-aria-[fixed=false]:bg-primary-500 bg-primary-900 text-gray-200 active:bg-primary-900 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300"
+                <a href="{{ route('home') }}/#contact"
+                   class="bg-primary-500 text-gray-200 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 transition-all duration-300"
                    type="submit" style="transition: all 0.15s ease 0s;">
                     Prendre rendez-vous
                 </a>
             </div>
         </div>
     </nav>
-    <header class="relative py-16 flex flex-col items-center justify-center" style="min-height: 90vh;" id="home">
-        <div class="absolute top-0 w-full h-full bg-cover bg-center bg-fixed -scale-x-100"
-             style="background-image: url(@if (isset($image)) {{ asset('storage/' . $image) }} @else {{ asset('images/soin_sur_table.webp') }} @endif)">
-            <span id=" blackOverlay"
-                  class="w-full h-full absolute opacity-50 bg-gradient-to-b backdrop-blur-sm to-primary-900 from-black"></span>
-        </div>
+    <header class="relative py-16 flex flex-col items-center justify-center" style="min-height: 90vh;" id="home">                                 
+        <img src="{{ isset($image) ? asset('storage/' . $image) : asset('images/soin_sur_table.webp') }}"
+        srcset="{{ asset('images/soin_sur_table-400.webp') }} 400w, {{ asset('images/soin_sur_table-800.webp') }} 800w"
+        sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, (max-width: 1600px) 1200px"
+        alt="Bannière du site représentant un soin sur une table" class="absolute top-0 w-full h-full object-cover -scale-x-100" />
+        
+        <span id="blackOverlay"
+              class="w-full h-full absolute opacity-50 bg-gradient-to-b backdrop-blur-sm to-primary-900 from-black"></span>
 
         <div id="collapse-navbar" aria-expanded="false"
              class="aria-expanded:translate-x-0 transition-all right-0 duration-300 translate-x-full z-50 mt-20 w-full h-full fixed inset-0 bg-primary-900">

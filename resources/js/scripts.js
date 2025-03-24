@@ -1,151 +1,166 @@
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
-(function ($) {
-	"use strict";
+"use strict";
 
-	$(window).on('scroll load', function () {
-		if ($(".navbar-fixed").offset().top > 60) {
-			// $(".fixed-top").addClass("top-nav-collapse");
-			$(".navbar-fixed").attr("aria-fixed", "false");
-		} else {
-			// $(".fixed-top").removeClass("top-nav-collapse");
-			$(".navbar-fixed").attr("aria-fixed", "true");
-		}
-	});
+window.addEventListener('scroll', handleScroll);
+window.addEventListener('load', handleScroll);
 
-	// jQuery for page scrolling feature - requires jQuery Easing plugin
-	$(document).on('click', 'a[href^="#"]', function (event) {
-		event.preventDefault();
+function handleScroll() {
+    const navbar = document.querySelector(".navbar-fixed");
+    if (navbar.getBoundingClientRect().top > 60) {
+        navbar.setAttribute("aria-fixed", "false");
+    } else {
+        navbar.setAttribute("aria-fixed", "true");
+    }
+}
 
-		$('html, body').animate({
-			scrollTop: $($.attr(this, 'href')).offset().top
-		}, 500);
-	});
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (event) {
+        event.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            window.scrollTo({
+                top: target.offsetTop,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
 
-	// close menu on click in small viewport
-	$('[data-toggle="offcanvas"]').on('click', function () {
-		$('.offcanvas-collapse').toggleClass('open')
-	})
+// Close menu on click in small viewport
+document.querySelectorAll('[data-toggle="offcanvas"]').forEach(button => {
+    button.addEventListener('click', function () {
+        document.querySelector('.offcanvas-collapse')?.classList.toggle('open');
+    });
+});
 
-	var amountScrolled = 700;
-	$(window).on("scroll", function () {
-		if ($(window).scrollTop() > amountScrolled) {
-			$('.back-to-top').fadeIn('500');
-		} else {
-			$('.back-to-top').fadeOut('500');
-		}
-	});
+const amountScrolled = 700;
+window.addEventListener("scroll", function () {
+    const backToTop = document.querySelector('.back-to-top');
 
-	/* Removes Long Focus On Buttons */
-	$(".button, a, button").mouseup(function () {
-		$(this).blur();
-	});
+    if (!backToTop) return;
+    if (window.scrollY > amountScrolled) {
+        backToTop.style.display = 'block';
+    } else {
+        backToTop.style.display = 'none';
+    }
+});
 
-	/* Function to get the navigation links for smooth page scroll */
-	function getMenuItems() {
-		var menuItems = [];
-		$('.nav-link').each(function () {
-			var hash = $(this).attr('href').substring(1);
-			if (hash !== "")
-				menuItems.push(hash);
-		})
-		return menuItems;
-	}
+/* Removes Long Focus On Buttons */
+document.querySelectorAll(".button, a, button").forEach(element => {
+    element.addEventListener('mouseup', function () {
+        this.blur();
+    });
+});
 
-	/* Prevents adding of # at the end of URL on click of non-pagescroll links */
-	$('.nav-link').on('click', function (e) {
-		var hash = $(this).attr('href').substring(1);
-		if (hash == "")
-			e.preventDefault();
-	});
+/* Function to get the navigation links for smooth page scroll */
+function getMenuItems() {
+    const menuItems = [];
+    document.querySelectorAll('.nav-link').forEach(link => {
+        const hash = link.getAttribute('href').substring(1);
+        if (hash !== "") menuItems.push(hash);
+    });
+    return menuItems;
+}
 
-	/* Checks page scroll offset and changes active link on page load */
-	changeActive();
+/* Prevents adding of # at the end of URL on click of non-pagescroll links */
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function (e) {
+        const hash = this.getAttribute('href').substring(1);
+        if (hash === "") e.preventDefault();
+    });
+});
 
-	/* Change active link on scroll */
-	$(document).on("scroll", function () {
-		changeActive();
-	});
+/* Checks page scroll offset and changes active link on page load */
+changeActive();
 
-	/* Function to change the active link */
-	function changeActive() {
-		const menuItems = getMenuItems();
-		$('.offcanvas-collapse').removeClass('open')
+/* Change active link on scroll */
+document.addEventListener("scroll", function () {
+    changeActive();
+});
 
-		$.each(menuItems, function (index, value) {
-			var offsetSection = $('#' + value).offset().top;
-			var docScroll = $(document).scrollTop();
-			var docScroll1 = docScroll + 1;
+/* Function to change the active link */
+function changeActive() {
+    const menuItems = getMenuItems();
+    document.querySelector('.offcanvas-collapse')?.classList.remove('open');
 
-			if (docScroll1 >= offsetSection) {
-				$('.nav-link').removeClass('bg-light-gold');
-				$('.nav-link').removeClass('text-white');
-				$('.nav-link[href$="#' + value + '"]').addClass('bg-light-gold');
-				$('.nav-link[href$="#' + value + '"]').addClass('text-white', true);
-			}
-		});
-	}
+    menuItems.forEach(value => {
+        const offsetSection = document.getElementById(value).offsetTop;
+        const docScroll = document.documentElement.scrollTop;
+        const docScroll1 = docScroll + 1;
 
-	function animateFrom(elem, direction) {
-		direction = direction || 1;
-		var x = 0,
-			y = direction * 100;
-		if (elem.classList.contains("gs_reveal_fromLeft")) {
-			x = -100;
-			y = 0;
-		} else if (elem.classList.contains("gs_reveal_fromRight")) {
-			x = 100;
-			y = 0;
-		}
+        if (docScroll1 >= offsetSection) {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList?.remove('bg-light-gold', 'text-white');
+            });
+            const activeLink = document.querySelector('.nav-link[href$="#' + value + '"]');
+            if (activeLink) {
+                activeLink.classList?.add('bg-light-gold', 'text-white');
+            }
+        }
+    });
+}
 
-		elem.style.transform = "translate(" + x + "px, " + y + "px)";
-		elem.style.opacity = "0";
-		gsap.fromTo(elem, { x: x, y: y, autoAlpha: 0 }, {
-			duration: 1.25,
-			x: 0,
-			y: 0,
-			autoAlpha: 1,
-			ease: "expo",
-			overwrite: "auto"
-		});
-	}
+function animateFrom(elem, direction) {
+    direction = direction || 1;
+    let x = 0, y = direction * 100;
+    if (elem?.classList?.contains("gs_reveal_fromLeft")) {
+        x = -100;
+        y = 0;
+    } else if (elem?.classList?.contains("gs_reveal_fromRight")) {
+        x = 100;
+        y = 0;
+    }
 
-	function hide(elem) {
-		gsap.set(elem, { autoAlpha: 0 });
-	}
+    if (!elem) return;
 
-	$("#openNavbar").on("click", function () {
-		$("#collapse-navbar").attr("aria-expanded", "true")
-		$("#openNavbar").addClass("hidden")
-		$("#closeNavbar").removeClass("hidden")
-	});
+    elem.style.transform = "translate(" + x + "px, " + y + "px)";
+    elem.style.opacity = "0";
+    gsap.fromTo(elem, { x: x, y: y, autoAlpha: 0 }, {
+        duration: 1.25,
+        x: 0,
+        y: 0,
+        autoAlpha: 1,
+        ease: "expo",
+        overwrite: "auto"
+    });
+}
 
-	$("#closeNavbar").on("click", function () {
-		$("#collapse-navbar").attr("aria-expanded", "false")
-		$("#closeNavbar").addClass("hidden")
-		$("#openNavbar").removeClass("hidden")
-	})
+function hide(elem) {
+    gsap.set(elem, { autoAlpha: 0 });
+}
 
-	// document.addEventListener("DOMContentLoaded", function () {
-	// 	gsap.registerPlugin(ScrollTrigger);
+document.getElementById("openNavbar")?.addEventListener("click", function () {
+    document.getElementById("collapse-navbar")?.setAttribute("aria-expanded", "true");
+    this.classList?.add("hidden");
+    document.getElementById("closeNavbar")?.classList?.remove("hidden");
+});
 
-	// 	ScrollTrigger.config({ limitCallbacks: true });
+document.getElementById("closeNavbar")?.addEventListener("click", function () {
+    document.getElementById("collapse-navbar")?.setAttribute("aria-expanded", "false");
+    this.classList?.add("hidden");
+    document.getElementById("openNavbar")?.classList?.remove("hidden");
+});
 
-	// 	gsap.utils.toArray(".gs_reveal").forEach(function (elem) {
-	// 		if (elem.getBoundingClientRect()?.top > 0) {
-	// 			hide(elem); // assure that the element is hidden when scrolled into view
+// document.addEventListener("DOMContentLoaded", function () {
+//     gsap.registerPlugin(ScrollTrigger);
 
-	// 			ScrollTrigger.create({
-	// 				trigger: elem,
-	// 				once: true,
-	// 				start: "top 80%",
-	// 				onEnter: function () { animateFrom(elem) },
-	// 			});
-	// 		}
-	// 	});
+//     ScrollTrigger.config({ limitCallbacks: true });
 
-	// });
+//     gsap.utils.toArray(".gs_reveal").forEach(function (elem) {
+//         if (elem.getBoundingClientRect()?.top > 0) {
+//             hide(elem); // assure that the element is hidden when scrolled into view
 
-})(jQuery);
+//             ScrollTrigger.create({
+//                 trigger: elem,
+//                 once: true,
+//                 start: "top 80%",
+//                 onEnter: function () { animateFrom(elem) },
+//             });
+//         }
+//     });
+
+// });
 
