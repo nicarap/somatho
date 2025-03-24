@@ -9,9 +9,9 @@ window.addEventListener('load', handleScroll);
 function handleScroll() {
     const navbar = document.querySelector(".navbar-fixed");
     if (navbar.getBoundingClientRect().top > 60) {
-        navbar.setAttribute("aria-fixed", "false");
+        navbar.setAttribute("data-fixed", "false");
     } else {
-        navbar.setAttribute("aria-fixed", "true");
+        navbar.setAttribute("data-fixed", "true");
     }
 }
 
@@ -133,15 +133,25 @@ function hide(elem) {
 }
 
 document.getElementById("openNavbar")?.addEventListener("click", function () {
-    document.getElementById("collapse-navbar")?.setAttribute("aria-expanded", "true");
+    const collapseNavbar = document.getElementById("collapse-navbar");
+    collapseNavbar?.setAttribute("data-expanded", "true");
+    this.setAttribute("aria-expanded", "true");
     this.classList?.add("hidden");
-    document.getElementById("closeNavbar")?.classList?.remove("hidden");
+    
+    const closeNavbar = document.getElementById("closeNavbar");
+    closeNavbar?.classList?.remove("hidden");
+    closeNavbar?.setAttribute("aria-expanded", "true");
 });
 
 document.getElementById("closeNavbar")?.addEventListener("click", function () {
-    document.getElementById("collapse-navbar")?.setAttribute("aria-expanded", "false");
+    const collapseNavbar = document.getElementById("collapse-navbar");
+    collapseNavbar?.setAttribute("data-expanded", "false");
+    this.setAttribute("aria-expanded", "false");
     this.classList?.add("hidden");
-    document.getElementById("openNavbar")?.classList?.remove("hidden");
+    
+    const openNavbar = document.getElementById("openNavbar");
+    openNavbar?.classList?.remove("hidden");
+    openNavbar?.setAttribute("aria-expanded", "false");
 });
 
 // document.addEventListener("DOMContentLoaded", function () {

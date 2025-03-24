@@ -110,7 +110,7 @@
                 <p class="leading-relaxed mt-1 mb-4 text-gray-100 text-xl">
                     Ou contactes moi directement
                 </p>
-                <div class="mt-2 w-full flex gap-2 items-center">
+                <div class="mt-2 w-full grid grid-cols-2 sm:grid-cols-3 gap-2 items-center">
                     <a title="BonziSomato" href="{{ config('app.social_medias.facebook') }}" target="_blank"
                        class="flex text-gray-200 fill-gray-200 bg-primary-900 hover:text-primary-900 hover:fill-primary-900 hover:bg-gray-200 shadow-lg font-normal h-8 gap-2 px-2 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-1"
                        type="button">

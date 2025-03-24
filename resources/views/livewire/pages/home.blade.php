@@ -1,9 +1,9 @@
 <div>
     <x-slot:main-title>
-        <div class="z-10 absolute fill-primary-50 opacity-20 aspect-auto w-[50%] top-[10%]">
+        <div class="z-10 absolute fill-primary-50 opacity-20 aspect-auto w-[70%] md:w-[50%] top-0 md:top-[10%]">
             @include('logo.masse')
         </div>
-        <div class="z-20 fill-primary-500 aspect-auto w-[50%]">@include('logo.complete')</div>
+        <div class="z-20 fill-primary-500 aspect-auto w-[80%]">@include('logo.complete')</div>
     </x-slot:main-title>
 
 
@@ -138,7 +138,7 @@
                     <div class="absolute inset-0 bg-primary-900/20 z-20 pointer-events-none"></div>
                     <div class="absolute h-full w-full inset-0 z-10 flex">
                         @foreach($links as $link)
-                        <iframe src="{{ $link }}" width="100%" height="100%" style="border:0;"
+                        <iframe title="Google Maps" src="{{ $link }}" width="100%" height="100%" style="border:0;"
                                 allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         @endforeach
                     </div>

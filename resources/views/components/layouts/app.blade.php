@@ -123,18 +123,18 @@
 
 <body class="text-gray-800 antialiased scroll-smooth">
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCHRQ4X9" height="0" width="0"
-                style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCHRQ4X9" height="0" width="0"
+                style="display:none;visibility:hidden"></iframe></noscript> -->
     <!-- End Google Tag Manager (noscript) -->
     <nav
-         class="navbar-fixed h-20 group top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 bg-primary-900 fill-primary-900 transition-all duration-300">
+         class="navbar-fixed h-20 group top-0 fixed z-50 w-full flex flex-wrap items-center justify-between pl-2 pr-6 py-3 bg-primary-900 fill-primary-900 transition-all duration-300">
         <div class="container px-4 mx-auto flex flex-wrap items-center justify-between gap-16">
             <div class="w-full relative flex justify-between xl:w-auto xl:static xl:block xl:justify-start">
-                <div class="group-aria-[fixed=false]:fill-gray-100 fill-primary-500 aspect-auto w-12">
+                <div class="group-data-[fixed=false]:fill-gray-100 fill-primary-500 aspect-auto w-12">
                     @include('logo.b')</div>
                 <button class="cursor-pointer text-xl fill-primary-500 leading-none px-3 py-1 w-14 border border-solid border-transparent rounded bg-transparent block xl:hidden outline-none focus:outline-none"
-                        type="button" id="openNavbar">
-                    <svg class="h-full w-full" viewBox="-2.5 0 19 19" xmlns="http://www.w3.org/2000/svg"
+                        type="button" id="openNavbar" aria-label="Ouvrir le menu" aria-controls="collapse-navbar" aria-expanded="false">
+                    <svg class="h-full w-full" viewBox="2.5 0 19 19" xmlns="http://www.w3.org/2000/svg"
                          class="cf-icon-svg">
                         <path
                               d="M.789 4.836a1.03 1.03 0 0 1 1.03-1.029h10.363a1.03 1.03 0 1 1 0 2.059H1.818A1.03 1.03 0 0 1 .79 4.836zm12.422 4.347a1.03 1.03 0 0 1-1.03 1.029H1.819a1.03 1.03 0 0 1 0-2.059h10.364a1.03 1.03 0 0 1 1.029 1.03zm0 4.345a1.03 1.03 0 0 1-1.03 1.03H1.819a1.03 1.03 0 1 1 0-2.059h10.364a1.03 1.03 0 0 1 1.029 1.03z" />
@@ -142,7 +142,7 @@
                 </button>
 
                 <button class="hidden cursor-pointer text-xl fill-primary-500 leading-none px-3 py-1 w-12 border border-solid border-transparent rounded bg-transparent xl:hidden outline-none focus:outline-none"
-                        type="button" id="closeNavbar">
+                        type="button" id="closeNavbar" aria-label="Fermer le menu" aria-controls="collapse-navbar" aria-expanded="true">
                     <svg xmlns="http://www.w3.org/2000/svg"
                          viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                         <path
@@ -162,7 +162,7 @@
             </div>
         </div>
     </nav>
-    <header class="relative py-16 flex flex-col items-center justify-center" style="min-height: 90vh;" id="home">                                 
+    <header class="relative py-16 flex flex-col items-center justify-center h-[50vh] md:h-[70vh]" id="home">
         <img src="{{ isset($image) ? asset('storage/' . $image) : asset('images/soin_sur_table.webp') }}"
         srcset="{{ asset('images/soin_sur_table-400.webp') }} 400w, {{ asset('images/soin_sur_table-800.webp') }} 800w"
         sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, (max-width: 1600px) 1200px"
@@ -171,14 +171,14 @@
         <span id="blackOverlay"
               class="w-full h-full absolute opacity-50 bg-gradient-to-b backdrop-blur-sm to-primary-900 from-black"></span>
 
-        <div id="collapse-navbar" aria-expanded="false"
-             class="aria-expanded:translate-x-0 transition-all right-0 duration-300 translate-x-full z-50 mt-20 w-full h-full fixed inset-0 bg-primary-900">
+        <div id="collapse-navbar"
+             class="data-[expanded=true]:translate-x-0 transition-all right-0 duration-300 translate-x-full z-50 mt-20 w-full h-full fixed inset-0 bg-primary-900" data-expanded="false" role="navigation">
             <x-navigation></x-navigation>
         </div>
 
-        <div class="container relative mx-auto -mt-16 h-full flex-1 flex flex-col justify-evenly items-center py-16">
+        <div class="container relative mx-auto mt-[2rem] md:mt-0 -mt-16 h-full flex-1 flex flex-col justify-evenly items-center">
             <div class="items-center w-full flex flex-wrap">
-                <div class="w-full 2xl:w-10/12 lg:w-6/12 mx-auto">
+                <div class="w-full scale- lg:w-8/12 mx-auto">
                     <div class="flex flex-col items-center gap-2">
                         {{ $mainTitle }}
                     </div>
