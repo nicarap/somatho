@@ -2,7 +2,7 @@
     <div class="container mx-auto px-4 snap-always snap-mandatory">
         <div class="flex flex-wrap">
             <div class="w-full lg:w-6/12 px-4">
-                <h4 class="text-3xl font-semibold text-primary-500">Restons en contact !</h4>
+                <h5 class="text-3xl font-semibold text-primary-500">Restons en contact !</h5>
                 <h5 class="text-lg mt-0 mb-2 text-gray-200">
                     Suivez-moi sur les différentes plateformes.
                 </h5>
