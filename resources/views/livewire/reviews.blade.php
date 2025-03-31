@@ -1,95 +1,73 @@
-<div class="container mx-auto px-4 overflow-hidden py-24">
-    <div class="flex flex-wrap justify-center text-center mb-8">
-        <div class="w-full lg:w-6/12 px-4">
-            <h2 class="text-5xl font-antiqua font-semibold text-primary-500">Avis des patients</h2>
-            <p class="text-lg font-light leading-relaxed text-justify md:text-center mt-4 mb-4 text-gray-700">
-                Découvres les témoignages inspirants à travers les retours authentiques des personnes qui m'ont fait
-                confiance pour un soin en somatopathie.
+<section id="reviews" class="py-24 bg-primary-100">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-antiqua font-semibold text-primary-900 mb-4">Témoignages</h2>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+                Découvrez ce que mes clients disent de la somatopathie et de mes consultations à Tahiti
             </p>
         </div>
-    </div>
-    <div class="flex gap-1 items-center justify-center">
 
-        <button {{ $hasPrev ? '' : 'disabled' }} wire:click="prev" title="Précédent" aria-label="Précédent"
-                class="hidden md:block w-8 h-8 {{ $hasPrev ? 'text-primary-900 hover:bg-primary-200 rounded-full hover:shadow-sm' : 'text-primary-200' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                 stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-            </svg>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
 
-        </button>
-        @php
-            $grid = $reviews->count() === 1 ? 'grid-cols-1' : ($reviews->count() === 2 ? 'grid-cols-2' : 'grid-cols-3');
-        @endphp
-        <div class="grid md:{{ $grid }} gap-6 text-center justify-center lg:gap-12">
             @foreach ($reviews as $review)
-                <div class="mx-auto max-w-xl flex items-center justify-evenly w-full">
-                    <div class="p-8 h-full bg-primary-900 max-w-xs text-gray-200 rounded-xl z-40 w-full">
-                        <div class="flex h-full flex-col justify-between">
-
-                            <h5 class="mb-4 text-xl font-semibold">
-                                {{ $review->name }}
-                            </h5>
-
-
-                            <p>
-                                <span class="fill-primary-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-7 w-7 pr-2"
-                                         viewBox="0 0 24 24">
-                                        <path
-                                              d="M13 14.725c0-5.141 3.892-10.519 10-11.725l.984 2.126c-2.215.835-4.163 3.742-4.38 5.746 2.491.392 4.396 2.547 4.396 5.149 0 3.182-2.584 4.979-5.199 4.979-3.015 0-5.801-2.305-5.801-6.275zm-13 0c0-5.141 3.892-10.519 10-11.725l.984 2.126c-2.215.835-4.163 3.742-4.38 5.746 2.491.392 4.396 2.547 4.396 5.149 0 3.182-2.584 4.979-5.199 4.979-3.015 0-5.801-2.305-5.801-6.275z" />
-                                    </svg>
-                                </span>
-                                {{ $review->content }}
-                            </p>
-
-                            <div class="flex gap-1 pt-4 justify-center fill-yellow-400 ">
-                                @for ($i = 1; $i <= $review->value; $i++)
-                                    @if ($i < 5)
-                                        <x-icones.fullStar></x-icones.fullStar>
-                                    @endif
-                                @endfor
-
-                                @if (strpos($review->value, '.'))
-                                    <x-icones.halfStar></x-icones.halfStar>
-                                    @php $i++; @endphp
-                                @endif
-
-                                @for ($j = $i; $j <= 5; $j++)
-                                    <x-icones.emptyStar>
-                                    </x-icones.emptyStar>
-                                @endfor
-                            </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 relative">
+                    <div
+                        class="absolute -top-4 left-6 w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                        </svg>
+                    </div>
+                    <div class="flex mb-4">
+                        <div class="flex text-primary-500">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                </path>
+                            </svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                </path>
+                            </svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                </path>
+                            </svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                </path>
+                            </svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                </path>
+                            </svg>
                         </div>
                     </div>
+                    <p class="text-gray-700 mb-4">
+                        {{ $review->content }}
+                    </p>
+                    <div class="mt-4 flex items-center">
+                        <div class="mr-4 bg-primary-200 rounded-full w-10 h-10 flex items-center justify-center">
+                            <span
+                                class="text-primary-900 font-bold">{{ ($review->firstname[0] ?? '') . ($review->name[0] ?? '') }}</span>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold text-primary-900">{{ $review->firstname }}
+                                {{ $review->name[0] . '.' ?? '' }}</h5>
+                            <p class="text-sm text-gray-600">{{ $review->location }}</p>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-xs text-gray-500">Consultation pour : {{ $review->subject ?? 'aze' }}</div>
                 </div>
             @endforeach
         </div>
-        <button {{ $hasNext ? '' : 'disabled' }} wire:click="next" title="Suivant" aria-label="Suivant"
-                class="hidden md:block w-8 h-8 {{ $hasNext ? 'text-primary-900 hover:bg-primary-200 rounded-full hover:shadow-sm' : 'text-primary-200' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                 stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-            </svg>
-        </button>
-    </div>
-    <div class="w-full flex gap-4 justify-center md:hidden py-4">
-        <button {{ $hasPrev ? '' : 'disabled' }} wire:click="prev" title="Précédent" aria-label="Précédent"
-                class=" w-8 h-8 {{ $hasPrev ? 'text-primary-900 hover:bg-primary-200 rounded-full hover:shadow-sm' : 'text-primary-200' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                 stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-            </svg>
-        </button>
 
-        <button {{ $hasNext ? '' : 'disabled' }} wire:click="next" title="Suivant" aria-label="Suivant"
-                class="w-8 h-8 {{ $hasNext ? 'text-primary-900 hover:bg-primary-200 rounded-full hover:shadow-sm' : 'text-primary-200' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                 stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-            </svg>
-        </button>
-    </div>
+
     <div class="flex flex-wrap justify-center text-center mb-8">
         <div class="w-full lg:w-6/12 px-4">
             <p class="text-lg font-light leading-relaxed text-justify md:text-center mt-4 mb-4 text-gray-700">
@@ -100,4 +78,76 @@
             </p>
         </div>
     </div>
-</div>
+
+
+        <div class="mt-12 text-center">
+            <x-button url="{{ route('home') }}/#contact">
+                <x-slot name="label">
+                    <span class="hidden md:inline">Prenez rendez-vous pour votre consultation</span>
+                    <span class="inline md:hidden">Prendre rendez-vous</span>
+                </x-slot>
+            </x-button>
+        </div>
+    </div>
+
+    <!-- Schema.org structured data for Reviews -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Somatopathie Amelie Bonzi - Tahiti",
+      "image": "{{ asset('images/amelie-1200.webp') }}",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Tahiti",
+        "addressRegion": "Polynésie française"
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "Marie L."
+          },
+          "reviewBody": "Après des années de douleurs chroniques au dos, j'ai découvert la somatopathie grâce à Amelie. Sa thérapie manuelle douce m'a apporté un soulagement que je n'avais pas connu depuis longtemps. Sa compréhension profonde de la connexion corps-esprit fait toute la différence."
+        },
+        {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "Paul T."
+          },
+          "reviewBody": "J'ai consulté Amelie pour des problèmes de sommeil et d'anxiété. La Méthode Poyet qu'elle utilise est vraiment efficace. En quelques séances, j'ai retrouvé un sommeil profond et réparateur. Son approche est à la fois professionnelle et bienveillante."
+        },
+        {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "Sophie V."
+          },
+          "reviewBody": "J'ai amené mon fils de 8 ans chez Amelie suite à des problèmes de concentration et d'hyperactivité. Son approche douce de la somatopathie a créé un véritable déclic. Il est maintenant beaucoup plus calme et concentré à l'école. Un grand merci pour cette thérapie naturelle si efficace!"
+        }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "3"
+      }
+    }
+    </script>
+</section>

@@ -10,9 +10,7 @@ class Reviews extends Component
 {
     public Collection $reviews;
     public int $offset = 0;
-    public int $limit = 2;
-    public bool $hasNext = true;
-    public bool $hasPrev = false;
+    public int $limit = 3;
 
     public function mount()
     {
@@ -21,27 +19,13 @@ class Reviews extends Component
 
     public function loadReviews()
     {
-        $this->reviews = Review::latest()
-            ->offset($this->offset)
+        // Récupère 3 avis aléatoirement
+        $this->reviews = Review::inRandomOrder()
             ->limit($this->limit)
             ->get();
 
         $this->hasNext = Review::offset($this->offset + $this->limit)->exists();
         $this->hasPrev = $this->offset > 0;
-    }
-
-    public function next()
-    {
-        // Avance de $limit avis
-        $this->offset += $this->limit;
-        $this->loadReviews();
-    }
-
-    public function prev()
-    {
-        // Recule de $limit avis
-        $this->offset = max(0, $this->offset - $this->limit);
-        $this->loadReviews();
     }
 
     public function render()

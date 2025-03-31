@@ -38,7 +38,7 @@ class Comment extends Component implements HasForms
                         'underline',
                     ])
                     ->required()
-                    ->default("<h1>aze</h1>")
+                    ->default("<h1>Voici mon commentaire</h1>")
                     ->label(__("filament.attributes.content")),
             ])
             ->statePath('data');

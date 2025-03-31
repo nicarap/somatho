@@ -9,7 +9,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\TextArea;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Forms\Components\TextInput;
@@ -44,7 +44,13 @@ class ReviewResource extends Resource
                     TextInput::make("name")
                         ->required()
                         ->label(__("filament.attributes.name")),
-                    TextArea::make("content")
+                    TextInput::make("firstname")
+                        ->required()
+                        ->label(__("filament.attributes.firstname")),
+                    TextInput::make("subject")
+                        ->required()
+                        ->label(__("filament.attributes.subject")),
+                    Textarea::make("content")
                         ->required()
                         ->label(__("filament.attributes.content")),
                     TextInput::make("value")
@@ -52,6 +58,9 @@ class ReviewResource extends Resource
                         ->numeric()
                         ->inputMode('decimal')
                         ->label(__("filament.attributes.value")),
+                    TextInput::make("location")
+                        ->required()
+                        ->label(__("filament.attributes.location")),
                 ])
             ]);
     }

@@ -6,7 +6,8 @@
                 <h5 class="text-lg mt-0 mb-2 text-gray-200">
                     Suivez-moi sur les différentes plateformes.
                 </h5>
-                <div class="mt-2 flex gap-2 items-center">
+                <div class="mt-2 flex">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
                 <a title="BonziSomato" href="{{ config('app.social_medias.facebook') }}" target="_blank"
                        class="flex text-gray-200 fill-primary-900 text-primary-900 bg-white hover:bg-primary-500 hover:fill-gray-200 hover:text-gray-200 shadow-lg font-normal h-8 gap-2 px-2 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-1"
                        type="button">
@@ -39,22 +40,23 @@
                         <span class="text-md leading-relaxed">{{ env('PHONE_NUMBER') }}</span>
                     </a>
                 </div>
+                </div>
             </div>
             <div class="w-full lg:w-6/12 mt-6 mb-6">
                 <div class="w-full px-4 ml-auto">
                     <span class="block uppercase text-primary-500 text-sm font-semibold mb-2">Liens utiles</span>
-                    <div class="grid grid-cols-2">
+                    <div class="grid grid-cols-2 gap-4">
                         <ul class="list-unstyled">
                             <li class="py-2">
-                                <a class="@if (Route::currentRouteName() === 'home') border-l-4 pl-2 border-primary-500 text-primary-500 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
+                                <a class="@if (Route::currentRouteName() === 'home') border-l-4 pl-2 border-primary-200 text-primary-200 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
                                    href="{{ route('home') }}">Accueil</a>
                             </li>
                             <li class="py-2">
-                                <a class="@if (Route::currentRouteName() === 'somatopathy') border-l-4 pl-2 border-primary-500 text-primary-500 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
+                                <a class="@if (Route::currentRouteName() === 'somatopathy') border-l-4 pl-2 border-primary-200 text-primary-200 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
                                    href="{{ route('somatopathy') }}">Somatopathie & Méthode Poyet</a>
                             </li>
                             <li class="py-2">
-                                <a class="@if (Route::currentRouteName() === 'traitment') border-l-4 pl-2 border-primary-500 text-primary-500 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
+                                <a class="@if (Route::currentRouteName() === 'traitment') border-l-4 pl-2 border-primary-200 text-primary-200 @else hover:text-primary-500 text-gray-200 @endif font-semibold block text-sm"
                                    href="{{ route('traitment') }}">Consultation</a>
                             </li>
                         </ul>

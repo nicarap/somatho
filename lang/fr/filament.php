@@ -109,5 +109,8 @@ return [
         "read_at" => "Lu le",
         "read" => "Lu",
         "not_read" => "Non lu",
+        "firstname" => "Prénom",
+        "subject" => "Sujet",
+        "location" => "Lieu",
     ]
 ];

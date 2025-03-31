@@ -19,7 +19,7 @@
                 <p class="text-3xl font-light font-antiqua leading-relaxed mt-4 mb-4 text-gray-700">
                     La Somatopathie explore et remet en lien le corps physique et les émotions.
                 </p>
-                <p class="text-3xl font-light font-antiqua leading-relaxed mt-4 mb-4 text-gray-700">
+                <p class="text-3xl font-light font-antiqua leading-relaxed mt-4 mb-4 text-gray-700 hidden md:block">
                     Cherchant à rétablir l'harmonie entre les blocages physiques et émotionnels,
                     cette méthode considère l'individu dans sa globalité.
                 </p>
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="bg-gray-100pt-24">
-            <div class="container mx-auto px-4 py-4">
+            <div class="container mx-auto py-4">
                 <div class="flex flex-wrap items-center">
                     <div
                          class="w-full xl:w-6/12 2xl:w-5/12  px-4 mr-auto ml-auto gs_reveal gs_reveal_fromLeft  relative z-10 ">
@@ -70,7 +70,7 @@
                             corps en
                             libérant les blocages articulaires et en favorisant la libre circulation de l'énergie.
                         </p>
-                        <p class="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700">
+                        <p class="hidden md:block text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700">
                             M.R. Poyet a personnalisé ses traitements pendant ses nombreuses années de pratique.
                             Grâce à une expérimentation personnelle très pragmatique, il a énormément modifié et
                             approfondi
@@ -88,13 +88,13 @@
                             , pionner de l'ostéopathie.
                         </p>
                     </div>
-                    <div class="w-8/12 xl:w-3/12 2xl:w-4/12 mr-auto ml-auto mt-8 md:mt-0 gs_reveal gs_reveal_fromRight">
+                    <div class="w-full sm:w-8/12 xl:w-3/12 2xl:w-4/12 mr-auto ml-auto mt-8 md:mt-0 gs_reveal gs_reveal_fromRight">
                         <div
-                             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-primary-200">
+                             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg md:rounded-lg bg-primary-200">
                             <img src="{{ asset('images/mrp-800.webp') }}"
                                  srcset="{{ asset('images/mrp-400.webp') }} 400w, {{ asset('images/mrp-800.webp') }} 800w"
                                  sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, (max-width: 1600px) 1200px"
-                                 alt="Photo représentant le MRP" class="w-full align-middle rounded-t-lg" />
+                                 alt="Représentation du MRP" class="w-full align-middle md:rounded-t-lg" />
                             <blockquote class="relative p-8 mb-4">
                                 <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95"
                                      class="absolute left-0 w-full block" style="height: 95px; top: -94px;">
@@ -114,7 +114,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-center gap-12 pt-32">
+                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-center gap-12 pt-12 md:pt-32">
                     <div class="w-full px-4 mr-auto ml-auto gs_reveal">
                         <div class="fill-primary-900 gap-4 inline-flex items-center justify-center ">
                             <div class="w- h- p-4 rounded-full bg-primary-500 fill-primary-900 ">
@@ -208,7 +208,7 @@
                                 personne</span>
                             cherchant une approche mêlant la santé mentale et la santé physique.
                         </p>
-                        <p class="mt-4 text-lg leading-relaxed text-gray-600 text-justify">
+                        <p class=" mt-4 text-lg leading-relaxed text-gray-600 text-justify">
                             Elle peut également convenir à ceux qui cherchent simplement à retrouver leur mobilité
                             physique
                             et à libérer les blocages corporels, sans aborder les aspects psychosomatiques.

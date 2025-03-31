@@ -12,7 +12,10 @@ class Review extends Model
 
     protected $fillable = [
         "name",
+        "firstname",
         "content",
         "value",
+        "subject",
+        "location",
     ];
 }
